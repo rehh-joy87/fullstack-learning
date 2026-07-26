@@ -2,32 +2,71 @@
 
 This repository contains my daily Full Stack Development practice and assignments.
 
-## Day 1 – Environment Setup
-- Installed VS Code
+## 🚀 Day 1 – Environment Setup
+- Installed Visual Studio Code
 - Installed Node.js
 - Installed Git
 - Installed Postman
 - Created a GitHub repository
-- Built and ran an Express.js Hello World server
+- Initialized a Node.js project
+- Installed Express.js
+- Built and ran a Hello World Express server
 
-## Day 2 – HTML
+## 🌐 Day 2 – HTML
 - Created Home page (`index.html`)
 - Created Blog page (`blog.html`)
 - Added a navigation bar
 - Added a footer
+- Built the basic structure of a website using HTML
 
-## Day 3 – CSS
-- Styled the website using CSS
+## 🎨 Day 3 – CSS
+- Created `style.css`
+- Styled the website layout
 - Designed the header and navigation bar
-- Styled buttons
-- Created a contact form
-- Designed blog cards
+- Styled forms and buttons
+- Created blog cards
 - Added a professional footer
+- Improved the overall user interface
 
-## Technologies Used
+## ⚡ Day 4 – JavaScript
+- Created `script.js`
+- Added an Add Blog form
+- Implemented form validation
+- Used DOM manipulation
+- Handled form submission using events
+- Displayed success and error messages
+- Improved website interactivity
+
+## 🛠️ Technologies Used
 - HTML5
 - CSS3
-- JavaScript
+- JavaScript (ES6)
 - Node.js
 - Express.js
-- Git & GitHub
+- Git
+- GitHub
+- Visual Studio Code
+
+## 📂 Project Structure
+
+```
+fullstack-learning/
+│── index.html
+│── blog.html
+│── style.css
+│── script.js
+│── server.js
+│── package.json
+│── package-lock.json
+└── README.md
+```
+
+## 🎯 Learning Goal
+
+To strengthen my Full Stack Development skills by building practical projects and learning modern web development technologies step by step.
+
+## 👩‍💻 Author
+
+**Reema Joy C**
+
+GitHub: https://github.com/rehh-joy87
