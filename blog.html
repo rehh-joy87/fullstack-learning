@@ -18,22 +18,25 @@
     </header>
 
     <main>
-        <h2>Blog Page</h2>
+        <h2>Add Blog</h2>
 
-    <div class="blog-card">
-        <h2>My First Blog</h2>
-        <p>
-            Today I learned how to style webpages using CSS and create a professional-looking interface.
-        </p>
+        <form id="blogForm">
+            <label>Blog Title</label><br>
+            <input type="text" id="title"><br><br>
 
-        <button>Read More</button>
-    </div>
+            <label>Blog Content</label><br>
+            <textarea id="content"></textarea><br><br>
+
+            <button type="submit">Add Blog</button>
+        </form>
+
+        <p id="message"></p>
     </main>
 
     <footer>
         <hr>
         <p>© 2026 My Website. All Rights Reserved.</p>
     </footer>
-
+<script src="script.js"></script>
 </body>
 </html>
