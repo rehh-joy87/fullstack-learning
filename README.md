@@ -37,6 +37,15 @@ This repository contains my daily Full Stack Development practice and assignment
 - Displayed success and error messages
 - Improved website interactivity
 
+## 🚀 Day 5 – Express.js
+
+- Created an Express.js backend server
+- Configured middleware using `express.json()`
+- Implemented a GET route for the home page
+- Implemented a GET route to fetch blog data
+- Implemented a POST route to receive blog data
+- Tested API endpoints using Postman
+
 ## 🛠️ Technologies Used
 - HTML5
 - CSS3
