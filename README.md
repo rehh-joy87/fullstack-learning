@@ -46,6 +46,128 @@ This repository contains my daily Full Stack Development practice and assignment
 - Implemented a POST route to receive blog data
 - Tested API endpoints using Postman
 
+# 🚀 Day 6 – Add Blog API
+
+## 📌 Objective
+
+Create a REST API using Express.js to add blog posts and store them in a JavaScript array.
+
+---
+
+## 📝 Features
+
+* Created an Express.js server
+* Implemented a **GET** API to retrieve all blog posts
+* Implemented a **POST** API to add new blog posts
+* Stored blog posts in a JavaScript array
+* Used `express.json()` middleware to handle JSON request bodies
+* Tested the API using Postman
+
+---
+
+## 🛠️ Technologies Used
+
+* Node.js
+* Express.js
+* JavaScript
+* Postman
+
+---
+
+## 📂 API Endpoints
+
+### GET `/blogs`
+
+Returns all blog posts stored in the JavaScript array.
+
+**Example Response**
+
+```json
+[
+  {
+    "id": 1,
+    "title": "My First Blog",
+    "content": "This is my first blog post."
+  }
+]
+```
+
+---
+
+### POST `/blogs`
+
+Adds a new blog post.
+
+**Request Body**
+
+```json
+{
+  "title": "Learning Express",
+  "content": "Today I created my first Blog API."
+}
+```
+
+**Response**
+
+```json
+{
+  "message": "Blog added successfully!",
+  "blog": {
+    "id": 2,
+    "title": "Learning Express",
+    "content": "Today I created my first Blog API."
+  }
+}
+
+
+## ▶️ How to Run
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start the server:
+
+```bash
+node server.js
+```
+
+3. Open your browser or Postman.
+
+* Home:
+
+  ```
+  http://localhost:3000/
+  ```
+
+* View all blogs:
+
+  ```
+  http://localhost:3000/blogs
+  ```
+
+* Add a blog:
+
+  ```
+  POST http://localhost:3000/blogs
+  ```
+
+---
+
+## 📚 Learning Outcome
+
+This task helped me understand:
+
+* REST API development using Express.js
+* GET and POST HTTP methods
+* Handling JSON data with middleware
+* Storing data temporarily using a JavaScript array
+* Testing APIs with Postman
+
+---
+
 ## 🛠️ Technologies Used
 - HTML5
 - CSS3
