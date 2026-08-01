@@ -1,20 +1,21 @@
-const form = document.getElementById("blogForm");
-const message = document.getElementById("message");
+const blogList = document.getElementById("blogList");
 
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
+fetch("http://localhost:3000/blogs")
+    .then(response => response.json())
+    .then(blogs => {
+        blogs.forEach(blog => {
+            const card = document.createElement("div");
 
-    const title = document.getElementById("title").value.trim();
-    const content = document.getElementById("content").value.trim();
+            card.className = "blog-card";
 
-    if (title === "" || content === "") {
-        message.textContent = "Please fill in all fields.";
-        message.style.color = "red";
-        return;
-    }
+            card.innerHTML = `
+                <h3>${blog.title}</h3>
+                <p>${blog.content}</p>
+            `;
 
-    message.textContent = "Blog added successfully!";
-    message.style.color = "green";
-
-    form.reset();
-});
+            blogList.appendChild(card);
+        });
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });

@@ -15,10 +15,6 @@ const blogs = [
     }
 ];
 
-// Home Route
-app.get("/", (req, res) => {
-    res.send("Welcome to my Express.js Server!");
-});
 
 // GET all blogs
 app.get("/blogs", (req, res) => {
