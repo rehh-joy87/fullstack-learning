@@ -168,6 +168,20 @@ This task helped me understand:
 
 ---
 
+## 🚀 Day 7 – View Blogs
+
+### Objective
+Display all blog posts using the GET API.
+
+### Completed Tasks
+- Created a GET API (`/blogs`) to retrieve all blog posts.
+- Returned blog data stored in a JavaScript array.
+- Tested the API using a web browser and Postman.
+
+
+### Learning Outcome
+Learned how to retrieve and return data from a REST API using the GET method.
+
 ## 🛠️ Technologies Used
 - HTML5
 - CSS3
@@ -176,6 +190,7 @@ This task helped me understand:
 - Express.js
 - Git
 - GitHub
+- Postman
 - Visual Studio Code
 
 ## 📂 Project Structure
