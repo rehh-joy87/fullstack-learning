@@ -182,6 +182,21 @@ Display all blog posts using the GET API.
 ### Learning Outcome
 Learned how to retrieve and return data from a REST API using the GET method.
 
+## 🚀 Day 8 – Edit Blog
+
+### Objective
+Allow users to update an existing blog post.
+
+### Completed Tasks
+- Implemented a PUT API (`/blogs/:id`) to update blog posts.
+- Updated the blog title and content using the blog ID.
+- Handled invalid blog IDs with a 404 response.
+- Tested the API successfully using Postman.
+
+### Learning Outcome
+Learned how to update existing data using the HTTP PUT method in a REST API.
+
+
 ## 🛠️ Technologies Used
 - HTML5
 - CSS3
