@@ -206,6 +206,22 @@ Learned how to update existing data using the HTTP PUT method in a REST API.
 - Tested DELETE API using Postman
 
 
+## 🚀 Day 10 – Frontend Integration
+
+### Objective
+Connect the HTML frontend with Express.js APIs using the Fetch API.
+
+### Completed Tasks
+- Connected the Add Blog page to the Express POST API.
+- Connected the Home page to the Express GET API.
+- Used the Fetch API to send and receive JSON data.
+- Enabled CORS to allow frontend-backend communication.
+- Successfully tested the complete blog workflow.
+
+### Learning Outcome
+Learned how to connect a frontend application with a backend API using the Fetch API, enabling dynamic data exchange between the client and server.
+
+
 ## 🛠️ Technologies Used
 - HTML5
 - CSS3
@@ -216,6 +232,7 @@ Learned how to update existing data using the HTTP PUT method in a REST API.
 - GitHub
 - Postman
 - Visual Studio Code
+- Fetch API
 
 ## 📂 Project Structure
 
