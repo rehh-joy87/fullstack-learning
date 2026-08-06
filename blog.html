@@ -21,22 +21,25 @@
         <h2>Add Blog</h2>
 
         <form id="blogForm">
-            <label>Blog Title</label><br>
-            <input type="text" id="title"><br><br>
 
-            <label>Blog Content</label><br>
-            <textarea id="content"></textarea><br><br>
+        <input
+            type="text"
+            id="title"
+            placeholder="Blog Title"
+            required>
 
-            <button type="submit">Add Blog</button>
-        </form>
+        <textarea
+            id="content"
+            placeholder="Blog Content"
+            required>
+        </textarea>
 
-        <p id="message"></p>
-    </main>
+        <button type="submit">
+            Add Blog
+        </button>
 
-    <footer>
-        <hr>
-        <p>© 2026 My Website. All Rights Reserved.</p>
-    </footer>
-<script src="script.js"></script>
+    </form>
+
+    <script src="script.js"></script>
 </body>
 </html>

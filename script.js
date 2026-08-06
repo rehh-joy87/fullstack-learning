@@ -1,21 +1,31 @@
-const blogList = document.getElementById("blogList");
+const form = document.getElementById("blogForm");
 
-fetch("http://localhost:3000/blogs")
-    .then(response => response.json())
-    .then(blogs => {
-        blogs.forEach(blog => {
-            const card = document.createElement("div");
+form.addEventListener("submit", async (e) => {
 
-            card.className = "blog-card";
+    e.preventDefault();
 
-            card.innerHTML = `
-                <h3>${blog.title}</h3>
-                <p>${blog.content}</p>
-            `;
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("content").value;
 
-            blogList.appendChild(card);
-        });
-    })
-    .catch(error => {
-        console.error("Error:", error);
+    const response = await fetch("http://localhost:3000/blogs", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            title,
+            content
+        })
+
     });
+
+    const data = await response.json();
+
+    alert(data.message);
+
+    form.reset();
+
+});

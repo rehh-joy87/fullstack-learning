@@ -1,8 +1,11 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 const PORT = 3000;
 
+// Middleware
+app.use(cors());
 app.use(express.json());
 
 // Blog Array
@@ -40,7 +43,34 @@ app.post("/blogs", (req, res) => {
 
     blogs.push(newBlog);
 
-    res.status(201).json(newBlog);
+    res.status(201).json({
+        message: "Blog added successfully!",
+        blog: newBlog
+    });
+
+});
+
+// PUT Update Blog
+app.put("/blogs/:id", (req, res) => {
+
+    const id = parseInt(req.params.id);
+
+    const blog = blogs.find(blog => blog.id === id);
+
+    if (!blog) {
+        return res.status(404).json({
+            message: "Blog not found"
+        });
+    }
+
+    blog.title = req.body.title;
+    blog.content = req.body.content;
+
+    res.json({
+        message: "Blog updated successfully!",
+        blog
+    });
+
 });
 
 // DELETE Blog
@@ -59,12 +89,13 @@ app.delete("/blogs/:id", (req, res) => {
     const deletedBlog = blogs.splice(index, 1);
 
     res.json({
-        message: "Blog deleted successfully",
-        deletedBlog
+        message: "Blog deleted successfully!",
+        blog: deletedBlog[0]
     });
 
 });
 
+// Start Server
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
