@@ -3,67 +3,68 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
-// Middleware
 app.use(express.json());
 
-// JavaScript array to store blogs
+// Blog Array
 const blogs = [
     {
         id: 1,
         title: "My First Blog",
         content: "This is my first blog post."
+    },
+    {
+        id: 2,
+        title: "Express API",
+        content: "Learning Express is fun!"
     }
 ];
 
+// Home Route
+app.get("/", (req, res) => {
+    res.send("Blog API Running...");
+});
 
-// GET all blogs
+// GET All Blogs
 app.get("/blogs", (req, res) => {
     res.json(blogs);
 });
 
-// POST a new blog
+// POST New Blog
 app.post("/blogs", (req, res) => {
-    const { title, content } = req.body;
 
     const newBlog = {
         id: blogs.length + 1,
-        title,
-        content
+        title: req.body.title,
+        content: req.body.content
     };
 
     blogs.push(newBlog);
 
-    res.status(201).json({
-        message: "Blog added successfully!",
-        blog: newBlog
-    });
+    res.status(201).json(newBlog);
 });
 
-// Update a blog
-app.put("/blogs/:id", (req, res) => {
+// DELETE Blog
+app.delete("/blogs/:id", (req, res) => {
+
     const id = parseInt(req.params.id);
 
-    const { title, content } = req.body;
+    const index = blogs.findIndex(blog => blog.id === id);
 
-    const blog = blogs.find(blog => blog.id === id);
-
-    if (!blog) {
+    if (index === -1) {
         return res.status(404).json({
             message: "Blog not found"
         });
     }
 
-    blog.title = title;
-    blog.content = content;
+    const deletedBlog = blogs.splice(index, 1);
 
     res.json({
-        message: "Blog updated successfully!",
-        blog: blog
+        message: "Blog deleted successfully",
+        deletedBlog
     });
+
 });
 
-
-// Start server
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
