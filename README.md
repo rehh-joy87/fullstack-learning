@@ -197,6 +197,15 @@ Allow users to update an existing blog post.
 Learned how to update existing data using the HTTP PUT method in a REST API.
 
 
+## Day 9: Implement Delete Blog API using Express.js
+
+- Added DELETE /blogs/:id endpoint
+- Implemented blog deletion using ID
+- Added validation for non-existent blog IDs
+- Returned appropriate success and error responses
+- Tested DELETE API using Postman
+
+
 ## 🛠️ Technologies Used
 - HTML5
 - CSS3
