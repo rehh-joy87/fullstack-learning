@@ -222,6 +222,18 @@ Connect the HTML frontend with Express.js APIs using the Fetch API.
 Learned how to connect a frontend application with a backend API using the Fetch API, enabling dynamic data exchange between the client and server.
 
 
+## Day 11 – UI Enhancements
+
+- Added animations
+- Added CSS transitions
+- Added hover effects
+- Added smooth scrolling
+- Added frontend Edit Blog functionality
+- Added frontend Delete Blog functionality
+- Improved blog card interactions
+  
+
+
 ## 🛠️ Technologies Used
 - HTML5
 - CSS3
