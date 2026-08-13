@@ -36,7 +36,9 @@ app.get("/blogs", (req, res) => {
 app.post("/blogs", (req, res) => {
 
     const newBlog = {
-        id: blogs.length + 1,
+        id: blogs.length > 0
+        ? Math.max(...blogs.map(blog => blog.id)) + 1
+        : 1,
         title: req.body.title,
         content: req.body.content
     };
