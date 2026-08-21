@@ -238,7 +238,7 @@ Learned how to connect a frontend application with a backend API using the Fetch
 The frontend of this project is deployed using GitHub Pages.
 
 Live Website:
-[View Live Website](YOUR_GITHUB_PAGES_URL)
+[View Live Website](https://rehh-joy87.github.io/fullstack-learning/)
 
 ## 🚀 Deployment
 
