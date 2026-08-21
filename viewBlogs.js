@@ -104,4 +104,4 @@ async function deleteBlog(id) {
 
 
 // Load blogs when page opens
-loadBlogs();
+loadBlogs()
