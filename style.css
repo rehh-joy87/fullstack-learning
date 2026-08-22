@@ -140,3 +140,31 @@ html {
 .blog-card button:hover {
     transform: scale(1.05);
 }
+
+/* Labels */
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Links */
+
+main a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+main a:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard */
+
+.dashboard-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}

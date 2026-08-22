@@ -1,33 +1,50 @@
 const form = document.getElementById("blogForm");
 
 form.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
-    const title = document.getElementById("title").value;
-    const content = document.getElementById("content").value;
+    const title = document.getElementById("title").value.trim();
+    const content = document.getElementById("content").value.trim();
+
+    if (!title || !content) {
+        alert("Please enter both blog title and content.");
+        return;
+    }
 
     try {
+
         const response = await fetch("http://localhost:3000/blogs", {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify({
-                title,
-                content
+                title: title,
+                content: content
             })
         });
 
         const data = await response.json();
 
+        if (!response.ok) {
+            throw new Error(data.message || "Failed to add blog");
+        }
+
         alert("Blog added successfully!");
 
-        form.reset();
-
-        console.log(data);
+        // Redirect to Home page
+        window.location.href = "index.html";
 
     } catch (error) {
-        console.error(error);
-        alert("Unable to connect to the server.");
+
+        console.error("Error:", error);
+
+        alert("Unable to add blog. Make sure the server is running.");
+
     }
+
 });
