@@ -8,6 +8,9 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
+// Users Array
+const users = [];
+
 // Blog Array
 const blogs = [
     {
@@ -25,6 +28,39 @@ const blogs = [
 // Home Route
 app.get("/", (req, res) => {
     res.send("Blog API Running...");
+});
+
+// User Registration
+app.post("/register", (req, res) => {
+
+    const { name, email, password } = req.body;
+
+    // Check if user already exists
+    const existingUser = users.find(user => user.email === email);
+
+    if (existingUser) {
+        return res.status(400).json({
+            message: "User already exists"
+        });
+    }
+
+    const newUser = {
+        id: users.length + 1,
+        name,
+        email,
+        password
+    };
+
+    users.push(newUser);
+
+    res.status(201).json({
+        message: "Registration successful!",
+        user: {
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email
+        }
+    });
 });
 
 // GET All Blogs
