@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+
+    <title>Blog Details</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <header>
         <h1>My Website</h1>
 
         <nav>
-            <a href="index.html">Home</a>
+            <a href="index.html">Home</a> |
             <a href="blog.html">Blog</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="login.html">Login</a>
-            <a href="register.html">Register</a>
         </nav>
     </header>
+
     <main>
-        <h2>All Blog Posts</h2>
 
-        <div id="blogList"></div>
+        <div id="blogDetails">
+            <p>Loading blog...</p>
+        </div>
+
     </main>
-
-    <script src="viewBlogs.js"></script>
 
     <footer>
         <hr>
         <p>© 2026 My Website. All Rights Reserved.</p>
     </footer>
 
+    <script src="blogDetails.js"></script>
+
 </body>
+
 </html>

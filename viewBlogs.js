@@ -3,14 +3,14 @@ const blogList = document.getElementById("blogList");
 async function loadBlogs() {
     try {
         const response = await fetch("http://localhost:3000/blogs");
-
-        if (!response.ok) {
-            throw new Error("Failed to fetch blogs");
-        }
-
         const blogs = await response.json();
 
         blogList.innerHTML = "";
+
+        if (blogs.length === 0) {
+            blogList.innerHTML = "<p>No blogs available.</p>";
+            return;
+        }
 
         blogs.forEach(blog => {
 
@@ -22,90 +22,78 @@ async function loadBlogs() {
                 <h3>${blog.title}</h3>
                 <p>${blog.content}</p>
 
-                <button class="edit-btn" data-id="${blog.id}">
+                <button onclick="viewBlog('${blog._id}')">
+                    View
+                </button>
+
+                <button onclick="editBlog('${blog._id}')">
                     Edit
                 </button>
 
-                <button class="delete-btn" data-id="${blog.id}">
+                <button onclick="deleteBlog('${blog._id}')">
                     Delete
                 </button>
-            `;
+`           ;
 
             blogList.appendChild(blogCard);
         });
 
-        // Edit buttons
-        document.querySelectorAll(".edit-btn").forEach(button => {
-            button.addEventListener("click", () => {
-                editBlog(button.dataset.id);
-            });
-        });
-
-        // Delete buttons
-        document.querySelectorAll(".delete-btn").forEach(button => {
-            button.addEventListener("click", () => {
-                deleteBlog(button.dataset.id);
-            });
-        });
-
     } catch (error) {
-        console.error(error);
-        blogList.innerHTML = "<p>Unable to load blogs.</p>";
+        console.error("Error loading blogs:", error);
+
+        blogList.innerHTML =
+            "<p>Unable to load blogs. Please make sure the server is running.</p>";
     }
 }
 
 
-// EDIT BLOG
 async function editBlog(id) {
 
-    const title = prompt("Enter new blog title:");
+    const newTitle = prompt("Enter new blog title:");
 
-    if (title === null) {
+    if (newTitle === null) {
         return;
     }
 
-    const content = prompt("Enter new blog content:");
+    const newContent = prompt("Enter new blog content:");
 
-    if (content === null) {
+    if (newContent === null) {
         return;
     }
 
     try {
 
-        const response = await fetch(
-            `http://localhost:3000/blogs/${id}`,
-            {
-                method: "PUT",
+        const response = await fetch(`http://localhost:3000/blogs/${id}`, {
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            method: "PUT",
 
-                body: JSON.stringify({
-                    title: title,
-                    content: content
-                })
-            }
-        );
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                title: newTitle,
+                content: newContent
+            })
+
+        });
 
         const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message);
-        }
 
         alert(data.message);
 
         loadBlogs();
 
     } catch (error) {
-        console.error(error);
-        alert("Unable to update blog.");
+
+        console.error("Error updating blog:", error);
+
+        alert("Failed to update blog.");
+
     }
 }
 
 
-// DELETE BLOG
 async function deleteBlog(id) {
 
     const confirmDelete = confirm(
@@ -127,20 +115,23 @@ async function deleteBlog(id) {
 
         const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(data.message);
-        }
-
         alert(data.message);
 
         loadBlogs();
 
     } catch (error) {
-        console.error(error);
-        alert("Unable to delete blog.");
+
+        console.error("Error deleting blog:", error);
+
+        alert("Failed to delete blog.");
+
     }
 }
 
+// VIEW BLOG
+function viewBlog(id) {
+    window.location.href = `blog-details.html?id=${id}`;
+}
 
-// Load blogs when page opens
+
 loadBlogs();
