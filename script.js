@@ -6,9 +6,10 @@ form.addEventListener("submit", async (e) => {
 
     const title = document.getElementById("title").value.trim();
     const content = document.getElementById("content").value.trim();
+    const category = document.getElementById("category").value;
 
-    if (!title || !content) {
-        alert("Please enter both blog title and content.");
+    if (!title || !content || !category) {
+        alert("Please enter all fields.");
         return;
     }
 
@@ -24,7 +25,8 @@ form.addEventListener("submit", async (e) => {
 
             body: JSON.stringify({
                 title: title,
-                content: content
+                content: content,
+                category: category
             })
         });
 

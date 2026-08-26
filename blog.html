@@ -23,25 +23,26 @@
     <main>
         <h2>Add Blog</h2>
 
-        <form id="blogForm">
+    <form id="blogForm">
+        <label>Blog Title</label>
+        <input type="text" id="title" required>
 
-            <input
-                type="text"
-                id="title"
-                placeholder="Blog Title"
-                required>
+        <label for="category">Category</label>
 
-            <textarea
-                id="content"
-                placeholder="Blog Content"
-                required>
-            </textarea>
+        <select id="category" name="category" required>
+            <option value="">Select a category</option>
+            <option value="Technology">Technology</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Programming">Programming</option>
+            <option value="AI & Machine Learning">AI & Machine Learning</option>
+            <option value="Database">Database</option>
+        </select>
 
-            <button type="submit">
-                Add Blog
-            </button>
+        <label>Blog Content</label>
+        <textarea id="content" required></textarea>
 
-        </form>
+        <button type="submit">Add Blog</button>
+    </form>
     </main>
 
     <script src="script.js"></script>

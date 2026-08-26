@@ -17,6 +17,7 @@ app.use(express.json());
 
 console.log("Mongo URI exists:", !!process.env.MONGO_URI);
 
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB connected successfully!");
@@ -34,6 +35,7 @@ const users = [];
 app.get("/", (req, res) => {
     res.send("Blog API Running...");
 });
+
 
 // User Registration
 app.post("/register", (req, res) => {
@@ -68,15 +70,34 @@ app.post("/register", (req, res) => {
     });
 });
 
+
 // GET All Blogs
 app.get("/blogs", async (req, res) => {
-    const blogs = await Blog.find();
-    res.json(blogs);
+
+    try {
+
+        const blogs = await Blog.find();
+
+        res.json(blogs);
+
+    } catch (error) {
+
+        console.error("Error fetching blogs:", error);
+
+        res.status(500).json({
+            message: "Failed to fetch blogs"
+        });
+
+    }
+
 });
 
 
+// GET Single Blog
 app.get("/blogs/:id", async (req, res) => {
+
     try {
+
         const blog = await Blog.findById(req.params.id);
 
         if (!blog) {
@@ -88,34 +109,55 @@ app.get("/blogs/:id", async (req, res) => {
         res.json(blog);
 
     } catch (error) {
+
         console.error("Error fetching blog:", error);
 
         res.status(500).json({
             message: "Error fetching blog"
         });
+
     }
+
 });
 
 
 // POST New Blog
 app.post("/blogs", async (req, res) => {
+
     try {
+
         const newBlog = new Blog({
+
             title: req.body.title,
-            content: req.body.content
+
+            content: req.body.content,
+
+            category: req.body.category || "Technology"
+
         });
 
         const savedBlog = await newBlog.save();
 
         res.status(201).json({
+
             message: "Blog added successfully!",
+
             blog: savedBlog
+
         });
+
     } catch (error) {
+
+        console.error("Error adding blog:", error);
+
         res.status(500).json({
+
             message: "Failed to add blog"
+
         });
+
     }
+
 });
 
 
@@ -125,33 +167,49 @@ app.put("/blogs/:id", async (req, res) => {
     try {
 
         const updatedBlog = await Blog.findByIdAndUpdate(
+
             req.params.id,
+
             {
                 title: req.body.title,
-                content: req.body.content
+
+                content: req.body.content,
+
+                category: req.body.category
             },
+
             {
                 new: true
             }
+
         );
 
         if (!updatedBlog) {
+
             return res.status(404).json({
+
                 message: "Blog not found"
+
             });
+
         }
 
         res.json({
+
             message: "Blog updated successfully!",
+
             blog: updatedBlog
+
         });
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Error updating blog:", error);
 
         res.status(500).json({
+
             message: "Failed to update blog"
+
         });
 
     }
@@ -169,22 +227,31 @@ app.delete("/blogs/:id", async (req, res) => {
         );
 
         if (!deletedBlog) {
+
             return res.status(404).json({
+
                 message: "Blog not found"
+
             });
+
         }
 
         res.json({
+
             message: "Blog deleted successfully!",
+
             blog: deletedBlog
+
         });
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Error deleting blog:", error);
 
         res.status(500).json({
+
             message: "Failed to delete blog"
+
         });
 
     }
@@ -192,8 +259,9 @@ app.delete("/blogs/:id", async (req, res) => {
 });
 
 
-
 // Start Server
 app.listen(PORT, () => {
+
     console.log(`Server running at http://localhost:${PORT}`);
+
 });

@@ -1,24 +1,37 @@
 const blogList = document.getElementById("blogList");
+const searchInput = document.getElementById("searchInput");
 
-async function loadBlogs() {
+async function loadBlogs(searchTerm = "") {
     try {
         const response = await fetch("http://localhost:3000/blogs");
+
+        if (!response.ok) {
+            throw new Error("Failed to load blogs");
+        }
+
         const blogs = await response.json();
+
+        const filteredBlogs = blogs.filter(blog =>
+            blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            blog.content.toLowerCase().includes(searchTerm.toLowerCase())
+        );
 
         blogList.innerHTML = "";
 
-        if (blogs.length === 0) {
-            blogList.innerHTML = "<p>No blogs available.</p>";
+        if (filteredBlogs.length === 0) {
+            blogList.innerHTML = "<p>No matching blogs found.</p>";
             return;
         }
 
-        blogs.forEach(blog => {
+        filteredBlogs.forEach(blog => {
 
             const blogCard = document.createElement("div");
 
             blogCard.className = "blog-card";
 
             blogCard.innerHTML = `
+                <span class="blog-category">
+                    ${blog.category || "Technology"}</span>
                 <h3>${blog.title}</h3>
                 <p>${blog.content}</p>
 
@@ -33,12 +46,13 @@ async function loadBlogs() {
                 <button onclick="deleteBlog('${blog._id}')">
                     Delete
                 </button>
-`           ;
+            `;
 
             blogList.appendChild(blogCard);
         });
 
     } catch (error) {
+
         console.error("Error loading blogs:", error);
 
         blogList.innerHTML =
@@ -46,54 +60,24 @@ async function loadBlogs() {
     }
 }
 
+searchInput.addEventListener("input", () => {
+    loadBlogs(searchInput.value);
+});
 
-async function editBlog(id) {
 
-    const newTitle = prompt("Enter new blog title:");
-
-    if (newTitle === null) {
-        return;
-    }
-
-    const newContent = prompt("Enter new blog content:");
-
-    if (newContent === null) {
-        return;
-    }
-
-    try {
-
-        const response = await fetch(`http://localhost:3000/blogs/${id}`, {
-
-            method: "PUT",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                title: newTitle,
-                content: newContent
-            })
-
-        });
-
-        const data = await response.json();
-
-        alert(data.message);
-
-        loadBlogs();
-
-    } catch (error) {
-
-        console.error("Error updating blog:", error);
-
-        alert("Failed to update blog.");
-
-    }
+// VIEW BLOG
+function viewBlog(id) {
+    window.location.href = `blog-details.html?id=${id}`;
 }
 
 
+// EDIT BLOG
+function editBlog(id) {
+    window.location.href = `edit-blog.html?id=${id}`;
+}
+
+
+// DELETE BLOG
 async function deleteBlog(id) {
 
     const confirmDelete = confirm(
@@ -115,7 +99,11 @@ async function deleteBlog(id) {
 
         const data = await response.json();
 
-        alert(data.message);
+        if (!response.ok) {
+            throw new Error(data.message || "Failed to delete blog");
+        }
+
+        alert("Blog deleted successfully!");
 
         loadBlogs();
 
@@ -124,13 +112,7 @@ async function deleteBlog(id) {
         console.error("Error deleting blog:", error);
 
         alert("Failed to delete blog.");
-
     }
-}
-
-// VIEW BLOG
-function viewBlog(id) {
-    window.location.href = `blog-details.html?id=${id}`;
 }
 
 
