@@ -1,63 +1,968 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - My Website</title>
+
+    <title>Dashboard | BlogSpace</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =====================================================
+           DASHBOARD
+        ===================================================== */
+
+        .dashboard-page {
+            min-height: 100vh;
+            background: #0b0d10;
+        }
+
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+
+        .dashboard-sidebar {
+            width: 230px;
+            min-height: 100vh;
+            background: #0d1014;
+            border-right: 1px solid #292f36;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            padding: 0 22px;
+            border-bottom: 1px solid #292f36;
+        }
+
+        .sidebar-logo a {
+            color: #f1f1f1;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .sidebar-logo span {
+            color: #d6a85f;
+        }
+
+        .sidebar-menu-title {
+            padding: 24px 20px 10px;
+            color: #686f78;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .sidebar-menu {
+            padding: 0 12px;
+        }
+
+        .sidebar-button {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            min-height: 42px;
+            margin-bottom: 7px;
+            padding: 0 12px;
+            border: 1px solid #292f36;
+            background: #11151a;
+            color: #aeb4bb;
+            text-decoration: none;
+            font-size: 13px;
+            box-sizing: border-box;
+            transition: 0.2s ease;
+        }
+
+        .sidebar-button:hover {
+            border-color: #d6a85f;
+            color: #f1f1f1;
+        }
+
+        .sidebar-button.active {
+            border-color: #d6a85f;
+            color: #d6a85f;
+            background: #14181d;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding: 12px;
+            border-top: 1px solid #292f36;
+        }
+
+        .logout-button {
+            cursor: pointer;
+            color: #c5c9ce;
+        }
+
+        /* MAIN */
+
+        .dashboard-main {
+            width: calc(100% - 230px);
+            margin-left: 230px;
+            min-height: 100vh;
+        }
+
+        .dashboard-topbar {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            border-bottom: 1px solid #292f36;
+            background: #0b0d10;
+        }
+
+        .dashboard-label {
+            color: #d6a85f;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .dashboard-user {
+            color: #8f969f;
+            font-size: 13px;
+        }
+
+        .dashboard-content {
+            padding: 40px 35px;
+            max-width: 1200px;
+        }
+
+        .dashboard-welcome {
+            margin-bottom: 35px;
+        }
+
+        .dashboard-welcome h1 {
+            margin: 8px 0;
+            color: #f1f1f1;
+            font-size: 36px;
+            line-height: 1.1;
+        }
+
+        .dashboard-welcome p {
+            margin: 0;
+            color: #8f969f;
+            font-size: 15px;
+        }
+
+        /* STATS */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            min-height: 125px;
+            padding: 22px;
+            background: #11151a;
+            border: 1px solid #292f36;
+            box-sizing: border-box;
+        }
+
+        .stat-title {
+            display: block;
+            color: #8f969f;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            color: #f1f1f1;
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        /* SECTIONS */
+
+        .dashboard-section {
+            margin-bottom: 35px;
+            background: #11151a;
+            border: 1px solid #292f36;
+        }
+
+        .dashboard-section-header {
+            min-height: 70px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #292f36;
+            box-sizing: border-box;
+        }
+
+        .dashboard-section-header h2 {
+            margin: 5px 0 0;
+            color: #f1f1f1;
+            font-size: 21px;
+        }
+
+        .dashboard-view-all {
+            display: inline-block;
+            padding: 8px 14px;
+            border: 1px solid #292f36;
+            color: #d6a85f;
+            background: #0d1014;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .dashboard-view-all:hover {
+            border-color: #d6a85f;
+            color: #f1f1f1;
+        }
+
+        /* ACTIONS */
+
+        .dashboard-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 20px;
+        }
+
+        .dashboard-action {
+            display: block;
+            padding: 16px;
+            border: 1px solid #292f36;
+            background: #0d1014;
+            color: #d6a85f;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .dashboard-action:hover {
+            border-color: #d6a85f;
+            color: #f1f1f1;
+        }
+
+        /* RECENT BLOGS */
+
+        .recent-list {
+            padding: 20px;
+        }
+
+        .recent-blog {
+            padding: 18px 0;
+            border-bottom: 1px solid #292f36;
+        }
+
+        .recent-blog:first-child {
+            padding-top: 0;
+        }
+
+        .recent-blog:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .recent-category {
+            color: #d6a85f;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .recent-blog h3 {
+            margin: 7px 0;
+            color: #f1f1f1;
+            font-size: 17px;
+        }
+
+        .recent-blog p {
+            margin: 0 0 8px;
+            color: #8f969f;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .recent-meta {
+            color: #686f78;
+            font-size: 12px;
+        }
+
+        .recent-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #d6a85f;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .recent-link:hover {
+            text-decoration: underline;
+        }
+
+        .dashboard-message {
+            padding: 25px 20px;
+            color: #8f969f;
+            font-size: 14px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 850px) {
+            .dashboard-sidebar {
+                position: static;
+                width: 100%;
+                min-height: auto;
+            }
+
+            .dashboard-layout {
+                display: block;
+            }
+
+            .dashboard-main {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .sidebar-logo {
+                height: 60px;
+            }
+
+            .sidebar-menu {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 7px;
+                padding: 10px 12px;
+            }
+
+            .sidebar-menu-title {
+                padding: 15px 20px 5px;
+            }
+
+            .sidebar-button {
+                margin-bottom: 0;
+            }
+
+            .sidebar-bottom {
+                margin-top: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .dashboard-topbar {
+                padding: 0 18px;
+            }
+
+            .dashboard-content {
+                padding: 25px 18px;
+            }
+
+            .dashboard-welcome h1 {
+                font-size: 28px;
+            }
+
+            .dashboard-section-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+                padding: 18px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <header>
+<div class="dashboard-page">
 
-        <h1>My Website</h1>
+    <div class="dashboard-layout">
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="blog.html">Create Blog</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="login.html">Logout</a>
-        </nav>
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
 
-    </header>
+        <aside class="dashboard-sidebar">
 
-    <main>
+            <div class="sidebar-logo">
+                <a href="index.html">
+                    <span>●</span> BlogSpace
+                </a>
+            </div>
 
-        <h2>Dashboard</h2>
+            <div class="sidebar-menu-title">
+                MY WEBSITE
+            </div>
 
-        <p>Welcome to your dashboard!</p>
+            <nav class="sidebar-menu">
 
-        <div class="blog-card">
+                <a
+                    href="dashboard.html"
+                    class="sidebar-button active"
+                >
+                    Dashboard
+                </a>
 
-            <h3>Blog Management</h3>
+                <a
+                    href="index.html"
+                    class="sidebar-button"
+                >
+                    Home
+                </a>
 
-            <p>
-                Create and manage your blog posts from here.
-            </p>
+                <a
+                    href="blogs.html"
+                    class="sidebar-button"
+                >
+                    All Blogs
+                </a>
 
-            <a href="blog.html">
-                <button type="button">
-                    Create New Blog
-                </button>
-            </a>
+                <a
+                    href="my-blogs.html"
+                    class="sidebar-button"
+                >
+                    My Blogs
+                </a>
 
-            <a href="index.html">
-                <button type="button">
-                    View Blogs
-                </button>
-            </a>
+                <a
+                    href="blog.html"
+                    class="sidebar-button"
+                >
+                    Write Blog
+                </a>
 
-        </div>
+                <a
+                    href="categories.html"
+                    class="sidebar-button"
+                >
+                    Categories
+                </a>
 
-    </main>
+                <a
+                    href="profile.html"
+                    class="sidebar-button"
+                >
+                    Profile
+                </a>
 
-    <footer>
-        <hr>
-        <p>© 2026 My Website. All Rights Reserved.</p>
-    </footer>
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a
+                    href="#"
+                    id="logoutButton"
+                    class="sidebar-button logout-button"
+                >
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-topbar">
+
+                <div>
+                    <span class="dashboard-label">
+                        DASHBOARD
+                    </span>
+                </div>
+
+                <div
+                    class="dashboard-user"
+                    id="topbarUser"
+                >
+                    Loading...
+                </div>
+
+            </header>
+
+
+            <div class="dashboard-content">
+
+                <!-- WELCOME -->
+
+                <section class="dashboard-welcome">
+
+                    <span class="dashboard-label">
+                        OVERVIEW
+                    </span>
+
+                    <h1 id="welcomeTitle">
+                        Welcome back
+                    </h1>
+
+                    <p>
+                        Manage your blogs and account from here.
+                    </p>
+
+                </section>
+
+
+                <!-- STATS -->
+
+                <section class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <span class="stat-title">
+                            TOTAL BLOGS
+                        </span>
+
+                        <strong
+                            class="stat-number"
+                            id="totalBlogs"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <span class="stat-title">
+                            CATEGORIES USED
+                        </span>
+
+                        <strong
+                            class="stat-number"
+                            id="totalCategories"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <span class="stat-title">
+                            ACCOUNT
+                        </span>
+
+                        <strong
+                            class="stat-number"
+                            id="accountName"
+                        >
+                            —
+                        </strong>
+
+                    </div>
+
+                </section>
+
+
+                <!-- QUICK ACTIONS -->
+
+                <section class="dashboard-section">
+
+                    <div class="dashboard-section-header">
+
+                        <div>
+                            <span class="dashboard-label">
+                                QUICK ACTIONS
+                            </span>
+
+                            <h2>
+                                Manage Your Website
+                            </h2>
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-actions">
+
+                        <a
+                            href="blog.html"
+                            class="dashboard-action"
+                        >
+                            + Write a Blog
+                        </a>
+
+                        <a
+                            href="my-blogs.html"
+                            class="dashboard-action"
+                        >
+                            Manage My Blogs
+                        </a>
+
+                        <a
+                            href="profile.html"
+                            class="dashboard-action"
+                        >
+                            View Profile
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+                <!-- RECENT BLOGS -->
+
+                <section class="dashboard-section">
+
+                    <div class="dashboard-section-header">
+
+                        <div>
+                            <span class="dashboard-label">
+                                RECENT BLOGS
+                            </span>
+
+                            <h2>
+                                Recent Blogs
+                            </h2>
+                        </div>
+
+                        <!-- IMPORTANT: VISIBLE VIEW ALL BUTTON -->
+
+                        <a
+                            href="blogs.html"
+                            class="dashboard-view-all"
+                        >
+                            View All →
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        id="recentBlogs"
+                        class="recent-list"
+                    >
+
+                        <div class="dashboard-message">
+                            Loading recent blogs...
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<script>
+    const API_URL = "http://localhost:3000";
+
+    const token = localStorage.getItem("token");
+
+    /*
+        Dashboard is protected.
+    */
+
+    if (!token) {
+        window.location.href = "login.html";
+    }
+
+
+    function authHeaders() {
+        return {
+            "Authorization": `Bearer ${token}`
+        };
+    }
+
+
+    function escapeHtml(value) {
+        const div = document.createElement("div");
+        div.textContent = value ?? "";
+        return div.innerHTML;
+    }
+
+
+    function formatDate(dateValue) {
+
+        if (!dateValue) {
+            return "Date unavailable";
+        }
+
+        const date = new Date(dateValue);
+
+        if (Number.isNaN(date.getTime())) {
+            return "Date unavailable";
+        }
+
+        return date.toLocaleDateString(
+            "en-US",
+            {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            }
+        );
+    }
+
+
+    function logout() {
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        window.location.href = "index.html";
+    }
+
+
+    document
+        .getElementById("logoutButton")
+        .addEventListener("click", function(event) {
+
+            event.preventDefault();
+
+            logout();
+
+        });
+
+
+    async function loadDashboard() {
+
+        try {
+
+            const [
+                blogsResponse,
+                userResponse
+            ] = await Promise.all([
+
+                fetch(
+                    `${API_URL}/my-blogs`,
+                    {
+                        headers: authHeaders()
+                    }
+                ),
+
+                fetch(
+                    `${API_URL}/me`,
+                    {
+                        headers: authHeaders()
+                    }
+                )
+
+            ]);
+
+
+            if (
+                blogsResponse.status === 401 ||
+                blogsResponse.status === 403 ||
+                userResponse.status === 401 ||
+                userResponse.status === 403
+            ) {
+
+                logout();
+
+                return;
+            }
+
+
+            if (!blogsResponse.ok) {
+                throw new Error(
+                    "Unable to load blogs"
+                );
+            }
+
+
+            if (!userResponse.ok) {
+                throw new Error(
+                    "Unable to load user"
+                );
+            }
+
+
+            const blogs =
+                await blogsResponse.json();
+
+            const user =
+                await userResponse.json();
+
+
+            const categories =
+                new Set(
+                    blogs.map(
+                        blog =>
+                            blog.category ||
+                            "General"
+                    )
+                );
+
+
+            document
+                .getElementById("totalBlogs")
+                .textContent = blogs.length;
+
+
+            document
+                .getElementById("totalCategories")
+                .textContent = categories.size;
+
+
+            document
+                .getElementById("accountName")
+                .textContent =
+                user.name || "User";
+
+
+            document
+                .getElementById("welcomeTitle")
+                .textContent =
+                `Welcome back, ${user.name || "User"}`;
+
+
+            document
+                .getElementById("topbarUser")
+                .textContent =
+                user.email || "";
+
+
+            displayRecentBlogs(blogs);
+
+        } catch (error) {
+
+            console.error(
+                "Dashboard error:",
+                error
+            );
+
+
+            document
+                .getElementById("recentBlogs")
+                .innerHTML = `
+                    <div class="dashboard-message">
+                        Unable to load dashboard data.
+                        Please make sure the backend server is running.
+                    </div>
+                `;
+        }
+    }
+
+
+    function displayRecentBlogs(blogs) {
+
+        const box =
+            document.getElementById("recentBlogs");
+
+
+        if (!blogs.length) {
+
+            box.innerHTML = `
+                <div class="dashboard-message">
+                    You have not written any blogs yet.
+                    <br><br>
+
+                    <a
+                        href="blog.html"
+                        class="dashboard-view-all"
+                    >
+                        Write Your First Blog
+                    </a>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        const recent =
+            blogs.slice(0, 5);
+
+
+        box.innerHTML = "";
+
+
+        recent.forEach(function(blog) {
+
+            const article =
+                document.createElement("article");
+
+            article.className =
+                "recent-blog";
+
+
+            const category =
+                blog.category || "General";
+
+
+            const title =
+                blog.title || "Untitled Blog";
+
+
+            const content =
+                blog.content || "";
+
+
+            const shortContent =
+                content.length > 180
+                    ? content.substring(0, 180) + "..."
+                    : content;
+
+
+            article.innerHTML = `
+
+                <span class="recent-category">
+                    ${escapeHtml(category)}
+                </span>
+
+                <h3>
+                    ${escapeHtml(title)}
+                </h3>
+
+                <p>
+                    ${escapeHtml(shortContent)}
+                </p>
+
+                <div class="recent-meta">
+                    ${formatDate(blog.createdAt)}
+                </div>
+
+                <a
+                    href="blog-details.html?id=${encodeURIComponent(blog._id)}"
+                    class="recent-link"
+                >
+                    Read Story →
+                </a>
+            `;
+
+
+            box.appendChild(article);
+
+        });
+    }
+
+
+    loadDashboard();
+</script>
 
 </body>
-
 </html>

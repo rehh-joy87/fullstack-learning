@@ -1,50 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="style.css">
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Write a Blog | BlogSpace</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-    <header>
-        <h1>My Website</h1>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="blog.html">Blog</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="login.html">Login</a>
-            <a href="register.html">Register</a>
-        </nav>
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
+    <header class="navbar">
+
+        <div class="navbar-inner">
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+                BlogSpace
+            </a>
+
+            <nav class="nav-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="blogs.html">
+                    Blogs
+                </a>
+
+                <a href="categories.html">
+                    Categories
+                </a>
+
+                <a href="my-blogs.html">
+                    My Blogs
+                </a>
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="profile.html">
+                    Profile
+                </a>
+
+                <a
+                    href="#"
+                    onclick="logout()"
+                >
+                    Logout
+                </a>
+
+            </nav>
+
+        </div>
+
     </header>
 
-    <main>
-        <h2>Add Blog</h2>
 
-    <form id="blogForm">
-        <label>Blog Title</label>
-        <input type="text" id="title" required>
+    <!-- =====================================================
+         CREATE BLOG
+         ===================================================== -->
 
-        <label for="category">Category</label>
+    <main class="section">
 
-        <select id="category" name="category" required>
-            <option value="">Select a category</option>
-            <option value="Technology">Technology</option>
-            <option value="Web Development">Web Development</option>
-            <option value="Programming">Programming</option>
-            <option value="AI & Machine Learning">AI & Machine Learning</option>
-            <option value="Database">Database</option>
-        </select>
+        <div class="container">
 
-        <label>Blog Content</label>
-        <textarea id="content" required></textarea>
+            <div class="auth-card"
+                 style="max-width: 800px; margin: auto;">
 
-        <button type="submit">Add Blog</button>
-    </form>
+                <h1>
+                    Write a Blog
+                </h1>
+
+                <p>
+                    Share your thoughts, knowledge and experiences.
+                </p>
+
+
+                <div
+                    id="message"
+                    class="message"
+                ></div>
+
+
+                <form id="blogForm">
+
+
+                    <div class="form-group">
+
+                        <label for="title">
+                            Blog Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            placeholder="Enter your blog title"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select
+                            id="category"
+                            required
+                        >
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            <option value="Technology">
+                                Technology
+                            </option>
+
+                            <option value="Python">
+                                Python
+                            </option>
+
+                            <option value="AI">
+                                AI
+                            </option>
+
+                            <option value="Machine Learning">
+                                Machine Learning
+                            </option>
+
+                            <option value="Travel">
+                                Travel
+                            </option>
+
+                            <option value="Lifestyle">
+                                Lifestyle
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="content">
+                            Content
+                        </label>
+
+                        <textarea
+                            id="content"
+                            placeholder="Write your blog here..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="form-button"
+                    >
+                        Publish Blog
+                    </button>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
     </main>
 
-    <script src="script.js"></script>
+
+    <script>
+
+        const API_URL =
+            "http://localhost:3000";
+
+
+        /* =====================================================
+           AUTH CHECK
+           ===================================================== */
+
+        const token =
+            localStorage.getItem("token");
+
+
+        if (!token) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        const form =
+            document.getElementById(
+                "blogForm"
+            );
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        function showMessage(text, type) {
+
+            message.textContent =
+                text;
+
+            message.className =
+                `message show ${type}`;
+
+        }
+
+
+        /* =====================================================
+           CREATE BLOG
+           ===================================================== */
+
+        form.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const title =
+                    document
+                        .getElementById("title")
+                        .value
+                        .trim();
+
+                const category =
+                    document
+                        .getElementById("category")
+                        .value;
+
+                const content =
+                    document
+                        .getElementById("content")
+                        .value
+                        .trim();
+
+
+                if (!title || !category || !content) {
+
+                    showMessage(
+                        "Please fill in all fields.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/blogs`,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Authorization":
+                                        `Bearer ${token}`
+                                },
+
+                                body: JSON.stringify({
+                                    title,
+                                    category,
+                                    content
+                                })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        if (
+                            response.status === 401
+                        ) {
+
+                            localStorage.removeItem(
+                                "token"
+                            );
+
+                            localStorage.removeItem(
+                                "user"
+                            );
+
+                            window.location.href =
+                                "login.html";
+
+                            return;
+
+                        }
+
+
+                        throw new Error(
+                            data.message ||
+                            "Failed to create blog"
+                        );
+
+                    }
+
+
+                    showMessage(
+                        "Blog published successfully!",
+                        "success"
+                    );
+
+
+                    form.reset();
+
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "my-blogs.html";
+
+                    }, 1000);
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    showMessage(
+                        error.message ||
+                        "Unable to publish blog.",
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           LOGOUT
+           ===================================================== */
+
+        function logout() {
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    </script>
+
 </body>
+
 </html>

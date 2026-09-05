@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Profile | BlogSpace</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        .profile-page {
+            min-height: 100vh;
+            background: #0b0d10;
+        }
+
+        .profile-header {
+            border-bottom: 1px solid #292f36;
+            background: #0b0d10;
+        }
+
+        .profile-navbar {
+            max-width: 1150px;
+            min-height: 70px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .profile-logo {
+            color: #f1f1f1;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .profile-logo span {
+            color: #d6a85f;
+        }
+
+        .profile-nav {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .profile-nav a {
+            padding: 8px 10px;
+            color: #8f969f;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .profile-nav a:hover,
+        .profile-nav a.active {
+            color: #d6a85f;
+        }
+
+        .profile-main {
+            padding: 55px 20px;
+        }
+
+        .profile-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .profile-heading {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #292f36;
+        }
+
+        .profile-heading-label {
+            color: #d6a85f;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .profile-heading h1 {
+            margin: 8px 0;
+            color: #f1f1f1;
+            font-size: 38px;
+        }
+
+        .profile-heading p {
+            margin: 0;
+            color: #8f969f;
+            font-size: 14px;
+        }
+
+        /* PROFILE TABLE */
+
+        .profile-table {
+            width: 100%;
+            border: 1px solid #292f36;
+            border-bottom: none;
+        }
+
+        .profile-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            min-height: 65px;
+            border-bottom: 1px solid #292f36;
+        }
+
+        .profile-label {
+            display: flex;
+            align-items: center;
+            padding: 15px 18px;
+            background: #0d1014;
+            border-right: 1px solid #292f36;
+            color: #d6a85f;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .profile-value {
+            display: flex;
+            align-items: center;
+            padding: 15px 18px;
+            background: #11151a;
+            color: #f1f1f1;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .password-hidden {
+            letter-spacing: 2px;
+            color: #f1f1f1;
+        }
+
+        .password-note {
+            margin-left: 12px;
+            color: #686f78;
+            font-size: 12px;
+            letter-spacing: 0;
+        }
+
+        .account-status {
+            color: #d6a85f;
+            font-weight: 600;
+        }
+
+        .profile-id {
+            color: #8f969f;
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        .profile-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .profile-button {
+            display: inline-block;
+            padding: 10px 15px;
+            border: 1px solid #292f36;
+            background: #11151a;
+            color: #d6a85f;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .profile-button:hover {
+            border-color: #d6a85f;
+            color: #f1f1f1;
+        }
+
+        .profile-status {
+            padding: 25px;
+            border: 1px solid #292f36;
+            color: #8f969f;
+            background: #11151a;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+
+            .profile-navbar {
+                align-items: flex-start;
+                flex-direction: column;
+                padding-top: 15px;
+                padding-bottom: 15px;
+            }
+
+            .profile-heading h1 {
+                font-size: 30px;
+            }
+
+            .profile-row {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-label {
+                min-height: 44px;
+                border-right: none;
+                border-bottom: 1px solid #292f36;
+            }
+
+            .profile-value {
+                min-height: 55px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="profile-page">
+
+    <!-- =================================================
+         NAVIGATION
+    ================================================== -->
+
+    <header class="profile-header">
+
+        <div class="profile-navbar">
+
+            <a
+                href="index.html"
+                class="profile-logo"
+            >
+                <span>●</span> BlogSpace
+            </a>
+
+
+            <nav class="profile-nav">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="blogs.html">
+                    Blogs
+                </a>
+
+                <a href="categories.html">
+                    Categories
+                </a>
+
+                <a href="my-blogs.html">
+                    My Blogs
+                </a>
+
+                <a
+                    href="profile.html"
+                    class="active"
+                >
+                    Profile
+                </a>
+
+                <a
+                    href="#"
+                    id="logoutButton"
+                >
+                    Logout
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <main class="profile-main">
+
+        <div class="profile-container">
+
+            <div class="profile-heading">
+
+                <span class="profile-heading-label">
+                    ACCOUNT
+                </span>
+
+                <h1>
+                    Profile
+                </h1>
+
+                <p>
+                    Your BlogSpace account information.
+                </p>
+
+            </div>
+
+
+            <section
+                id="profileBox"
+                class="profile-table"
+            >
+
+                <div class="profile-status">
+                    Loading profile...
+                </div>
+
+            </section>
+
+
+            <div class="profile-actions">
+
+                <a
+                    href="my-blogs.html"
+                    class="profile-button"
+                >
+                    My Blogs
+                </a>
+
+                <a
+                    href="blog.html"
+                    class="profile-button"
+                >
+                    Write a Blog
+                </a>
+
+                <a
+                    href="dashboard.html"
+                    class="profile-button"
+                >
+                    Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    const API_URL =
+        "http://localhost:3000";
+
+
+    const token =
+        localStorage.getItem("token");
+
+
+    if (!token) {
+
+        window.location.href =
+            "login.html";
+    }
+
+
+    function authHeaders() {
+
+        return {
+            "Authorization":
+                `Bearer ${token}`
+        };
+    }
+
+
+    function escapeHtml(value) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            value ?? "";
+
+        return div.innerHTML;
+    }
+
+
+    function formatDate(dateValue) {
+
+        if (!dateValue) {
+            return "Not available";
+        }
+
+        const date =
+            new Date(dateValue);
+
+        if (Number.isNaN(date.getTime())) {
+            return "Not available";
+        }
+
+        return date.toLocaleDateString(
+            "en-US",
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+    }
+
+
+    function logout() {
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        window.location.href =
+            "index.html";
+    }
+
+
+    document
+        .getElementById("logoutButton")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                logout();
+            }
+        );
+
+
+    async function loadProfile() {
+
+        const box =
+            document.getElementById(
+                "profileBox"
+            );
+
+
+        try {
+
+            const [
+                userResponse,
+                blogsResponse
+            ] = await Promise.all([
+
+                fetch(
+                    `${API_URL}/me`,
+                    {
+                        headers:
+                            authHeaders()
+                    }
+                ),
+
+                fetch(
+                    `${API_URL}/my-blogs`,
+                    {
+                        headers:
+                            authHeaders()
+                    }
+                )
+
+            ]);
+
+
+            if (
+                userResponse.status === 401 ||
+                userResponse.status === 403 ||
+                blogsResponse.status === 401 ||
+                blogsResponse.status === 403
+            ) {
+
+                logout();
+
+                return;
+            }
+
+
+            if (!userResponse.ok) {
+
+                throw new Error(
+                    "Unable to load profile"
+                );
+            }
+
+
+            if (!blogsResponse.ok) {
+
+                throw new Error(
+                    "Unable to load blogs"
+                );
+            }
+
+
+            const user =
+                await userResponse.json();
+
+
+            const blogs =
+                await blogsResponse.json();
+
+
+            box.innerHTML = `
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+                        Name
+                    </div>
+
+                    <div class="profile-value">
+                        ${escapeHtml(user.name || "Not available")}
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+                        Email
+                    </div>
+
+                    <div class="profile-value">
+                        ${escapeHtml(user.email || "Not available")}
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+                        Password
+                    </div>
+
+                    <div class="profile-value">
+
+                        <span class="password-hidden">
+                            ••••••••••
+                        </span>
+
+                        <span class="password-note">
+                            Password protected
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+                        Account Status
+                    </div>
+
+                    <div class="profile-value">
+
+                        <span class="account-status">
+                            Active
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+                        Created Date
+                    </div>
+
+                    <div class="profile-value">
+                        ${formatDate(user.createdAt)}
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+                        User ID
+                    </div>
+
+                    <div class="profile-value">
+
+                        <span class="profile-id">
+                            ${escapeHtml(user.id || "Not available")}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
+                        Total Blogs
+                    </div>
+
+                    <div class="profile-value">
+                        ${blogs.length}
+                    </div>
+
+                </div>
+
+            `;
+
+        } catch (error) {
+
+            console.error(
+                "Profile error:",
+                error
+            );
+
+
+            box.innerHTML = `
+                <div class="profile-status">
+                    Unable to load profile.
+                    <br>
+                    Please make sure the backend server is running.
+                </div>
+            `;
+        }
+    }
+
+
+    loadProfile();
+
+</script>
+
+</body>
+</html>

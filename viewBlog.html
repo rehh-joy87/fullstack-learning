@@ -2,40 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>View Blog</title>
+
 </head>
 
 <body>
 
-    <header>
+<script>
 
-        <h1>My Website</h1>
+const params =
+    new URLSearchParams(window.location.search);
 
-        <nav>
-            <a href="index.html">Home</a> |
-            <a href="blog.html">Add Blog</a>
-        </nav>
+const id =
+    params.get("id");
 
-    </header>
+if (id) {
 
-    <main>
+    window.location.replace(
+        `blog-details.html?id=${encodeURIComponent(id)}`
+    );
 
-        <div id="blogDetails"></div>
+} else {
 
-        <br>
+    window.location.replace("blogs.html");
 
-        <button onclick="goBack()">
-            Back to Blogs
-        </button>
+}
 
-    </main>
-
-    <script src="viewBlog.js"></script>
+</script>
 
 </body>
 

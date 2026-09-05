@@ -2,70 +2,430 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Edit Blog</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Blog | BlogSpace</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-    <header>
-        <h1>My Website</h1>
 
-        <nav>
-            <a href="index.html">Home</a> |
-            <a href="blog.html">Blog</a>
-        </nav>
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="navbar-inner">
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+                BlogSpace
+            </a>
+
+            <nav class="nav-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="blogs.html">
+                    Blogs
+                </a>
+
+                <a href="categories.html">
+                    Categories
+                </a>
+
+                <a href="my-blogs.html">
+                    My Blogs
+                </a>
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="profile.html">
+                    Profile
+                </a>
+
+                <a href="blog.html" class="nav-cta">
+                    Write a Blog
+                </a>
+
+                <a
+                    href="#"
+                    onclick="logout()"
+                >
+                    Logout
+                </a>
+
+            </nav>
+
+        </div>
+
     </header>
 
-    <main>
 
-        <h2>Edit Blog</h2>
+    <!-- EDIT -->
 
-        <form id="editBlogForm">
+    <main class="section">
 
-            <label for="title">Blog Title</label>
+        <div class="container">
 
-            <input
-                type="text"
-                id="title"
-                placeholder="Blog Title"
-                required
+            <div
+                class="auth-card"
+                style="max-width: 800px; margin:auto;"
             >
 
-            <label for="content">Blog Content</label>
+                <h1>
+                    Edit Blog
+                </h1>
 
-            <textarea
-                id="content"
-                placeholder="Blog Content"
-                rows="8"
-                required
-            ></textarea>
+                <p>
+                    Update your blog post.
+                </p>
 
-            <button type="submit">
-                Update Blog
-            </button>
 
-            <button
-                type="button"
-                onclick="goBack()"
-            >
-                Cancel
-            </button>
+                <div
+                    id="message"
+                    class="message"
+                ></div>
 
-        </form>
+
+                <form id="editForm">
+
+                    <div class="form-group">
+
+                        <label for="title">
+                            Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select
+                            id="category"
+                            required
+                        >
+
+                            <option value="Technology">
+                                Technology
+                            </option>
+
+                            <option value="Python">
+                                Python
+                            </option>
+
+                            <option value="AI">
+                                AI
+                            </option>
+
+                            <option value="Machine Learning">
+                                Machine Learning
+                            </option>
+
+                            <option value="Travel">
+                                Travel
+                            </option>
+
+                            <option value="Lifestyle">
+                                Lifestyle
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="content">
+                            Content
+                        </label>
+
+                        <textarea
+                            id="content"
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="form-button"
+                    >
+                        Save Changes
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
 
     </main>
 
-    <footer>
-        <hr>
-        <p>© 2026 My Website. All Rights Reserved.</p>
-    </footer>
 
-    <script src="editBlog.js"></script>
+    <script>
+
+        const API_URL =
+            "http://localhost:3000";
+
+        const token =
+            localStorage.getItem("token");
+
+
+        if (!token) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const blogId =
+            params.get("id");
+
+
+        const form =
+            document.getElementById(
+                "editForm"
+            );
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        function showMessage(text, type) {
+
+            message.textContent =
+                text;
+
+            message.className =
+                `message show ${type}`;
+
+        }
+
+
+        /* =====================================================
+           LOAD BLOG
+           ===================================================== */
+
+        async function loadBlog() {
+
+            if (!blogId) {
+
+                showMessage(
+                    "No blog ID provided.",
+                    "error"
+                );
+
+                form.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_URL}/blogs/${blogId}`
+                    );
+
+
+                const blog =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        blog.message ||
+                        "Blog not found"
+                    );
+
+                }
+
+
+                document.getElementById("title")
+                    .value =
+                    blog.title || "";
+
+
+                document.getElementById("category")
+                    .value =
+                    blog.category || "Technology";
+
+
+                document.getElementById("content")
+                    .value =
+                    blog.content || "";
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    error.message,
+                    "error"
+                );
+
+                form.style.display =
+                    "none";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           UPDATE BLOG
+           ===================================================== */
+
+        form.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const title =
+                    document
+                        .getElementById("title")
+                        .value
+                        .trim();
+
+                const category =
+                    document
+                        .getElementById("category")
+                        .value;
+
+                const content =
+                    document
+                        .getElementById("content")
+                        .value
+                        .trim();
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/blogs/${blogId}`,
+                            {
+                                method: "PUT",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Authorization":
+                                        `Bearer ${token}`
+
+                                },
+
+                                body: JSON.stringify({
+                                    title,
+                                    category,
+                                    content
+                                })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.message ||
+                            "Failed to update blog"
+                        );
+
+                    }
+
+
+                    showMessage(
+                        "Blog updated successfully!",
+                        "success"
+                    );
+
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "my-blogs.html";
+
+                    }, 900);
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    showMessage(
+                        error.message,
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+
+        function logout() {
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+        loadBlog();
+
+    </script>
 
 </body>
 

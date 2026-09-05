@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>All Blogs | BlogSpace</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        .blogs-page {
+            min-height: 100vh;
+            background: #0b0d10;
+        }
+
+        .blogs-main {
+            padding: 55px 20px;
+        }
+
+        .blogs-container {
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .blogs-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #292f36;
+        }
+
+        .blogs-header-label {
+            color: #d6a85f;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .blogs-header h1 {
+            margin: 8px 0 6px;
+            color: #f1f1f1;
+            font-size: 38px;
+        }
+
+        .blogs-header p {
+            margin: 0;
+            color: #8f969f;
+            font-size: 14px;
+        }
+
+        .write-button {
+            display: inline-block;
+            padding: 11px 17px;
+            border: 1px solid #d6a85f;
+            color: #d6a85f;
+            background: #11151a;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .write-button:hover {
+            color: #f1f1f1;
+            border-color: #f1f1f1;
+        }
+
+        .blogs-search {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px 14px;
+            margin-bottom: 25px;
+            background: #11151a;
+            border: 1px solid #292f36;
+            color: #f1f1f1;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .blogs-search:focus {
+            border-color: #d6a85f;
+        }
+
+        .blogs-search::placeholder {
+            color: #686f78;
+        }
+
+        .blogs-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .public-blog-card {
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+            padding: 22px;
+            background: #11151a;
+            border: 1px solid #292f36;
+            box-sizing: border-box;
+        }
+
+        .public-blog-card:hover {
+            border-color: #3c434c;
+        }
+
+        .public-category {
+            color: #d6a85f;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .public-blog-card h2 {
+            margin: 10px 0;
+            color: #f1f1f1;
+            font-size: 20px;
+            line-height: 1.35;
+        }
+
+        .public-blog-card p {
+            color: #8f969f;
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 0 0 15px;
+        }
+
+        .public-meta {
+            color: #686f78;
+            font-size: 12px;
+            margin-top: auto;
+            margin-bottom: 15px;
+        }
+
+        .read-button {
+            display: inline-block;
+            padding: 9px 13px;
+            border: 1px solid #292f36;
+            color: #d6a85f;
+            background: #0d1014;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            align-self: flex-start;
+        }
+
+        .read-button:hover {
+            border-color: #d6a85f;
+            color: #f1f1f1;
+        }
+
+        .blogs-status {
+            grid-column: 1 / -1;
+            padding: 35px 20px;
+            text-align: center;
+            border: 1px solid #292f36;
+            color: #8f969f;
+            background: #11151a;
+            font-size: 14px;
+        }
+
+        /* HEADER */
+
+        .public-header {
+            border-bottom: 1px solid #292f36;
+            background: #0b0d10;
+        }
+
+        .public-navbar {
+            max-width: 1150px;
+            min-height: 70px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .public-logo {
+            color: #f1f1f1;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .public-logo span {
+            color: #d6a85f;
+        }
+
+        .public-nav {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .public-nav a {
+            padding: 8px 10px;
+            color: #8f969f;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .public-nav a:hover,
+        .public-nav a.active {
+            color: #d6a85f;
+        }
+
+        .public-nav .nav-cta {
+            border: 1px solid #292f36;
+            color: #d6a85f;
+        }
+
+        .public-nav .nav-cta:hover {
+            border-color: #d6a85f;
+        }
+
+        .site-footer-simple {
+            border-top: 1px solid #292f36;
+            padding: 22px 20px;
+            color: #686f78;
+            font-size: 12px;
+        }
+
+        .footer-simple-inner {
+            max-width: 1150px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        @media (max-width: 850px) {
+
+            .blogs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .blogs-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .public-navbar {
+                align-items: flex-start;
+                flex-direction: column;
+                padding-top: 15px;
+                padding-bottom: 15px;
+            }
+
+            .blogs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blogs-header h1 {
+                font-size: 30px;
+            }
+
+            .footer-simple-inner {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="blogs-page">
+
+    <!-- =================================================
+         NAVIGATION
+    ================================================== -->
+
+    <header class="public-header">
+
+        <div class="public-navbar">
+
+            <a
+                href="index.html"
+                class="public-logo"
+            >
+                <span>●</span> BlogSpace
+            </a>
+
+
+            <nav class="public-nav">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a
+                    href="blogs.html"
+                    class="active"
+                >
+                    Blogs
+                </a>
+
+                <a href="categories.html">
+                    Categories
+                </a>
+
+                <span
+                    id="loggedInLinks"
+                    style="display:none;"
+                >
+
+                    <a href="my-blogs.html">
+                        My Blogs
+                    </a>
+
+                    <a href="profile.html">
+                        Profile
+                    </a>
+
+                    <a
+                        href="#"
+                        id="logoutButton"
+                    >
+                        Logout
+                    </a>
+
+                </span>
+
+
+                <span
+                    id="loggedOutLinks"
+                >
+
+                    <a href="register.html">
+                        Register
+                    </a>
+
+                    <a href="login.html">
+                        Login
+                    </a>
+
+                </span>
+
+
+                <a
+                    href="login.html"
+                    id="writeBlogButton"
+                    class="nav-cta"
+                >
+                    Write a Blog
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <main class="blogs-main">
+
+        <div class="blogs-container">
+
+            <div class="blogs-header">
+
+                <div>
+
+                    <span class="blogs-header-label">
+                        DISCOVER
+                    </span>
+
+                    <h1>
+                        All Blogs
+                    </h1>
+
+                    <p>
+                        Browse every public article on BlogSpace.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="login.html"
+                    id="topWriteButton"
+                    class="write-button"
+                >
+                    Write a Blog
+                </a>
+
+            </div>
+
+
+            <input
+                type="text"
+                id="searchInput"
+                class="blogs-search"
+                placeholder="Search by title, category or content..."
+            >
+
+
+            <section
+                id="blogList"
+                class="blogs-grid"
+            >
+
+                <div class="blogs-status">
+                    Loading blogs...
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <footer class="site-footer-simple">
+
+        <div class="footer-simple-inner">
+
+            <span>
+                © 2026 BlogSpace
+            </span>
+
+            <span>
+                Stories. Ideas. Knowledge.
+            </span>
+
+        </div>
+
+    </footer>
+
+</div>
+
+
+<script>
+
+    const API_URL =
+        "http://localhost:3000";
+
+
+    let allBlogs = [];
+
+
+    const blogList =
+        document.getElementById("blogList");
+
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+
+    function escapeHtml(value) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            value ?? "";
+
+        return div.innerHTML;
+    }
+
+
+    function formatDate(dateValue) {
+
+        if (!dateValue) {
+            return "Date unavailable";
+        }
+
+        const date =
+            new Date(dateValue);
+
+        if (Number.isNaN(date.getTime())) {
+            return "Date unavailable";
+        }
+
+        return date.toLocaleDateString(
+            "en-US",
+            {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            }
+        );
+    }
+
+
+    function updateNavigation() {
+
+        const token =
+            localStorage.getItem("token");
+
+
+        const loggedInLinks =
+            document.getElementById(
+                "loggedInLinks"
+            );
+
+
+        const loggedOutLinks =
+            document.getElementById(
+                "loggedOutLinks"
+            );
+
+
+        const writeBlogButton =
+            document.getElementById(
+                "writeBlogButton"
+            );
+
+
+        const topWriteButton =
+            document.getElementById(
+                "topWriteButton"
+            );
+
+
+        if (token) {
+
+            loggedInLinks.style.display =
+                "contents";
+
+            loggedOutLinks.style.display =
+                "none";
+
+
+            writeBlogButton.href =
+                "blog.html";
+
+            topWriteButton.href =
+                "blog.html";
+
+        } else {
+
+            loggedInLinks.style.display =
+                "none";
+
+            loggedOutLinks.style.display =
+                "contents";
+
+
+            writeBlogButton.href =
+                "login.html";
+
+            topWriteButton.href =
+                "login.html";
+        }
+    }
+
+
+    document
+        .getElementById("logoutButton")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+
+                window.location.href =
+                    "index.html";
+            }
+        );
+
+
+    function renderBlogs() {
+
+        const search =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        const filtered =
+            allBlogs.filter(function(blog) {
+
+                const title =
+                    (blog.title || "")
+                    .toLowerCase();
+
+                const content =
+                    (blog.content || "")
+                    .toLowerCase();
+
+                const category =
+                    (blog.category || "")
+                    .toLowerCase();
+
+                return (
+                    title.includes(search) ||
+                    content.includes(search) ||
+                    category.includes(search)
+                );
+            });
+
+
+        blogList.innerHTML = "";
+
+
+        if (!filtered.length) {
+
+            blogList.innerHTML = `
+                <div class="blogs-status">
+                    No matching blogs found.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        filtered.forEach(function(blog) {
+
+            const card =
+                document.createElement("article");
+
+            card.className =
+                "public-blog-card";
+
+
+            const category =
+                blog.category ||
+                "General";
+
+
+            const title =
+                blog.title ||
+                "Untitled Blog";
+
+
+            const content =
+                blog.content ||
+                "";
+
+
+            const shortContent =
+                content.length > 180
+                    ? content.substring(0, 180) + "..."
+                    : content;
+
+
+            card.innerHTML = `
+
+                <span class="public-category">
+                    ${escapeHtml(category)}
+                </span>
+
+                <h2>
+                    ${escapeHtml(title)}
+                </h2>
+
+                <p>
+                    ${escapeHtml(shortContent)}
+                </p>
+
+                <div class="public-meta">
+                    ${formatDate(blog.createdAt)}
+                </div>
+
+                <a
+                    class="read-button"
+                    href="blog-details.html?id=${encodeURIComponent(blog._id)}"
+                >
+                    Read Story →
+                </a>
+
+            `;
+
+
+            blogList.appendChild(card);
+
+        });
+    }
+
+
+    async function loadBlogs() {
+
+        try {
+
+            /*
+                IMPORTANT:
+                This is a PUBLIC endpoint.
+                No Authorization header is sent.
+            */
+
+            const response =
+                await fetch(
+                    `${API_URL}/blogs`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load blogs"
+                );
+            }
+
+
+            allBlogs =
+                await response.json();
+
+
+            renderBlogs();
+
+        } catch (error) {
+
+            console.error(
+                "All blogs error:",
+                error
+            );
+
+
+            blogList.innerHTML = `
+                <div class="blogs-status">
+                    Unable to load blogs.
+                    <br>
+                    Please make sure the backend server is running.
+                </div>
+            `;
+        }
+    }
+
+
+    searchInput.addEventListener(
+        "input",
+        renderBlogs
+    );
+
+
+    updateNavigation();
+
+    loadBlogs();
+
+</script>
+
+</body>
+</html>

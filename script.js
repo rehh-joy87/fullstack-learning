@@ -15,13 +15,24 @@ form.addEventListener("submit", async (e) => {
 
     try {
 
-        const response = await fetch("http://localhost:3000/blogs", {
+        const token = localStorage.getItem("token");
 
-            method: "POST",
+        if (!token) {
+            alert("Please login first.");
+            window.location.href = "login.html";
+            return;
+        }
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+        const response = await fetch(
+            "http://localhost:3000/blogs",
+            {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
 
             body: JSON.stringify({
                 title: title,

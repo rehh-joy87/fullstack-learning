@@ -9,7 +9,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>Blog - BlogSpace</title>
+    <title>Categories - BlogSpace</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -35,7 +35,7 @@
                 Blogs
             </a>
 
-            <a href="categories.html">
+            <a href="categories.html" class="active">
                 Categories
             </a>
 
@@ -50,17 +50,32 @@
 
 <main class="page">
 
-    <article class="article">
+    <div class="page-header">
 
-        <div id="articleContainer">
+        <span class="eyebrow">
+            EXPLORE
+        </span>
 
-            <div class="status-message">
-                Loading article...
-            </div>
+        <h1>
+            Categories
+        </h1>
 
+        <p>
+            Browse blogs by topic.
+        </p>
+
+    </div>
+
+
+    <div
+        id="categoryList"
+        class="category-grid">
+
+        <div class="status-message">
+            Loading categories...
         </div>
 
-    </article>
+    </div>
 
 </main>
 
@@ -74,7 +89,7 @@
         </span>
 
         <span>
-            BlogSpace
+            Explore
         </span>
 
     </div>
@@ -140,104 +155,78 @@ function setupNavigation() {
 
 
 // ---------------------------------------------------------
-// LOAD BLOG
+// LOAD CATEGORIES
 // ---------------------------------------------------------
 
-async function loadBlog() {
-
-    const params =
-        new URLSearchParams(window.location.search);
-
-    const id =
-        params.get("id");
-
-    const container =
-        document.getElementById("articleContainer");
-
-    if (!id) {
-
-        container.innerHTML =
-            `<div class="status-message">
-                Blog ID is missing.
-             </div>`;
-
-        return;
-    }
+async function loadCategories() {
 
     try {
 
         const response =
-            await fetch(`${API_URL}/blogs/${id}`);
-
-        const data =
-            await response.json();
+            await fetch(`${API_URL}/blogs`);
 
         if (!response.ok) {
-
-            throw new Error(
-                data.message || "Blog not found"
-            );
+            throw new Error("Failed to load blogs");
         }
 
-        const date =
-            data.createdAt
-                ? new Date(data.createdAt)
-                    .toLocaleDateString()
-                : "";
+        const blogs =
+            await response.json();
 
-        container.innerHTML = `
+        const categories = {};
 
-            <header class="article-header">
+        blogs.forEach(blog => {
 
-                <div class="article-category">
-                    ${escapeHTML(
-                        data.category || "General"
-                    )}
-                </div>
+            const category =
+                blog.category || "General";
 
-                <h1>
-                    ${escapeHTML(
-                        data.title || "Untitled"
-                    )}
-                </h1>
+            categories[category] =
+                (categories[category] || 0) + 1;
 
-                <div class="article-meta">
-                    ${date}
-                </div>
+        });
 
-            </header>
+        const categoryList =
+            document.getElementById("categoryList");
 
-            <div class="article-content">
-                ${escapeHTML(
-                    data.content || ""
-                )}
-            </div>
+        const entries =
+            Object.entries(categories);
 
-            <div class="article-actions">
+        if (!entries.length) {
+
+            categoryList.innerHTML =
+                `<div class="empty-state">
+                    No categories available.
+                 </div>`;
+
+            return;
+        }
+
+        categoryList.innerHTML =
+            entries.map(([name, count]) => `
 
                 <a
-                    href="blogs.html"
-                    class="btn btn-secondary">
-                    Back to Blogs
+                    class="category-card"
+                    href="blogs.html?category=${encodeURIComponent(name)}">
+
+                    <h3>
+                        ${escapeHTML(name)}
+                    </h3>
+
+                    <p>
+                        ${count}
+                        ${count === 1 ? "blog" : "blogs"}
+                    </p>
+
                 </a>
 
-                <a
-                    href="index.html"
-                    class="btn btn-secondary">
-                    Home
-                </a>
-
-            </div>
-
-        `;
+            `).join("");
 
     } catch (error) {
 
         console.error(error);
 
-        container.innerHTML =
+        document.getElementById("categoryList").innerHTML =
             `<div class="status-message">
-                Unable to load this blog.
+                Unable to load categories.
              </div>`;
     }
 }
@@ -272,7 +261,7 @@ function escapeHTML(value) {
 
 
 setupNavigation();
-loadBlog();
+loadCategories();
 
 </script>
 

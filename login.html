@@ -1,84 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - My Website</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <title>Login - My Website</title>
 </head>
 
 <body>
 
-    <header>
+<header class="site-header">
+    <div class="navbar">
 
-        <h1>My Website</h1>
+        <a href="index.html" class="logo">
+            My Website
+        </a>
 
-        <nav>
+        <nav class="nav-links">
             <a href="index.html">Home</a>
-            <a href="blog.html">Blog</a>
-            <a href="login.html">Login</a>
+            <a href="blogs.html">Blogs</a>
+            <a href="categories.html">Categories</a>
             <a href="register.html">Register</a>
+            <a href="login.html" class="active">Login</a>
         </nav>
 
-    </header>
+    </div>
+</header>
 
-    <main>
 
-        <h2>Login</h2>
+<main class="page">
 
-        <form id="loginForm">
+    <div class="form-wrapper">
 
-            <label for="email">Email</label>
+        <div class="form-card">
 
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                required
-            >
+            <div class="page-header">
+                <h1>Login</h1>
+                <p>Login to your account to continue.</p>
+            </div>
 
-            <label for="password">Password</label>
 
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-                required
-            >
+            <form id="loginForm">
 
-            <button type="submit">
-                Login
-            </button>
+                <div class="form-table">
 
-        </form>
+                    <div class="form-row">
+                        <label for="email">Email</label>
 
-        <p>
-            Don't have an account?
-            <a href="register.html">Register</a>
-        </p>
+                        <div class="form-input">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+                        </div>
+                    </div>
 
-    </main>
 
-    <footer>
-        <hr>
-        <p>© 2026 My Website. All Rights Reserved.</p>
-    </footer>
+                    <div class="form-row">
+                        <label for="password">Password</label>
 
-    <script>
-        const loginForm = document.getElementById("loginForm");
+                        <div class="form-input">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+                        </div>
+                    </div>
 
-        loginForm.addEventListener("submit", function(event) {
 
-            event.preventDefault();
+                    <div class="form-row">
+                        <div></div>
 
-            alert("Login successful!");
+                        <div class="form-input">
+                            <button type="submit" class="btn">
+                                Login
+                            </button>
+                        </div>
+                    </div>
 
-            window.location.href = "dashboard.html";
+                </div>
 
+            </form>
+
+
+            <div id="loginMessage" class="form-message"></div>
+
+
+            <div class="form-footer">
+                <p>
+                    Don't have an account?
+                    <a href="register.html">Create an account</a>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <p>&copy; 2026 My Website. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script>
+const loginForm = document.getElementById("loginForm");
+const loginMessage = document.getElementById("loginMessage");
+
+loginForm.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    loginMessage.textContent = "";
+    loginMessage.className = "form-message";
+
+    try {
+
+        const response = await fetch("http://localhost:3000/login", {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                email,
+                password
+            })
         });
-    </script>
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Login failed");
+        }
+
+        localStorage.setItem("token", data.token);
+
+        if (data.user) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+        }
+
+        loginMessage.textContent = "Login successful.";
+        loginMessage.classList.add("success");
+
+        setTimeout(() => {
+            window.location.href = "dashboard.html";
+        }, 700);
+
+    } catch (error) {
+
+        console.error(error);
+
+        loginMessage.textContent =
+            error.message || "Unable to login.";
+
+        loginMessage.classList.add("error");
+    }
+
+});
+</script>
 
 </body>
-
 </html>

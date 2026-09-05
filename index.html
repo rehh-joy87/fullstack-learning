@@ -1,46 +1,1096 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="style.css">
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>BlogSpace</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
+
 <body>
 
-    <header>
-        <h1>My Website</h1>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="blog.html">Blog</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="login.html">Login</a>
-            <a href="register.html">Register</a>
-        </nav>
-    </header>
-     <main>
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
-        <h2>All Blog Posts</h2>
+<header class="site-header">
 
-        <div class="search-container">
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search blogs..."
+    <div class="navbar">
+
+        <a
+            href="index.html"
+            class="logo"
+        >
+            BlogSpace
+        </a>
+
+
+        <nav
+            class="nav-links"
+            id="mainNav"
+        >
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="blogs.html">
+                Blogs
+            </a>
+
+            <a href="categories.html">
+                Categories
+            </a>
+
+
+            <!-- =========================================
+                 LOGGED IN NAVIGATION
+            ========================================== -->
+
+            <span
+                id="loggedInLinks"
+                class="nav-auth-links"
             >
+
+                <a href="my-blogs.html">
+                    My Blogs
+                </a>
+
+                <a href="profile.html">
+                    Profile
+                </a>
+
+                <a
+                    href="#"
+                    id="logoutButton"
+                >
+                    Logout
+                </a>
+
+            </span>
+
+
+            <!-- =========================================
+                 LOGGED OUT NAVIGATION
+            ========================================== -->
+
+            <span
+                id="loggedOutLinks"
+                class="nav-auth-links"
+            >
+
+                <a href="register.html">
+                    Register
+                </a>
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </span>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+
+    <!-- =================================================
+         HERO
+    ================================================== -->
+
+    <section class="home-hero">
+
+        <div class="container">
+
+            <p class="eyebrow">
+                BLOGSPACE
+            </p>
+
+
+            <h1>
+                Ideas worth
+                <span>sharing.</span>
+            </h1>
+
+
+            <p>
+                Discover stories, ideas, experiences and
+                knowledge from the BlogSpace community.
+            </p>
+
+
+            <div class="home-actions">
+
+                <a
+                    href="blogs.html"
+                    class="btn"
+                >
+                    Explore Blogs
+                </a>
+
+
+                <!--
+                    Default is login.html.
+                    JavaScript changes it to blog.html
+                    when the user is logged in.
+                -->
+
+                <a
+                    href="login.html"
+                    class="btn"
+                    id="writeBlogButton"
+                >
+                    Write a Blog
+                </a>
+
+            </div>
+
         </div>
 
-        <div id="blogList"></div>
+    </section>
 
-    </main>
 
-    <footer>
-        <hr>
-        <p>© 2026 My Website. All Rights Reserved.</p>
-    </footer>
 
-    <script src="viewBlogs.js"></script>
+    <!-- =================================================
+         FEATURED BLOGS
+    ================================================== -->
+
+    <section class="section">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+                <h2>
+                    Featured Blogs
+                </h2>
+
+                <a href="blogs.html">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div
+                id="featuredBlogs"
+                class="blog-grid"
+            >
+
+                <!--
+                    JavaScript will replace this
+                    with real blogs.
+                -->
+
+                <div class="status-message">
+                    Loading featured blogs...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CATEGORIES
+    ================================================== -->
+
+    <section class="section">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+                <h2>
+                    Categories
+                </h2>
+
+                <a href="categories.html">
+                    Browse Categories
+                </a>
+
+            </div>
+
+
+            <div
+                id="categoryList"
+                class="category-grid"
+            >
+
+                <!--
+                    JavaScript will replace this
+                    with real categories.
+                -->
+
+                <div class="status-message">
+                    Loading categories...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         LATEST BLOGS
+    ================================================== -->
+
+    <section class="section">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+                <h2>
+                    Latest Blogs
+                </h2>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search blogs..."
+                >
+
+            </div>
+
+
+            <!-- BLOGS -->
+
+            <div
+                id="latestBlogs"
+                class="blog-grid"
+            >
+
+                <!--
+                    JavaScript will replace this
+                    with real blogs.
+                -->
+
+                <div class="status-message">
+                    Loading latest blogs...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         WRITE BLOG CTA
+    ================================================== -->
+
+    <section class="section">
+
+        <div class="container">
+
+
+            <div class="page-header">
+
+                <span class="eyebrow">
+                    HAVE A STORY?
+                </span>
+
+
+                <h1>
+                    Start writing.
+                </h1>
+
+
+                <p>
+                    Share your ideas with the BlogSpace
+                    community.
+                </p>
+
+            </div>
+
+
+            <!--
+                Default is login.html.
+                JavaScript changes it to blog.html
+                when logged in.
+            -->
+
+            <a
+                href="login.html"
+                id="bottomWriteButton"
+                class="btn"
+            >
+                Write a Blog
+            </a>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div class="footer-inner">
+
+        <span>
+            © 2026 BlogSpace
+        </span>
+
+        <span>
+            Stories. Ideas. Knowledge.
+        </span>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const featuredBlogs =
+    document.getElementById("featuredBlogs");
+
+
+const latestBlogs =
+    document.getElementById("latestBlogs");
+
+
+const categoryList =
+    document.getElementById("categoryList");
+
+
+const searchInput =
+    document.getElementById("searchInput");
+
+
+const loggedInLinks =
+    document.getElementById("loggedInLinks");
+
+
+const loggedOutLinks =
+    document.getElementById("loggedOutLinks");
+
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
+
+const writeBlogButton =
+    document.getElementById("writeBlogButton");
+
+
+const bottomWriteButton =
+    document.getElementById("bottomWriteButton");
+
+
+
+/* =====================================================
+   STORE ALL BLOGS
+===================================================== */
+
+let allBlogs = [];
+
+
+
+/* =====================================================
+   AUTHENTICATION / NAVIGATION
+===================================================== */
+
+function updateNavigation() {
+
+    const token =
+        localStorage.getItem("token");
+
+
+    if (token) {
+
+        /*
+         * USER IS LOGGED IN
+         */
+
+        loggedInLinks.style.display =
+            "contents";
+
+        loggedOutLinks.style.display =
+            "none";
+
+
+        /*
+         * Write Blog buttons
+         * go directly to blog.html
+         */
+
+        if (writeBlogButton) {
+
+            writeBlogButton.href =
+                "blog.html";
+
+        }
+
+
+        if (bottomWriteButton) {
+
+            bottomWriteButton.href =
+                "blog.html";
+
+        }
+
+    } else {
+
+        /*
+         * USER IS NOT LOGGED IN
+         */
+
+        loggedInLinks.style.display =
+            "none";
+
+        loggedOutLinks.style.display =
+            "contents";
+
+
+        /*
+         * Write Blog buttons
+         * go to login.html
+         */
+
+        if (writeBlogButton) {
+
+            writeBlogButton.href =
+                "login.html";
+
+        }
+
+
+        if (bottomWriteButton) {
+
+            bottomWriteButton.href =
+                "login.html";
+
+        }
+
+    }
+
+}
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+if (logoutButton) {
+
+    logoutButton.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+
+            localStorage.removeItem("token");
+
+            localStorage.removeItem("user");
+
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   VIEW BLOG
+===================================================== */
+
+function viewBlog(id) {
+
+    window.location.href =
+        `blog-details.html?id=${id}`;
+
+}
+
+
+
+/* =====================================================
+   CREATE PUBLIC BLOG CARD
+===================================================== */
+
+function createBlogCard(blog) {
+
+
+    const card =
+        document.createElement("article");
+
+
+    card.className =
+        "blog-card";
+
+
+    const category =
+        blog.category || "General";
+
+
+    const title =
+        blog.title || "Untitled Blog";
+
+
+    const content =
+        blog.content || "";
+
+
+    /*
+     * Keep the home page clean by showing
+     * only a short preview.
+     */
+
+    const shortContent =
+        content.length > 160
+            ? content.substring(0, 160) + "..."
+            : content;
+
+
+    card.innerHTML = `
+
+        <div class="blog-card-content">
+
+
+            <span class="blog-category">
+                ${category}
+            </span>
+
+
+            <h3>
+                ${title}
+            </h3>
+
+
+            <p>
+                ${shortContent}
+            </p>
+
+
+            <button
+                type="button"
+                class="btn"
+                onclick="viewBlog('${blog._id}')"
+            >
+                Read Story
+            </button>
+
+
+        </div>
+
+    `;
+
+
+    return card;
+
+}
+
+
+
+/* =====================================================
+   DISPLAY FEATURED BLOGS
+===================================================== */
+
+function displayFeaturedBlogs(blogs) {
+
+
+    featuredBlogs.innerHTML = "";
+
+
+    /*
+     * Show first 3 blogs as featured.
+     */
+
+    const featured =
+        blogs.slice(0, 3);
+
+
+    if (featured.length === 0) {
+
+        featuredBlogs.innerHTML = `
+
+            <div class="status-message">
+
+                No blogs available yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    featured.forEach(function(blog) {
+
+        const card =
+            createBlogCard(blog);
+
+
+        featuredBlogs.appendChild(card);
+
+    });
+
+}
+
+
+
+/* =====================================================
+   DISPLAY LATEST BLOGS
+===================================================== */
+
+function displayLatestBlogs(
+    blogs,
+    searchTerm = ""
+) {
+
+
+    latestBlogs.innerHTML = "";
+
+
+    const search =
+        searchTerm
+            .toLowerCase()
+            .trim();
+
+
+    const filtered =
+        blogs.filter(function(blog) {
+
+
+            const title =
+                (blog.title || "")
+                .toLowerCase();
+
+
+            const content =
+                (blog.content || "")
+                .toLowerCase();
+
+
+            const category =
+                (blog.category || "")
+                .toLowerCase();
+
+
+            return (
+
+                title.includes(search) ||
+
+                content.includes(search) ||
+
+                category.includes(search)
+
+            );
+
+        });
+
+
+
+    if (filtered.length === 0) {
+
+        latestBlogs.innerHTML = `
+
+            <div class="status-message">
+
+                No blogs found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    filtered.forEach(function(blog) {
+
+
+        const card =
+            createBlogCard(blog);
+
+
+        latestBlogs.appendChild(card);
+
+    });
+
+}
+
+
+
+/* =====================================================
+   DISPLAY CATEGORIES
+===================================================== */
+
+function displayCategories(blogs) {
+
+
+    categoryList.innerHTML = "";
+
+
+    const categories = {};
+
+
+
+    blogs.forEach(function(blog) {
+
+
+        const category =
+            blog.category || "General";
+
+
+        if (!categories[category]) {
+
+            categories[category] = 0;
+
+        }
+
+
+        categories[category]++;
+
+    });
+
+
+
+    const categoryNames =
+        Object.keys(categories);
+
+
+
+    if (categoryNames.length === 0) {
+
+        categoryList.innerHTML = `
+
+            <div class="status-message">
+
+                No categories available.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    categoryNames.forEach(function(category) {
+
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "category-card";
+
+
+        card.innerHTML = `
+
+            <h3>
+                ${category}
+            </h3>
+
+
+            <p>
+
+                ${categories[category]}
+
+                ${
+                    categories[category] === 1
+                        ? " Blog"
+                        : " Blogs"
+                }
+
+            </p>
+
+
+            <button
+                type="button"
+                class="btn"
+                onclick="filterCategory('${category}')"
+            >
+                Explore
+            </button>
+
+        `;
+
+
+        categoryList.appendChild(card);
+
+    });
+
+}
+
+
+
+/* =====================================================
+   FILTER BY CATEGORY
+===================================================== */
+
+function filterCategory(category) {
+
+
+    const filtered =
+        allBlogs.filter(function(blog) {
+
+
+            return (
+                (blog.category || "General")
+                === category
+            );
+
+        });
+
+
+    displayLatestBlogs(filtered);
+
+
+    latestBlogs.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/* =====================================================
+   LOAD PUBLIC BLOGS
+===================================================== */
+
+async function loadBlogs() {
+
+
+    try {
+
+
+        /*
+         * IMPORTANT
+         *
+         * This is the PUBLIC API.
+         *
+         * No token is required.
+         *
+         * Everyone can see these blogs.
+         */
+
+        const response =
+            await fetch(
+                "http://localhost:3000/blogs"
+            );
+
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load blogs"
+            );
+
+        }
+
+
+
+        const blogs =
+            await response.json();
+
+
+
+        /*
+         * Save all blogs for search
+         * and category filtering.
+         */
+
+        allBlogs = blogs;
+
+
+
+        /*
+         * Display real blogs.
+         */
+
+        displayFeaturedBlogs(
+            blogs
+        );
+
+
+        displayLatestBlogs(
+            blogs
+        );
+
+
+        displayCategories(
+            blogs
+        );
+
+
+    } catch (error) {
+
+
+        console.error(
+            "Public blog loading error:",
+            error
+        );
+
+
+
+        featuredBlogs.innerHTML = `
+
+            <div class="status-message">
+
+                Unable to load blogs.
+
+                <br>
+
+                Please make sure the backend
+                server is running.
+
+            </div>
+
+        `;
+
+
+
+        latestBlogs.innerHTML = `
+
+            <div class="status-message">
+
+                Unable to load blogs.
+
+                <br>
+
+                Please make sure the backend
+                server is running.
+
+            </div>
+
+        `;
+
+
+
+        categoryList.innerHTML = `
+
+            <div class="status-message">
+
+                Unable to load categories.
+
+                <br>
+
+                Please make sure the backend
+                server is running.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+if (searchInput) {
+
+
+    searchInput.addEventListener(
+        "input",
+        function() {
+
+
+            displayLatestBlogs(
+                allBlogs,
+                searchInput.value
+            );
+
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   INITIALIZE PAGE
+===================================================== */
+
+updateNavigation();
+
+loadBlogs();
+
+
+</script>
+
 
 </body>
 
