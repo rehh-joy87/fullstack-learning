@@ -102,3 +102,24 @@ INKORA/
 │   └── auth.js
 │
 └── uploads/
+
+
+🔐 Authentication
+
+INKORA uses JSON Web Tokens (JWT) for authentication.
+
+After login, the JWT token is stored in the browser and sent with protected API requests.
+
+Protected functionality includes:
+
+Creating blogs
+Editing blogs
+Deleting blogs
+Viewing My Blogs
+Viewing profile information
+Dashboard access
+⚙️ Installation
+
+Clone the repository:
+
+git clone https://github.com/rehh-joy87/fullstack-learning.git
