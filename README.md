@@ -1,204 +1,104 @@
-# Full Stack Web Development Internship 🚀
+# INKORA — Stories. Ideas. Knowledge.
 
-This repository contains my work and progress throughout my **Full Stack Web Development Internship at Codomax Digital Solutions**.
+INKORA is a full-stack blogging platform where users can create, publish, explore, edit, and manage blog posts across different categories.
 
-During this internship, I am developing a full-stack Blog Application while learning and implementing frontend development, backend APIs, database integration, CRUD operations, authentication, dashboards, and deployment.
+## 🌐 Project Overview
 
----
+INKORA provides a simple and clean platform for sharing stories, ideas, knowledge, and experiences.
 
-# 👩‍💻 Internship Details
+Users can browse blogs publicly and registered users can create and manage their own blog posts.
 
-**Internship:** Full Stack Web Development  
-**Organization:** Codomax Digital Solutions  
-**Internship Project:** Full Stack Blog Application  
-**Repository:** https://github.com/rehh-joy87/fullstack-learning
+## ✨ Features
 
----
+- User registration
+- Secure user login
+- JWT authentication
+- Protected user pages
+- Create blog posts
+- Upload blog images
+- Edit blog posts
+- Delete blog posts
+- View all public blogs
+- View individual blog details
+- Search blogs
+- Filter blogs by category
+- Personal My Blogs page
+- User dashboard
+- User profile
+- Responsive design
+- Mobile-friendly interface
+- Logout functionality
 
-# 🛠️ Technologies Used
+## 📚 Blog Categories
+
+INKORA currently supports:
+
+- Technical
+- Food
+- Travel
+- Interior
+- Craft
+- Music
+- Nature
+- Dresses
+- Climate
+
+## 🛠️ Technologies Used
 
 ### Frontend
+
 - HTML5
 - CSS3
 - JavaScript
+- Responsive Web Design
 
 ### Backend
+
 - Node.js
 - Express.js
-
-### Database
 - MongoDB
 - Mongoose
+- JWT
+- bcryptjs
+- Multer
+- CORS
 
-### Authentication
-- JWT (JSON Web Token)
-
-### Development Tools
-- Visual Studio Code
-- Git
-- GitHub
-- Live Server
-
----
-
-# 📚 Internship Modules
-
-## Module 1 – Frontend Development
-
-**Day 1 – Day 4**
-
-### Status: ✅ Completed
-
-### Objectives
-
-- Set up the local development environment.
-- Learn the basics of HTML, CSS, and JavaScript.
-- Design a responsive Blog Application interface.
-- Create the required application pages.
-
-### Pages Created
-
-- Home
-- Login
-- Register
-- Dashboard
-- Create Blog
-
-### Technologies
-
-- HTML
-- CSS
-- JavaScript
-
----
-
-# Module 2 – Backend Development
-
-**Day 5 – Day 8**
-
-### Status: ✅ Completed
-
-### Objectives
-
-- Set up a backend server using Node.js and Express.js.
-- Create REST APIs for the application.
-- Build APIs for:
-  - User Registration
-  - User Login
-  - Create Blog
-- Connect the frontend with the backend APIs.
-
-### Technologies
-
-- Node.js
-- Express.js
-- REST API
-- JavaScript
-
----
-
-# Module 3 – Database Integration
-
-**Day 9 – Day 12**
-
-### Status: ✅ Completed
-
-### Objectives
-
-- Connect the application with MongoDB.
-- Store user credentials securely.
-- Store blog posts in the database.
-- Retrieve and display all blogs.
-- Create a page to view individual blog details.
-
-### Technologies
-
-- MongoDB
-- Mongoose
-- Node.js
-- Express.js
-
-### Database Features
-
-- User data storage
-- Blog data storage
-- Blog retrieval
-- Individual blog details
-
----
-
-# Module 4 – CRUD Operations
-
-**Day 13 – Day 16**
-
-### Status: ✅ Completed
-
-### Objectives
-
-Implement complete CRUD functionality for the Blog Application.
-
-### CRUD Features
-
-| Operation | Feature | Status |
-|---|---|---|
-| Create | Create a new blog | ✅ |
-| Read | View blogs | ✅ |
-| Update | Edit a blog | ✅ |
-| Delete | Delete a blog | ✅ |
-
-### Additional Features
-
-- Blog search
-- Blog categories
-- Blog filtering
-- Blog details
-
----
-
-# Module 5 – Authentication & Dashboard
-
-**Day 17 – Day 20**
-
-### Status: ✅ Completed
-
-### Objectives
-
-- Implement secure JWT user authentication or session management.
-- Protect private dashboard routes.
-- Display only the logged-in user's blogs in their dashboard.
-- Add user profile functionality.
-- Add logout functionality.
-
-### Authentication Features
-
-- User Registration
-- User Login
-- JWT Authentication
-- Protected Routes
-- User Logout
-- User Profile
-
-### Dashboard Features
-
-- Dashboard
-- My Blogs
-- Write Blog
-- Edit Blog
-- Delete Blog
-- Profile
-- Logout
-
-### User-Specific Blog Management
-
-Authenticated users can manage their own blogs.
+## 📁 Project Structure
 
 ```text
-Login
-   ↓
-JWT Authentication
-   ↓
-Protected Dashboard
-   ↓
-My Blogs
-   ↓
-Create / Edit / Delete
+INKORA/
+│
+├── index.html
+├── blogs.html
+├── blog-details.html
+├── categories.html
+├── register.html
+├── login.html
+├── blog.html
+├── my-blogs.html
+├── edit-blog.html
+├── dashboard.html
+├── profile.html
+│
+├── style.css
+├── config.js
+├── script.js
+├── login.js
+├── register.js
+├── dashboard.js
+├── editBlog.js
+├── blogDetails.js
+├── categoryImages.js
+│
+├── server.js
+├── package.json
+├── package-lock.json
+│
+├── models/
+│   ├── User.js
+│   └── Blog.js
+│
+├── middleware/
+│   └── auth.js
+│
+└── uploads/
