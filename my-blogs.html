@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>My Blogs | BlogSpace</title>
+    <title>My Blogs | INKORA</title>
 
     <link
         rel="stylesheet"
@@ -21,12 +21,11 @@
 
         .myblogs-page {
             min-height: 100vh;
-            background: #0b0d10;
         }
 
         .private-header {
-            border-bottom: 1px solid #292f36;
-            background: #0b0d10;
+            border-bottom: 1px solid #dfe6e1;
+            background: #fffdf8;
         }
 
         .private-navbar {
@@ -41,14 +40,15 @@
         }
 
         .private-logo {
-            color: #f1f1f1;
+            color: #20242a;
             text-decoration: none;
             font-size: 20px;
             font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         .private-logo span {
-            color: #d6a85f;
+            color: #6b9278;
         }
 
         .private-nav {
@@ -60,14 +60,14 @@
 
         .private-nav a {
             padding: 8px 10px;
-            color: #8f969f;
+            color: #66716b;
             text-decoration: none;
             font-size: 13px;
         }
 
         .private-nav a:hover,
         .private-nav a.active {
-            color: #d6a85f;
+            color: #4f765e;
         }
 
         .private-main {
@@ -81,12 +81,12 @@
 
         .private-heading {
             padding-bottom: 22px;
-            border-bottom: 1px solid #292f36;
+            border-bottom: 1px solid #dfe6e1;
             margin-bottom: 25px;
         }
 
         .private-heading-label {
-            color: #d6a85f;
+            color: #5f876d;
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 1.5px;
@@ -94,13 +94,13 @@
 
         .private-heading h1 {
             margin: 8px 0;
-            color: #f1f1f1;
+            color: #20242a;
             font-size: 38px;
         }
 
         .private-heading p {
             margin: 0;
-            color: #8f969f;
+            color: #718078;
             font-size: 14px;
         }
 
@@ -111,38 +111,65 @@
         .write-button {
             display: inline-block;
             padding: 11px 16px;
-            border: 1px solid #d6a85f;
-            color: #d6a85f;
-            background: #11151a;
+            border: 1px solid #6b9278;
+            color: #4f765e;
+            background: #ffffff;
             text-decoration: none;
             font-size: 13px;
             font-weight: 600;
         }
 
         .write-button:hover {
-            border-color: #f1f1f1;
-            color: #f1f1f1;
+            background: #f1f7f2;
+            border-color: #4f765e;
         }
 
         .myblogs-grid {
             display: grid;
-            grid-template-columns:
-                repeat(3, minmax(0, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
         }
 
         .myblog-card {
-            min-height: 300px;
-            padding: 22px;
-            background: #11151a;
-            border: 1px solid #292f36;
+            min-height: 390px;
+            background: #ffffff;
+            border: 1px solid #dfe6e1;
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .myblog-image {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+            background: #eef3ef;
+            border-bottom: 1px solid #dfe6e1;
+        }
+
+        .myblog-no-image {
+            width: 100%;
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f2;
+            color: #8a968f;
+            font-size: 13px;
+            border-bottom: 1px solid #dfe6e1;
+        }
+
+        .myblog-card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
 
         .myblog-category {
-            color: #d6a85f;
+            color: #5f876d;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
@@ -150,14 +177,14 @@
         }
 
         .myblog-card h2 {
-            margin: 10px 0;
-            color: #f1f1f1;
+            margin: 9px 0;
+            color: #20242a;
             font-size: 20px;
             line-height: 1.35;
         }
 
         .myblog-card p {
-            color: #8f969f;
+            color: #68736d;
             font-size: 14px;
             line-height: 1.7;
             margin: 0 0 15px;
@@ -166,7 +193,7 @@
         .myblog-date {
             margin-top: auto;
             margin-bottom: 15px;
-            color: #686f78;
+            color: #89938e;
             font-size: 12px;
         }
 
@@ -178,30 +205,30 @@
 
         .small-button {
             padding: 8px 12px;
-            border: 1px solid #292f36;
-            background: #0d1014;
-            color: #d6a85f;
+            border: 1px solid #d3ddd6;
+            background: #f8faf8;
+            color: #4f765e;
             text-decoration: none;
             font-size: 12px;
             cursor: pointer;
         }
 
         .small-button:hover {
-            border-color: #d6a85f;
-            color: #f1f1f1;
+            border-color: #6b9278;
+            background: #f1f7f2;
         }
 
         .delete-button {
-            color: #c2c5c9;
+            color: #8a5c5c;
         }
 
         .status-box {
             grid-column: 1 / -1;
             padding: 35px 20px;
             text-align: center;
-            background: #11151a;
-            border: 1px solid #292f36;
-            color: #8f969f;
+            background: #ffffff;
+            border: 1px solid #dfe6e1;
+            color: #718078;
             font-size: 14px;
         }
 
@@ -241,9 +268,7 @@
 
 <div class="myblogs-page">
 
-    <!-- =================================================
-         NAVIGATION
-    ================================================== -->
+    <!-- NAVIGATION -->
 
     <header class="private-header">
 
@@ -253,9 +278,8 @@
                 href="index.html"
                 class="private-logo"
             >
-                <span>●</span> BlogSpace
+                <span>●</span> INKORA
             </a>
-
 
             <nav class="private-nav">
 
@@ -296,9 +320,7 @@
     </header>
 
 
-    <!-- =================================================
-         MAIN
-    ================================================== -->
+    <!-- MAIN -->
 
     <main class="private-main">
 
@@ -351,29 +373,23 @@
 </div>
 
 
+<script src="config.js"></script>
+
 <script>
 
-    const API_URL =
-        "http://localhost:3000";
-
-
-    const token =
-        localStorage.getItem("token");
-
+    const token = sessionStorage.getItem("token");
 
     if (!token) {
-
-        window.location.href =
-            "login.html";
+        window.location.href = "login.html";
     }
 
 
     function authHeaders() {
 
         return {
-            "Authorization":
-                `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
         };
+
     }
 
 
@@ -386,6 +402,7 @@
             value ?? "";
 
         return div.innerHTML;
+
     }
 
 
@@ -410,16 +427,36 @@
                 day: "numeric"
             }
         );
+
+    }
+
+
+    function getImageUrl(imageUrl) {
+
+        if (!imageUrl) {
+            return "";
+        }
+
+        if (
+            imageUrl.startsWith("http://") ||
+            imageUrl.startsWith("https://")
+        ) {
+            return imageUrl;
+        }
+
+        return `${API_BASE_URL}${imageUrl}`;
+
     }
 
 
     function logout() {
 
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
 
         window.location.href =
             "index.html";
+
     }
 
 
@@ -432,6 +469,7 @@
                 event.preventDefault();
 
                 logout();
+
             }
         );
 
@@ -439,16 +477,14 @@
     async function loadMyBlogs() {
 
         const blogList =
-            document.getElementById(
-                "blogList"
-            );
+            document.getElementById("blogList");
 
 
         try {
 
             const response =
                 await fetch(
-                    `${API_URL}/my-blogs`,
+                    `${API_BASE_URL}/my-blogs`,
                     {
                         headers:
                             authHeaders()
@@ -464,14 +500,16 @@
                 logout();
 
                 return;
+
             }
 
 
             if (!response.ok) {
 
                 throw new Error(
-                    "Failed to load blogs"
+                    "Failed to load blogs."
                 );
+
             }
 
 
@@ -485,6 +523,7 @@
             if (!blogs.length) {
 
                 blogList.innerHTML = `
+
                     <div class="status-box">
 
                         <strong>
@@ -505,18 +544,18 @@
                         </a>
 
                     </div>
+
                 `;
 
                 return;
+
             }
 
 
             blogs.forEach(function(blog) {
 
                 const card =
-                    document.createElement(
-                        "article"
-                    );
+                    document.createElement("article");
 
                 card.className =
                     "myblog-card";
@@ -543,49 +582,88 @@
                         : content;
 
 
+                const imageUrl =
+                    getImageUrl(blog.imageUrl);
+
+
+                let imageHTML = "";
+
+                if (imageUrl) {
+
+                    imageHTML = `
+
+                        <img
+                            src="${escapeHtml(imageUrl)}"
+                            alt="${escapeHtml(title)}"
+                            class="myblog-image"
+                            loading="lazy"
+                        >
+
+                    `;
+
+                } else {
+
+                    imageHTML = `
+
+                        <div class="myblog-no-image">
+                            No image uploaded
+                        </div>
+
+                    `;
+
+                }
+
+
                 card.innerHTML = `
 
-                    <span class="myblog-category">
-                        ${escapeHtml(category)}
-                    </span>
+                    ${imageHTML}
 
-                    <h2>
-                        ${escapeHtml(title)}
-                    </h2>
+                    <div class="myblog-card-body">
 
-                    <p>
-                        ${escapeHtml(shortContent)}
-                    </p>
+                        <span class="myblog-category">
+                            ${escapeHtml(category)}
+                        </span>
 
-                    <div class="myblog-date">
-                        ${formatDate(blog.createdAt)}
+                        <h2>
+                            ${escapeHtml(title)}
+                        </h2>
+
+                        <p>
+                            ${escapeHtml(shortContent)}
+                        </p>
+
+                        <div class="myblog-date">
+                            ${formatDate(blog.createdAt)}
+                        </div>
+
+                        <div class="myblog-actions">
+
+                            <a
+                                href="blog-details.html?id=${encodeURIComponent(blog._id)}"
+                                class="small-button"
+                            >
+                                View
+                            </a>
+
+                            <a
+                                href="edit-blog.html?id=${encodeURIComponent(blog._id)}"
+                                class="small-button"
+                            >
+                                Edit
+                            </a>
+
+                            <button
+                                type="button"
+                                class="small-button delete-button"
+                                data-id="${escapeHtml(blog._id)}"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
                     </div>
 
-                    <div class="myblog-actions">
-
-                        <a
-                            href="blog-details.html?id=${encodeURIComponent(blog._id)}"
-                            class="small-button"
-                        >
-                            View
-                        </a>
-
-                        <a
-                            href="edit-blog.html?id=${encodeURIComponent(blog._id)}"
-                            class="small-button"
-                        >
-                            Edit
-                        </a>
-
-                        <button
-                            type="button"
-                            class="small-button delete-button"
-                            data-id="${blog._id}"
-                        >
-                            Delete
-                        </button>
-
-                    </div>
                 `;
 
 
@@ -620,13 +698,22 @@
 
 
             blogList.innerHTML = `
+
                 <div class="status-box">
+
                     Unable to load your blogs.
+
                     <br>
-                    Please make sure the backend server is running.
+
+                    Please make sure the backend
+                    server is running.
+
                 </div>
+
             `;
+
         }
+
     }
 
 
@@ -647,7 +734,7 @@
 
             const response =
                 await fetch(
-                    `${API_URL}/blogs/${id}`,
+                    `${API_BASE_URL}/blogs/${encodeURIComponent(id)}`,
                     {
                         method: "DELETE",
                         headers:
@@ -664,6 +751,7 @@
                 logout();
 
                 return;
+
             }
 
 
@@ -675,8 +763,9 @@
 
                 throw new Error(
                     data.message ||
-                    "Failed to delete blog"
+                    "Failed to delete blog."
                 );
+
             }
 
 
@@ -699,7 +788,9 @@
                 error.message ||
                 "Unable to delete blog."
             );
+
         }
+
     }
 
 
@@ -708,4 +799,5 @@
 </script>
 
 </body>
+
 </html>

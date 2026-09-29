@@ -1,29 +1,459 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+<title>Blog Details | INKORA</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 
-    <title>Blog - BlogSpace</title>
+<style>
 
-    <link rel="stylesheet" href="style.css">
+    /* =========================================
+       BLOG DETAILS PAGE
+    ========================================= */
+
+    .blog-details-page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 55px 20px 80px;
+    }
+
+
+    /* =========================================
+       ARTICLE
+    ========================================= */
+
+    .article-card {
+        background: #ffffff;
+        border: 1px solid #e1e7e3;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+
+    /* =========================================
+       ARTICLE HEADER
+    ========================================= */
+
+    .article-header {
+        padding: 40px 45px 30px;
+    }
+
+
+    .article-category {
+        display: inline-block;
+
+        margin-bottom: 16px;
+        padding: 6px 12px;
+
+        background: #edf4ef;
+        border: 1px solid #d4e2d8;
+        border-radius: 20px;
+
+        color: #55715f;
+
+        font-size: 12px;
+        font-weight: 600;
+
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
+
+
+    .article-title {
+        margin: 0 0 15px;
+
+        color: #20242a;
+
+        font-size: 42px;
+        line-height: 1.2;
+        font-weight: 700;
+    }
+
+
+    .article-meta {
+        color: #7a847e;
+        font-size: 14px;
+    }
+
+
+    /* =========================================
+       COVER IMAGE
+    ========================================= */
+
+    .article-cover {
+        width: 100%;
+        max-height: 500px;
+
+        display: block;
+
+        object-fit: cover;
+
+        border-top: 1px solid #e1e7e3;
+        border-bottom: 1px solid #e1e7e3;
+
+        background: #eef3ef;
+    }
+
+
+    .article-no-image {
+        min-height: 220px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #f3f7f4;
+
+        border-top: 1px solid #e1e7e3;
+        border-bottom: 1px solid #e1e7e3;
+
+        color: #89958e;
+        font-size: 14px;
+    }
+
+
+    /* =========================================
+       ARTICLE BODY
+    ========================================= */
+
+    .article-body {
+        padding: 35px 45px 40px;
+    }
+
+
+    .article-content {
+        color: #343a40;
+
+        font-size: 17px;
+        line-height: 1.9;
+
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+
+    /* =========================================
+       ARTICLE ACTIONS
+    ========================================= */
+
+    .article-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        margin-top: 35px;
+        padding-top: 25px;
+
+        border-top: 1px solid #e1e6e3;
+    }
+
+
+    .article-actions a,
+    .article-actions button {
+        padding: 9px 16px;
+
+        border: 1px solid #cfdad3;
+        border-radius: 7px;
+
+        background: #f7faf8;
+
+        color: #50685a;
+
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+
+        cursor: pointer;
+    }
+
+
+    .article-actions a:hover,
+    .article-actions button:hover {
+        background: #edf4ef;
+        border-color: #b9cbbf;
+    }
+
+
+    /* =========================================
+       LOADING / ERROR MESSAGE
+    ========================================= */
+
+    .blog-message {
+        padding: 50px 25px;
+
+        text-align: center;
+
+        background: #ffffff;
+        border: 1px solid #e1e7e3;
+        border-radius: 12px;
+
+        color: #68736d;
+        font-size: 15px;
+    }
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    .site-header {
+        width: 100%;
+
+        background: rgba(255, 255, 255, 0.97);
+
+        border-bottom: 1px solid #dfe5e1;
+    }
+
+
+    .navbar {
+        max-width: 1200px;
+        min-height: 70px;
+
+        margin: 0 auto;
+        padding: 0 25px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 30px;
+    }
+
+
+    .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        flex-shrink: 0;
+
+        color: #20242a;
+
+        font-size: 24px;
+        font-weight: 700;
+
+        letter-spacing: 1px;
+
+        text-decoration: none;
+    }
+
+
+    .logo::before {
+        content: "●";
+
+        color: #6b9278;
+        font-size: 12px;
+    }
+
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        gap: 26px;
+
+        flex: 1;
+    }
+
+
+    .nav-links > a,
+    .nav-auth-links > a {
+        color: #3e4642;
+
+        text-decoration: none;
+
+        font-size: 14px;
+        font-weight: 500;
+
+        white-space: nowrap;
+    }
+
+
+    .nav-links > a:hover,
+    .nav-auth-links > a:hover {
+        color: #5f8069;
+    }
+
+
+    .nav-auth-links {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+    }
+
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    .site-footer {
+        margin-top: 30px;
+
+        background: #ffffff;
+
+        border-top: 1px solid #dfe5e1;
+    }
+
+
+    .footer-inner {
+        max-width: 1200px;
+
+        margin: 0 auto;
+        padding: 25px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        color: #737d77;
+
+        font-size: 13px;
+    }
+
+
+    /* =========================================
+       TABLET
+    ========================================= */
+
+    @media (max-width: 800px) {
+
+        .navbar {
+            flex-direction: column;
+
+            justify-content: center;
+
+            padding: 18px 20px;
+        }
+
+
+        .nav-links {
+            width: 100%;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 14px 20px;
+        }
+
+
+        .nav-auth-links {
+            gap: 14px 20px;
+        }
+
+
+        .article-header {
+            padding: 30px 25px 25px;
+        }
+
+
+        .article-body {
+            padding: 30px 25px 35px;
+        }
+
+
+        .article-title {
+            font-size: 32px;
+        }
+
+
+        .article-content {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+
+        .footer-inner {
+            flex-direction: column;
+            gap: 8px;
+
+            text-align: center;
+        }
+
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 550px) {
+
+        .blog-details-page {
+            padding: 35px 15px 60px;
+        }
+
+
+        .article-card {
+            border-radius: 10px;
+        }
+
+
+        .article-header {
+            padding: 25px 20px 22px;
+        }
+
+
+        .article-title {
+            font-size: 28px;
+        }
+
+
+        .article-meta {
+            font-size: 13px;
+        }
+
+
+        .article-body {
+            padding: 25px 20px 30px;
+        }
+
+
+        .article-content {
+            font-size: 15.5px;
+            line-height: 1.75;
+        }
+
+
+        .article-cover {
+            max-height: 350px;
+        }
+
+
+        .article-actions {
+            margin-top: 30px;
+        }
+
+    }
+
+</style>
+
 
 </head>
 
 <body>
 
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
 <header class="site-header">
 
     <nav class="navbar">
 
-        <a href="index.html" class="logo">
-            BlogSpace
+        <a href="index.html"
+           class="logo">
+
+            INKORA
+
         </a>
+
 
         <div class="nav-links">
 
@@ -39,7 +469,10 @@
                 Categories
             </a>
 
-            <span id="authLinks"></span>
+
+            <span id="authLinks"
+                  class="nav-auth-links">
+            </span>
 
         </div>
 
@@ -48,33 +481,43 @@
 </header>
 
 
-<main class="page">
 
-    <article class="article">
+<!-- =========================================
+     MAIN
+========================================= -->
 
-        <div id="articleContainer">
+<main class="blog-details-page">
 
-            <div class="status-message">
-                Loading article...
-            </div>
+
+    <div id="blogContainer">
+
+        <div class="blog-message">
+
+            Loading blog...
 
         </div>
 
-    </article>
+    </div>
+
 
 </main>
 
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
 
 <footer class="site-footer">
 
     <div class="footer-inner">
 
         <span>
-            © 2026 BlogSpace
+            © 2026 INKORA
         </span>
 
         <span>
-            BlogSpace
+            Stories. Ideas. Knowledge.
         </span>
 
     </div>
@@ -82,199 +525,16 @@
 </footer>
 
 
-<script>
 
-const API_URL = "http://localhost:3000";
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
 
+<script src="config.js"></script>
 
-// ---------------------------------------------------------
-// NAV
-// ---------------------------------------------------------
+<script src="blogDetails.js"></script>
 
-function setupNavigation() {
-
-    const authLinks =
-        document.getElementById("authLinks");
-
-    if (localStorage.getItem("token")) {
-
-        authLinks.innerHTML = `
-
-            <a href="my-blogs.html">
-                My Blogs
-            </a>
-
-            <a href="dashboard.html">
-                Dashboard
-            </a>
-
-            <a href="profile.html">
-                Profile
-            </a>
-
-            <a href="blog.html" class="nav-button">
-                Write a Blog
-            </a>
-
-            <a href="#" onclick="logout()">
-                Logout
-            </a>
-
-        `;
-
-    } else {
-
-        authLinks.innerHTML = `
-
-            <a href="register.html">
-                Register
-            </a>
-
-            <a href="login.html">
-                Login
-            </a>
-
-        `;
-    }
-}
-
-
-// ---------------------------------------------------------
-// LOAD BLOG
-// ---------------------------------------------------------
-
-async function loadBlog() {
-
-    const params =
-        new URLSearchParams(window.location.search);
-
-    const id =
-        params.get("id");
-
-    const container =
-        document.getElementById("articleContainer");
-
-    if (!id) {
-
-        container.innerHTML =
-            `<div class="status-message">
-                Blog ID is missing.
-             </div>`;
-
-        return;
-    }
-
-    try {
-
-        const response =
-            await fetch(`${API_URL}/blogs/${id}`);
-
-        const data =
-            await response.json();
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.message || "Blog not found"
-            );
-        }
-
-        const date =
-            data.createdAt
-                ? new Date(data.createdAt)
-                    .toLocaleDateString()
-                : "";
-
-        container.innerHTML = `
-
-            <header class="article-header">
-
-                <div class="article-category">
-                    ${escapeHTML(
-                        data.category || "General"
-                    )}
-                </div>
-
-                <h1>
-                    ${escapeHTML(
-                        data.title || "Untitled"
-                    )}
-                </h1>
-
-                <div class="article-meta">
-                    ${date}
-                </div>
-
-            </header>
-
-            <div class="article-content">
-                ${escapeHTML(
-                    data.content || ""
-                )}
-            </div>
-
-            <div class="article-actions">
-
-                <a
-                    href="blogs.html"
-                    class="btn btn-secondary">
-                    Back to Blogs
-                </a>
-
-                <a
-                    href="index.html"
-                    class="btn btn-secondary">
-                    Home
-                </a>
-
-            </div>
-
-        `;
-
-    } catch (error) {
-
-        console.error(error);
-
-        container.innerHTML =
-            `<div class="status-message">
-                Unable to load this blog.
-             </div>`;
-    }
-}
-
-
-// ---------------------------------------------------------
-// LOGOUT
-// ---------------------------------------------------------
-
-function logout() {
-
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-
-    window.location.href = "index.html";
-}
-
-
-// ---------------------------------------------------------
-// ESCAPE
-// ---------------------------------------------------------
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-setupNavigation();
-loadBlog();
-
-</script>
 
 </body>
+
 </html>

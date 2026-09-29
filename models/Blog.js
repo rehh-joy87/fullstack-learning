@@ -15,7 +15,23 @@ const blogSchema = new mongoose.Schema(
 
         category: {
             type: String,
-            default: "Technology"
+            required: true,
+            enum: [
+                "Technical",
+                "Food",
+                "Travel",
+                "Interior",
+                "Craft",
+                "Music",
+                "Nature",
+                "Dresses",
+                "Climate"
+            ]
+        },
+
+        imageUrl: {
+            type: String,
+            default: ""
         },
 
         userId: {

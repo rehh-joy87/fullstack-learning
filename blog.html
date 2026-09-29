@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Write a Blog | BlogSpace</title>
+    <title>Write a Blog | INKORA</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -21,18 +21,19 @@
 
     <!-- =====================================================
          NAVBAR
-         ===================================================== -->
+    ===================================================== -->
 
-    <header class="navbar">
+    <header class="site-header">
 
-        <div class="navbar-inner">
+        <div class="navbar">
 
             <a
                 href="index.html"
                 class="logo"
             >
-                BlogSpace
+                INKORA
             </a>
+
 
             <nav class="nav-links">
 
@@ -52,17 +53,14 @@
                     My Blogs
                 </a>
 
-                <a href="dashboard.html">
-                    Dashboard
-                </a>
-
                 <a href="profile.html">
                     Profile
                 </a>
 
                 <a
                     href="#"
-                    onclick="logout()"
+                    id="logoutButton"
+                    class="nav-button"
                 >
                     Logout
                 </a>
@@ -76,32 +74,51 @@
 
     <!-- =====================================================
          CREATE BLOG
-         ===================================================== -->
+    ===================================================== -->
 
-    <main class="section">
+    <main class="page">
 
-        <div class="container">
+        <div class="form-wrapper">
 
-            <div class="auth-card"
-                 style="max-width: 800px; margin: auto;">
+            <div class="form-card">
 
-                <h1>
-                    Write a Blog
-                </h1>
 
-                <p>
-                    Share your thoughts, knowledge and experiences.
-                </p>
+                <!-- PAGE HEADING -->
 
+                <div class="page-header">
+
+                    <span class="eyebrow">
+                        INKORA
+                    </span>
+
+                    <h1>
+                        Write a Blog
+                    </h1>
+
+                    <p>
+                        Share your stories, ideas, knowledge
+                        and experiences with the INKORA community.
+                    </p>
+
+                </div>
+
+
+                <!-- MESSAGE -->
 
                 <div
                     id="message"
-                    class="message"
+                    class="form-message hidden"
                 ></div>
 
 
+                <!-- BLOG FORM -->
+
                 <form id="blogForm">
 
+
+                    <!-- =================================================
+                         TITLE
+                    ================================================= -->
 
                     <div class="form-group">
 
@@ -112,12 +129,18 @@
                         <input
                             type="text"
                             id="title"
+                            name="title"
                             placeholder="Enter your blog title"
+                            maxlength="200"
                             required
                         >
 
                     </div>
 
+
+                    <!-- =================================================
+                         CATEGORY
+                    ================================================= -->
 
                     <div class="form-group">
 
@@ -127,6 +150,7 @@
 
                         <select
                             id="category"
+                            name="category"
                             required
                         >
 
@@ -134,34 +158,91 @@
                                 Select category
                             </option>
 
-                            <option value="Technology">
-                                Technology
+                            <option value="Technical">
+                                Technical
                             </option>
 
-                            <option value="Python">
-                                Python
-                            </option>
-
-                            <option value="AI">
-                                AI
-                            </option>
-
-                            <option value="Machine Learning">
-                                Machine Learning
+                            <option value="Food">
+                                Food
                             </option>
 
                             <option value="Travel">
                                 Travel
                             </option>
 
-                            <option value="Lifestyle">
-                                Lifestyle
+                            <option value="Interior">
+                                Interior
+                            </option>
+
+                            <option value="Craft">
+                                Craft
+                            </option>
+
+                            <option value="Music">
+                                Music
+                            </option>
+
+                            <option value="Nature">
+                                Nature
+                            </option>
+
+                            <option value="Dresses">
+                                Dresses
+                            </option>
+
+                            <option value="Climate">
+                                Climate
                             </option>
 
                         </select>
 
                     </div>
 
+
+                    <!-- =================================================
+                         IMAGE
+                    ================================================= -->
+
+                    <div class="form-group">
+
+                        <label for="image">
+                            Blog Image
+                        </label>
+
+                        <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            accept="image/jpeg,image/png,image/webp"
+                        >
+
+                        <p class="image-help">
+                            Optional. JPG, PNG or WEBP.
+                            Maximum size: 5 MB.
+                        </p>
+
+
+                        <!-- IMAGE PREVIEW -->
+
+                        <div
+                            id="imagePreview"
+                            class="image-preview hidden"
+                        >
+
+                            <img
+                                id="previewImage"
+                                src=""
+                                alt="Blog image preview"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         CONTENT
+                    ================================================= -->
 
                     <div class="form-group">
 
@@ -171,6 +252,7 @@
 
                         <textarea
                             id="content"
+                            name="content"
                             placeholder="Write your blog here..."
                             required
                         ></textarea>
@@ -178,9 +260,14 @@
                     </div>
 
 
+                    <!-- =================================================
+                         SUBMIT
+                    ================================================= -->
+
                     <button
                         type="submit"
-                        class="form-button"
+                        class="btn"
+                        id="publishButton"
                     >
                         Publish Blog
                     </button>
@@ -195,198 +282,13 @@
     </main>
 
 
-    <script>
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
 
-        const API_URL =
-            "http://localhost:3000";
+    <script src="config.js"></script>
 
-
-        /* =====================================================
-           AUTH CHECK
-           ===================================================== */
-
-        const token =
-            localStorage.getItem("token");
-
-
-        if (!token) {
-
-            window.location.href =
-                "login.html";
-
-        }
-
-
-        const form =
-            document.getElementById(
-                "blogForm"
-            );
-
-        const message =
-            document.getElementById(
-                "message"
-            );
-
-
-        function showMessage(text, type) {
-
-            message.textContent =
-                text;
-
-            message.className =
-                `message show ${type}`;
-
-        }
-
-
-        /* =====================================================
-           CREATE BLOG
-           ===================================================== */
-
-        form.addEventListener(
-            "submit",
-            async function(event) {
-
-                event.preventDefault();
-
-
-                const title =
-                    document
-                        .getElementById("title")
-                        .value
-                        .trim();
-
-                const category =
-                    document
-                        .getElementById("category")
-                        .value;
-
-                const content =
-                    document
-                        .getElementById("content")
-                        .value
-                        .trim();
-
-
-                if (!title || !category || !content) {
-
-                    showMessage(
-                        "Please fill in all fields.",
-                        "error"
-                    );
-
-                    return;
-
-                }
-
-
-                try {
-
-                    const response =
-                        await fetch(
-                            `${API_URL}/blogs`,
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json",
-
-                                    "Authorization":
-                                        `Bearer ${token}`
-                                },
-
-                                body: JSON.stringify({
-                                    title,
-                                    category,
-                                    content
-                                })
-                            }
-                        );
-
-
-                    const data =
-                        await response.json();
-
-
-                    if (!response.ok) {
-
-                        if (
-                            response.status === 401
-                        ) {
-
-                            localStorage.removeItem(
-                                "token"
-                            );
-
-                            localStorage.removeItem(
-                                "user"
-                            );
-
-                            window.location.href =
-                                "login.html";
-
-                            return;
-
-                        }
-
-
-                        throw new Error(
-                            data.message ||
-                            "Failed to create blog"
-                        );
-
-                    }
-
-
-                    showMessage(
-                        "Blog published successfully!",
-                        "success"
-                    );
-
-
-                    form.reset();
-
-
-                    setTimeout(() => {
-
-                        window.location.href =
-                            "my-blogs.html";
-
-                    }, 1000);
-
-
-                } catch (error) {
-
-                    console.error(error);
-
-                    showMessage(
-                        error.message ||
-                        "Unable to publish blog.",
-                        "error"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* =====================================================
-           LOGOUT
-           ===================================================== */
-
-        function logout() {
-
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-
-            window.location.href =
-                "index.html";
-
-        }
-
-    </script>
+    <script src="script.js"></script>
 
 </body>
 

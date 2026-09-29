@@ -1,143 +1,235 @@
-const token = localStorage.getItem("token");
+const token = sessionStorage.getItem("token");
 
 
-// ===============================
-// CHECK LOGIN
-// ===============================
+/* =====================================================
+   LOGIN CHECK
+===================================================== */
 
 if (!token) {
-
-    alert("Please login first.");
-
     window.location.href = "login.html";
+}
+
+
+/* =====================================================
+   AUTH HEADERS
+===================================================== */
+
+function authHeaders() {
+
+    return {
+        "Authorization": `Bearer ${token}`
+    };
 
 }
 
 
-// ===============================
-// LOAD DASHBOARD
-// ===============================
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   DATE FORMAT
+===================================================== */
+
+function formatDate(dateValue) {
+
+    if (!dateValue) {
+        return "Date unavailable";
+    }
+
+
+    const date =
+        new Date(dateValue);
+
+
+    if (Number.isNaN(date.getTime())) {
+        return "Date unavailable";
+    }
+
+
+    return date.toLocaleDateString(
+        "en-US",
+        {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    sessionStorage.removeItem("token");
+
+    sessionStorage.removeItem("user");  
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+document
+    .getElementById("logoutButton")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            logout();
+
+        }
+    );
+
+
+/* =====================================================
+   LOAD DASHBOARD
+===================================================== */
 
 async function loadDashboard() {
 
     try {
 
-        // Get logged-in user
-        const userResponse = await fetch(
-            "http://localhost:3000/me",
-            {
-                headers: {
-                    "Authorization": `Bearer ${token}`
+        const [
+            blogsResponse,
+            userResponse
+        ] = await Promise.all([
+
+            fetch(
+                `${API_BASE_URL}/my-blogs`,
+                {
+                    headers:
+                        authHeaders()
                 }
-            }
-        );
+            ),
+
+            fetch(
+                `${API_BASE_URL}/me`,
+                {
+                    headers:
+                        authHeaders()
+                }
+            )
+
+        ]);
+
+
+        /* INVALID TOKEN */
+
+        if (
+            blogsResponse.status === 401 ||
+            blogsResponse.status === 403 ||
+            userResponse.status === 401 ||
+            userResponse.status === 403
+        ) {
+
+            sessionStorage.removeItem("token");
+
+            sessionStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        if (!blogsResponse.ok) {
+
+            throw new Error(
+                "Unable to load blogs."
+            );
+
+        }
 
 
         if (!userResponse.ok) {
 
-            localStorage.removeItem("token");
-
-            window.location.href = "login.html";
-
-            return;
+            throw new Error(
+                "Unable to load user."
+            );
 
         }
 
 
-        const user = await userResponse.json();
-
-        console.log("Logged-in user:", user);
-
-
-        // Display user information
-        document.getElementById("userName").textContent =
-            user.name;
-
-        document.getElementById("userEmail").textContent =
-            user.email;
+        const blogs =
+            await blogsResponse.json();
 
 
-
-        // ===============================
-        // GET USER'S BLOGS
-        // ===============================
-
-        const blogResponse = await fetch(
-            "http://localhost:3000/blogs",
-            {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            }
-        );
+        const user =
+            await userResponse.json();
 
 
-        if (!blogResponse.ok) {
+        /* CATEGORIES */
 
-            throw new Error("Failed to load blogs");
-
-        }
-
-
-        const blogs = await blogResponse.json();
-
-
-        const myBlogs =
-            document.getElementById("myBlogs");
+        const categories =
+            new Set(
+                blogs.map(
+                    blog =>
+                        blog.category ||
+                        "General"
+                )
+            );
 
 
-        myBlogs.innerHTML = "";
+        /* STATS */
+
+        document.getElementById(
+            "totalBlogs"
+        ).textContent =
+            blogs.length;
 
 
-        // No blogs
-        if (blogs.length === 0) {
-
-            myBlogs.innerHTML =
-                "<p>You haven't created any blogs yet.</p>";
-
-            return;
-
-        }
+        document.getElementById(
+            "totalCategories"
+        ).textContent =
+            categories.size;
 
 
-        // Display blogs
-        blogs.forEach(blog => {
-
-            const blogCard =
-                document.createElement("div");
-
-            blogCard.className = "blog-card";
+        document.getElementById(
+            "accountName"
+        ).textContent =
+            user.name || "User";
 
 
-            blogCard.innerHTML = `
+        /* WELCOME */
 
-                <span class="blog-category">
-                    ${blog.category || "Technology"}
-                </span>
-
-                <h3>${blog.title}</h3>
-
-                <p>${blog.content}</p>
-
-                <button onclick="viewBlog('${blog._id}')">
-                    View
-                </button>
-
-                <button onclick="editBlog('${blog._id}')">
-                    Edit
-                </button>
-
-                <button onclick="deleteBlog('${blog._id}')">
-                    Delete
-                </button>
-
-            `;
+        document.getElementById(
+            "welcomeTitle"
+        ).textContent =
+            `Welcome back, ${user.name || "User"}`;
 
 
-            myBlogs.appendChild(blogCard);
+        /* EMAIL */
 
-        });
+        document.getElementById(
+            "topbarUser"
+        ).textContent =
+            user.email || "";
 
+
+        displayRecentBlogs(blogs);
 
     } catch (error) {
 
@@ -146,111 +238,150 @@ async function loadDashboard() {
             error
         );
 
+
+        document.getElementById(
+            "recentBlogs"
+        ).innerHTML = `
+
+            <div class="dashboard-message">
+
+                Unable to load dashboard data.
+
+                <br><br>
+
+                Please make sure the backend server is running.
+
+            </div>
+
+        `;
+
     }
 
 }
 
 
-// ===============================
-// VIEW BLOG
-// ===============================
+/* =====================================================
+   RECENT BLOGS
+===================================================== */
 
-function viewBlog(id) {
+function displayRecentBlogs(blogs) {
 
-    window.location.href =
-        `blog-details.html?id=${id}`;
-
-}
-
-
-// ===============================
-// EDIT BLOG
-// ===============================
-
-function editBlog(id) {
-
-    window.location.href =
-        `edit-blog.html?id=${id}`;
-
-}
-
-
-// ===============================
-// DELETE BLOG
-// ===============================
-
-async function deleteBlog(id) {
-
-    const confirmDelete =
-        confirm("Are you sure you want to delete this blog?");
-
-
-    if (!confirmDelete) {
-        return;
-    }
-
-
-    try {
-
-        const response = await fetch(
-            `http://localhost:3000/blogs/${id}`,
-            {
-                method: "DELETE",
-
-                headers: {
-                    "Authorization":
-                        `Bearer ${token}`
-                }
-            }
+    const box =
+        document.getElementById(
+            "recentBlogs"
         );
 
 
-        const data =
-            await response.json();
+    if (!blogs.length) {
+
+        box.innerHTML = `
+
+            <div class="dashboard-message">
+
+                You have not written any blogs yet.
+
+                <br><br>
+
+                <a
+                    href="blog.html"
+                    class="dashboard-action"
+                    style="display:inline-block;"
+                >
+                    Write Your First Blog
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
 
 
-        if (!response.ok) {
+    const recent =
+        blogs.slice(0, 5);
 
-            throw new Error(
-                data.message ||
-                "Failed to delete blog"
-            );
+
+    box.innerHTML = "";
+
+
+    recent.forEach(
+        function(blog) {
+
+            const article =
+                document.createElement(
+                    "article"
+                );
+
+
+            article.className =
+                "recent-blog";
+
+
+            const category =
+                blog.category ||
+                "General";
+
+
+            const title =
+                blog.title ||
+                "Untitled Blog";
+
+
+            const content =
+                blog.content ||
+                "";
+
+
+            const shortContent =
+                content.length > 180
+                    ? content.substring(0, 180) + "..."
+                    : content;
+
+
+            article.innerHTML = `
+
+                <span class="recent-category">
+                    ${escapeHtml(category)}
+                </span>
+
+
+                <h3>
+                    ${escapeHtml(title)}
+                </h3>
+
+
+                <p>
+                    ${escapeHtml(shortContent)}
+                </p>
+
+
+                <div class="recent-meta">
+                    ${formatDate(blog.createdAt)}
+                </div>
+
+
+                <a
+                    href="blog-details.html?id=${encodeURIComponent(blog._id)}"
+                    class="recent-link"
+                >
+                    Read Story →
+                </a>
+
+            `;
+
+
+            box.appendChild(article);
 
         }
-
-
-        alert("Blog deleted successfully!");
-
-
-        loadDashboard();
-
-
-    } catch (error) {
-
-        console.error(
-            "Delete error:",
-            error
-        );
-
-        alert("Failed to delete blog.");
-
-    }
+    );
 
 }
 
 
-// ===============================
-// LOGOUT
-// ===============================
+/* =====================================================
+   START
+===================================================== */
 
-function logout() {
-
-    localStorage.removeItem("token");
-
-    window.location.href = "login.html";
-
-}
-
-
-// Start dashboard
 loadDashboard();

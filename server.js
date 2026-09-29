@@ -4,8 +4,14 @@ const dns = require("dns");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
 
 require("dotenv").config();
+
 
 const Blog = require("./models/Blog");
 const User = require("./models/User");
@@ -14,10 +20,70 @@ const authenticateToken = require("./middleware/auth");
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 const app = express();
-const PORT = 3000;
+
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// Serve frontend files
+app.use(express.static(__dirname));
+
+const uploadDirectory = path.join(__dirname, "uploads");
+
+if (!fs.existsSync(uploadDirectory)) {
+    fs.mkdirSync(uploadDirectory, {
+        recursive: true
+    });
+}
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadDirectory);
+    },
+
+    filename: function (req, file, cb) {
+        const extension =
+            path.extname(file.originalname).toLowerCase();
+
+        const uniqueName =
+            `${Date.now()}-${Math.round(Math.random() * 1e9)}${extension}`;
+
+        cb(null, uniqueName);
+    }
+});
+
+const upload = multer({
+    storage: storage,
+
+    limits: {
+        fileSize: 5 * 1024 * 1024
+    },
+
+    fileFilter: function (req, file, cb) {
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+        ];
+
+        if (!allowedTypes.includes(file.mimetype)) {
+            return cb(
+                new Error(
+                    "Only JPG, PNG and WEBP images are allowed."
+                )
+            );
+        }
+
+        cb(null, true);
+    }
+});
+
+// Make uploaded images publicly accessible
+
+app.use("/uploads",express.static(uploadDirectory));
+
+
 
 console.log("Mongo URI exists:", !!process.env.MONGO_URI);
 
@@ -41,7 +107,7 @@ mongoose.connect(process.env.MONGO_URI)
 // ===============================
 
 app.get("/", (req, res) => {
-    res.send("Blog API Running...");
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 
@@ -300,162 +366,274 @@ app.get("/blogs/:id", async (req, res) => {
     }
 });
 
-
 // ===============================
-// CREATE BLOG
+// CREATE BLOG WITH IMAGE
 // ===============================
 
-app.post("/blogs", authenticateToken, async (req, res) => {
+app.post(
+    "/blogs",
+    authenticateToken,
+    upload.single("image"),
+    async (req, res) => {
 
-    try {
+        try {
 
-        const newBlog = new Blog({
+            console.log("=================================");
+            console.log("CREATE BLOG REQUEST");
+            console.log("USER ID:", req.user.userId);
+            console.log("TITLE:", req.body.title);
+            console.log("CATEGORY:", req.body.category);
+            console.log("=================================");
 
-            title: req.body.title,
+            const {
+                title,
+                content,
+                category
+            } = req.body;
 
-            content: req.body.content,
+            if (!title || !content) {
 
-            category: req.body.category || "Technology",
+                return res.status(400).json({
+                    message: "Title and content are required."
+                });
 
-            userId: req.user.userId
+            }
 
-        });
+            const imageUrl = req.file
+                ? `/uploads/${req.file.filename}`
+                : "";
 
-        const savedBlog = await newBlog.save();
+            const newBlog = new Blog({
 
-        res.status(201).json({
+                title: title.trim(),
 
-            message: "Blog added successfully!",
+                content: content.trim(),
 
-            blog: savedBlog
+                // IMPORTANT:
+                // "Technology" is not in Blog.js enum
+                category: category || "Technical",
 
-        });
+                imageUrl,
 
-    } catch (error) {
+                userId: req.user.userId
 
-        console.error("Error adding blog:", error);
+            });
 
-        res.status(500).json({
+            const savedBlog = await newBlog.save();
 
-            message: "Failed to add blog"
+            console.log("BLOG CREATED SUCCESSFULLY");
+            console.log("NEW BLOG ID:", savedBlog._id);
+            console.log("NEW BLOG TITLE:", savedBlog.title);
+            console.log("NEW BLOG CATEGORY:", savedBlog.category);
+            console.log("=================================");
 
-        });
+            res.status(201).json({
+
+                message: "Blog added successfully!",
+
+                blog: savedBlog
+
+            });
+
+        } catch (error) {
+
+            console.error("ERROR ADDING BLOG:", error);
+
+            res.status(500).json({
+
+                message: "Failed to add blog",
+
+                error: error.message
+
+            });
+
+        }
 
     }
-
-});
+);
 
 
 // ===============================
 // UPDATE BLOG
 // ===============================
 
-app.put("/blogs/:id", authenticateToken, async (req, res) => {
+app.put(
+    "/blogs/:id",
+    authenticateToken,
+    upload.single("image"),
+    async (req, res) => {
 
-    try {
+        try {
 
-        const updatedBlog = await Blog.findOneAndUpdate(
+            const blog =
+                await Blog.findById(req.params.id);
 
-            {
-                _id: req.params.id,
-                userId: req.user.userId
-            },
 
-            {
-                title: req.body.title,
-                content: req.body.content,
-                category: req.body.category
-            },
+            if (!blog) {
 
-            {
-                new: true,
-                runValidators: true
+                return res.status(404).json({
+                    message: "Blog not found."
+                });
+
             }
 
-        );
 
-        if (!updatedBlog) {
+            /* CHECK OWNER */
 
-            return res.status(404).json({
+            if (
+                blog.userId.toString() !==
+                req.user.userId
+            ) {
 
+                return res.status(403).json({
+                    message:
+                        "You are not allowed to edit this blog."
+                });
+
+            }
+
+
+            const {
+                title,
+                content,
+                category
+            } = req.body;
+
+
+            if (!title || !content) {
+
+                return res.status(400).json({
+                    message:
+                        "Title and content are required."
+                });
+
+            }
+
+
+            /* UPDATE TEXT */
+
+            blog.title =
+                title.trim();
+
+
+            blog.content =
+                content.trim();
+
+
+            blog.category =
+                category || "Technical";
+
+
+            /* UPDATE IMAGE ONLY IF
+               A NEW IMAGE WAS UPLOADED */
+
+            if (req.file) {
+
+                blog.imageUrl =
+                    `/uploads/${req.file.filename}`;
+
+            }
+
+
+            const updatedBlog =
+                await blog.save();
+
+
+            res.json({
                 message:
-                    "Blog not found or you don't have permission to edit it"
+                    "Blog updated successfully!",
+                blog: updatedBlog
+            });
 
+
+        } catch (error) {
+
+            console.error(
+                "Error updating blog:",
+                error
+            );
+
+
+            res.status(500).json({
+                message:
+                    "Failed to update blog."
             });
 
         }
 
-        res.json({
-
-            message: "Blog updated successfully!",
-
-            blog: updatedBlog
-
-        });
-
-    } catch (error) {
-
-        console.error("Error updating blog:", error);
-
-        res.status(500).json({
-
-            message: "Failed to update blog"
-
-        });
-
     }
-
-});
+);
 
 
 // ===============================
 // DELETE BLOG
 // ===============================
 
-app.delete("/blogs/:id", authenticateToken, async (req, res) => {
+app.delete(
+    "/blogs/:id",
+    authenticateToken,
+    async (req, res) => {
 
-    try {
+        try {
 
-        const deletedBlog = await Blog.findOneAndDelete({
+            console.log("=================================");
+            console.log("DELETE BLOG REQUEST");
+            console.log("BLOG ID:", req.params.id);
+            console.log("USER ID:", req.user.userId);
+            console.log("=================================");
 
-            _id: req.params.id,
+            const deletedBlog =
+                await Blog.findOneAndDelete({
 
-            userId: req.user.userId
+                    _id: req.params.id,
 
-        });
+                    userId: req.user.userId
 
-        if (!deletedBlog) {
+                });
 
-            return res.status(404).json({
+            if (!deletedBlog) {
 
-                message:
-                    "Blog not found or you don't have permission to delete it"
+                console.log("NO BLOG WAS DELETED");
+
+                return res.status(404).json({
+
+                    message:
+                        "Blog not found or you don't have permission to delete it"
+
+                });
+
+            }
+
+            console.log("BLOG DELETED!");
+            console.log("DELETED ID:", deletedBlog._id);
+            console.log("DELETED TITLE:", deletedBlog.title);
+            console.log("=================================");
+
+            res.json({
+
+                message: "Blog deleted successfully!",
+
+                blog: deletedBlog
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "Error deleting blog:",
+                error
+            );
+
+            res.status(500).json({
+
+                message: "Failed to delete blog"
 
             });
 
         }
 
-        res.json({
-
-            message: "Blog deleted successfully!",
-
-            blog: deletedBlog
-
-        });
-
-    } catch (error) {
-
-        console.error("Error deleting blog:", error);
-
-        res.status(500).json({
-
-            message: "Failed to delete blog"
-
-        });
-
     }
-
-});
+);
 
 
 // ===============================

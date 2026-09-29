@@ -10,12 +10,462 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>BlogSpace</title>
+    <title>INKORA | Stories. Ideas. Knowledge.</title>
 
     <link
         rel="stylesheet"
         href="style.css"
     >
+
+    <style>
+
+        /* =========================
+           HOME PAGE
+        ========================= */
+
+        .home-hero {
+            padding: 90px 20px 85px;
+            border-bottom: 1px solid #dfe6e1;
+        }
+
+        .home-hero .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .home-hero .eyebrow {
+            margin: 0 0 15px;
+            color: #5f876d;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .home-hero h1 {
+            margin: 0;
+            max-width: 750px;
+            color: #20242a;
+            font-size: 58px;
+            line-height: 1.08;
+            letter-spacing: -1.5px;
+        }
+
+        .home-hero h1 span {
+            color: #6b9278;
+        }
+
+        .home-hero > .container > p:not(.eyebrow) {
+            max-width: 650px;
+            margin: 22px 0 0;
+            color: #68736d;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .home-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .home-actions .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border: 1px solid #6b9278;
+            background: #6b9278;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .home-actions .btn:hover {
+            background: #557961;
+            border-color: #557961;
+        }
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        .section {
+            padding: 65px 20px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 28px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #dfe6e1;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            color: #20242a;
+            font-size: 27px;
+        }
+
+        .section-heading a {
+            color: #5f876d;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .section-heading a:hover {
+            color: #365944;
+        }
+
+        /* =========================
+           BLOG GRID
+        ========================= */
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .blog-card {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+
+            background: #ffffff;
+            border: 1px solid #dfe6e1;
+        }
+
+        .blog-card:hover {
+            border-color: #b8c9bd;
+        }
+
+        .home-blog-image {
+            width: 100%;
+            height: 200px;
+            display: block;
+            object-fit: cover;
+
+            background: #eef3ef;
+            border-bottom: 1px solid #dfe6e1;
+        }
+
+        .home-blog-no-image {
+            width: 100%;
+            height: 200px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #f1f5f2;
+            color: #89958e;
+
+            font-size: 13px;
+
+            border-bottom: 1px solid #dfe6e1;
+        }
+
+        .blog-card-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 20px;
+        }
+
+        .blog-category {
+            color: #5f876d;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .blog-card h3 {
+            margin: 10px 0;
+            color: #20242a;
+            font-size: 20px;
+            line-height: 1.35;
+        }
+
+        .blog-card p {
+            margin: 0 0 18px;
+            color: #68736d;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .blog-card .btn {
+            display: inline-block;
+            align-self: flex-start;
+
+            margin-top: auto;
+            padding: 9px 14px;
+
+            border: 1px solid #d3ddd6;
+            background: #f8faf8;
+            color: #4f765e;
+
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .blog-card .btn:hover {
+            border-color: #6b9278;
+            background: #f1f7f2;
+            color: #365944;
+        }
+
+        /* =========================
+           CATEGORY GRID
+        ========================= */
+
+        .category-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .category-card {
+            padding: 24px;
+
+            background: #ffffff;
+            border: 1px solid #dfe6e1;
+
+            text-decoration: none;
+        }
+
+        .category-card:hover {
+            border-color: #9eb4a5;
+            background: #f8faf8;
+        }
+
+        .category-card h3 {
+            margin: 0 0 5px;
+            color: #20242a;
+            font-size: 18px;
+        }
+
+        .category-card p {
+            margin: 0 0 15px;
+            color: #7a847e;
+            font-size: 13px;
+        }
+
+        .category-card .btn {
+            display: inline-block;
+            padding: 8px 12px;
+
+            border: 1px solid #d3ddd6;
+            background: #f8faf8;
+            color: #4f765e;
+
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .category-card .btn:hover {
+            border-color: #6b9278;
+            background: #f1f7f2;
+        }
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .search-box {
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            width: 100%;
+            box-sizing: border-box;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d7e0da;
+            background: #ffffff;
+            color: #20242a;
+
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-box input:focus {
+            border-color: #6b9278;
+        }
+
+        .search-box input::placeholder {
+            color: #8a958f;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-message {
+            grid-column: 1 / -1;
+
+            padding: 35px 20px;
+
+            text-align: center;
+
+            border: 1px solid #dfe6e1;
+            background: #ffffff;
+
+            color: #718078;
+            font-size: 14px;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .nav-auth-links {
+            display: inline-flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-auth-links > a {
+            display: inline-flex;
+            align-items: center;
+
+            color: #3e4642;
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            white-space: nowrap;
+        }
+
+        .nav-auth-links > a:hover {
+            color: #5f8069;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* =========================
+           CTA SECTION
+        ========================= */
+
+        .page-header {
+            margin-bottom: 22px;
+        }
+
+        .page-header .eyebrow {
+            color: #5f876d;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .page-header h1 {
+            margin: 8px 0;
+            color: #20242a;
+            font-size: 34px;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #718078;
+            font-size: 15px;
+        }
+
+        .section:last-of-type .btn {
+            display: inline-block;
+
+            padding: 11px 18px;
+
+            border: 1px solid #6b9278;
+            background: #6b9278;
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .section:last-of-type .btn:hover {
+            background: #557961;
+            border-color: #557961;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .home-hero h1 {
+                font-size: 46px;
+            }
+
+            .blog-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .category-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .home-hero {
+                padding: 60px 20px;
+            }
+
+            .home-hero h1 {
+                font-size: 38px;
+            }
+
+            .home-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -35,7 +485,7 @@
             href="index.html"
             class="logo"
         >
-            BlogSpace
+            INKORA
         </a>
 
 
@@ -57,26 +507,32 @@
             </a>
 
 
-            <!-- =========================================
-                 LOGGED IN NAVIGATION
-            ========================================== -->
+            <!-- LOGGED-IN LINKS -->
 
             <span
                 id="loggedInLinks"
                 class="nav-auth-links"
+                style="display: none;"
             >
 
-                <a href="my-blogs.html">
+                <a
+                    href="my-blogs.html"
+                    class="nav-button"
+                >
                     My Blogs
                 </a>
 
-                <a href="profile.html">
+                <a
+                    href="profile.html"
+                    class="nav-button"
+                >
                     Profile
                 </a>
 
                 <a
                     href="#"
                     id="logoutButton"
+                    class="nav-button"
                 >
                     Logout
                 </a>
@@ -84,20 +540,25 @@
             </span>
 
 
-            <!-- =========================================
-                 LOGGED OUT NAVIGATION
-            ========================================== -->
+            <!-- LOGGED-OUT LINKS -->
 
             <span
                 id="loggedOutLinks"
                 class="nav-auth-links"
+                style="display: inline-flex;"
             >
 
-                <a href="register.html">
+                <a
+                    href="register.html"
+                    class="nav-button"
+                >
                     Register
                 </a>
 
-                <a href="login.html">
+                <a
+                    href="login.html"
+                    class="nav-button"
+                >
                     Login
                 </a>
 
@@ -118,16 +579,14 @@
 <main>
 
 
-    <!-- =================================================
-         HERO
-    ================================================== -->
+    <!-- HERO -->
 
     <section class="home-hero">
 
         <div class="container">
 
             <p class="eyebrow">
-                BLOGSPACE
+                STORIES. IDEAS. KNOWLEDGE.
             </p>
 
 
@@ -139,7 +598,7 @@
 
             <p>
                 Discover stories, ideas, experiences and
-                knowledge from the BlogSpace community.
+                knowledge from the INKORA community.
             </p>
 
 
@@ -152,12 +611,6 @@
                     Explore Blogs
                 </a>
 
-
-                <!--
-                    Default is login.html.
-                    JavaScript changes it to blog.html
-                    when the user is logged in.
-                -->
 
                 <a
                     href="login.html"
@@ -183,7 +636,6 @@
 
         <div class="container">
 
-
             <div class="section-heading">
 
                 <h2>
@@ -201,11 +653,6 @@
                 id="featuredBlogs"
                 class="blog-grid"
             >
-
-                <!--
-                    JavaScript will replace this
-                    with real blogs.
-                -->
 
                 <div class="status-message">
                     Loading featured blogs...
@@ -227,7 +674,6 @@
 
         <div class="container">
 
-
             <div class="section-heading">
 
                 <h2>
@@ -245,11 +691,6 @@
                 id="categoryList"
                 class="category-grid"
             >
-
-                <!--
-                    JavaScript will replace this
-                    with real categories.
-                -->
 
                 <div class="status-message">
                     Loading categories...
@@ -271,7 +712,6 @@
 
         <div class="container">
 
-
             <div class="section-heading">
 
                 <h2>
@@ -280,8 +720,6 @@
 
             </div>
 
-
-            <!-- SEARCH -->
 
             <div class="search-box">
 
@@ -294,17 +732,10 @@
             </div>
 
 
-            <!-- BLOGS -->
-
             <div
                 id="latestBlogs"
                 class="blog-grid"
             >
-
-                <!--
-                    JavaScript will replace this
-                    with real blogs.
-                -->
 
                 <div class="status-message">
                     Loading latest blogs...
@@ -326,7 +757,6 @@
 
         <div class="container">
 
-
             <div class="page-header">
 
                 <span class="eyebrow">
@@ -340,18 +770,12 @@
 
 
                 <p>
-                    Share your ideas with the BlogSpace
+                    Share your ideas with the INKORA
                     community.
                 </p>
 
             </div>
 
-
-            <!--
-                Default is login.html.
-                JavaScript changes it to blog.html
-                when logged in.
-            -->
 
             <a
                 href="login.html"
@@ -379,7 +803,7 @@
     <div class="footer-inner">
 
         <span>
-            © 2026 BlogSpace
+            © 2026 INKORA
         </span>
 
         <span>
@@ -396,698 +820,651 @@
      JAVASCRIPT
 ===================================================== -->
 
+<script src="config.js"></script>
+
 <script>
 
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+    const featuredBlogs =
+        document.getElementById("featuredBlogs");
 
-const featuredBlogs =
-    document.getElementById("featuredBlogs");
+    const latestBlogs =
+        document.getElementById("latestBlogs");
 
+    const categoryList =
+        document.getElementById("categoryList");
 
-const latestBlogs =
-    document.getElementById("latestBlogs");
+    const searchInput =
+        document.getElementById("searchInput");
 
+    const loggedInLinks =
+        document.getElementById("loggedInLinks");
 
-const categoryList =
-    document.getElementById("categoryList");
+    const loggedOutLinks =
+        document.getElementById("loggedOutLinks");
 
+    const logoutButton =
+        document.getElementById("logoutButton");
 
-const searchInput =
-    document.getElementById("searchInput");
+    const writeBlogButton =
+        document.getElementById("writeBlogButton");
 
+    const bottomWriteButton =
+        document.getElementById("bottomWriteButton");
 
-const loggedInLinks =
-    document.getElementById("loggedInLinks");
 
+    /* =====================================================
+       STORE BLOGS
+    ===================================================== */
 
-const loggedOutLinks =
-    document.getElementById("loggedOutLinks");
+    let allBlogs = [];
 
 
-const logoutButton =
-    document.getElementById("logoutButton");
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
 
+    function escapeHtml(value) {
 
-const writeBlogButton =
-    document.getElementById("writeBlogButton");
-
-
-const bottomWriteButton =
-    document.getElementById("bottomWriteButton");
-
-
-
-/* =====================================================
-   STORE ALL BLOGS
-===================================================== */
-
-let allBlogs = [];
-
-
-
-/* =====================================================
-   AUTHENTICATION / NAVIGATION
-===================================================== */
-
-function updateNavigation() {
-
-    const token =
-        localStorage.getItem("token");
-
-
-    if (token) {
-
-        /*
-         * USER IS LOGGED IN
-         */
-
-        loggedInLinks.style.display =
-            "contents";
-
-        loggedOutLinks.style.display =
-            "none";
-
-
-        /*
-         * Write Blog buttons
-         * go directly to blog.html
-         */
-
-        if (writeBlogButton) {
-
-            writeBlogButton.href =
-                "blog.html";
-
-        }
-
-
-        if (bottomWriteButton) {
-
-            bottomWriteButton.href =
-                "blog.html";
-
-        }
-
-    } else {
-
-        /*
-         * USER IS NOT LOGGED IN
-         */
-
-        loggedInLinks.style.display =
-            "none";
-
-        loggedOutLinks.style.display =
-            "contents";
-
-
-        /*
-         * Write Blog buttons
-         * go to login.html
-         */
-
-        if (writeBlogButton) {
-
-            writeBlogButton.href =
-                "login.html";
-
-        }
-
-
-        if (bottomWriteButton) {
-
-            bottomWriteButton.href =
-                "login.html";
-
-        }
-
-    }
-
-}
-
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-if (logoutButton) {
-
-    logoutButton.addEventListener(
-        "click",
-        function(event) {
-
-            event.preventDefault();
-
-
-            localStorage.removeItem("token");
-
-            localStorage.removeItem("user");
-
-
-            window.location.href =
-                "index.html";
-
-        }
-    );
-
-}
-
-
-
-/* =====================================================
-   VIEW BLOG
-===================================================== */
-
-function viewBlog(id) {
-
-    window.location.href =
-        `blog-details.html?id=${id}`;
-
-}
-
-
-
-/* =====================================================
-   CREATE PUBLIC BLOG CARD
-===================================================== */
-
-function createBlogCard(blog) {
-
-
-    const card =
-        document.createElement("article");
-
-
-    card.className =
-        "blog-card";
-
-
-    const category =
-        blog.category || "General";
-
-
-    const title =
-        blog.title || "Untitled Blog";
-
-
-    const content =
-        blog.content || "";
-
-
-    /*
-     * Keep the home page clean by showing
-     * only a short preview.
-     */
-
-    const shortContent =
-        content.length > 160
-            ? content.substring(0, 160) + "..."
-            : content;
-
-
-    card.innerHTML = `
-
-        <div class="blog-card-content">
-
-
-            <span class="blog-category">
-                ${category}
-            </span>
-
-
-            <h3>
-                ${title}
-            </h3>
-
-
-            <p>
-                ${shortContent}
-            </p>
-
-
-            <button
-                type="button"
-                class="btn"
-                onclick="viewBlog('${blog._id}')"
-            >
-                Read Story
-            </button>
-
-
-        </div>
-
-    `;
-
-
-    return card;
-
-}
-
-
-
-/* =====================================================
-   DISPLAY FEATURED BLOGS
-===================================================== */
-
-function displayFeaturedBlogs(blogs) {
-
-
-    featuredBlogs.innerHTML = "";
-
-
-    /*
-     * Show first 3 blogs as featured.
-     */
-
-    const featured =
-        blogs.slice(0, 3);
-
-
-    if (featured.length === 0) {
-
-        featuredBlogs.innerHTML = `
-
-            <div class="status-message">
-
-                No blogs available yet.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    featured.forEach(function(blog) {
-
-        const card =
-            createBlogCard(blog);
-
-
-        featuredBlogs.appendChild(card);
-
-    });
-
-}
-
-
-
-/* =====================================================
-   DISPLAY LATEST BLOGS
-===================================================== */
-
-function displayLatestBlogs(
-    blogs,
-    searchTerm = ""
-) {
-
-
-    latestBlogs.innerHTML = "";
-
-
-    const search =
-        searchTerm
-            .toLowerCase()
-            .trim();
-
-
-    const filtered =
-        blogs.filter(function(blog) {
-
-
-            const title =
-                (blog.title || "")
-                .toLowerCase();
-
-
-            const content =
-                (blog.content || "")
-                .toLowerCase();
-
-
-            const category =
-                (blog.category || "")
-                .toLowerCase();
-
-
-            return (
-
-                title.includes(search) ||
-
-                content.includes(search) ||
-
-                category.includes(search)
-
-            );
-
-        });
-
-
-
-    if (filtered.length === 0) {
-
-        latestBlogs.innerHTML = `
-
-            <div class="status-message">
-
-                No blogs found.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-
-    filtered.forEach(function(blog) {
-
-
-        const card =
-            createBlogCard(blog);
-
-
-        latestBlogs.appendChild(card);
-
-    });
-
-}
-
-
-
-/* =====================================================
-   DISPLAY CATEGORIES
-===================================================== */
-
-function displayCategories(blogs) {
-
-
-    categoryList.innerHTML = "";
-
-
-    const categories = {};
-
-
-
-    blogs.forEach(function(blog) {
-
-
-        const category =
-            blog.category || "General";
-
-
-        if (!categories[category]) {
-
-            categories[category] = 0;
-
-        }
-
-
-        categories[category]++;
-
-    });
-
-
-
-    const categoryNames =
-        Object.keys(categories);
-
-
-
-    if (categoryNames.length === 0) {
-
-        categoryList.innerHTML = `
-
-            <div class="status-message">
-
-                No categories available.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-
-    categoryNames.forEach(function(category) {
-
-
-        const card =
+        const div =
             document.createElement("div");
+
+        div.textContent =
+            value ?? "";
+
+        return div.innerHTML;
+
+    }
+
+
+    /* =====================================================
+       IMAGE URL
+    ===================================================== */
+
+    function getImageUrl(imageUrl) {
+
+        if (!imageUrl) {
+            return "";
+        }
+
+        if (
+            imageUrl.startsWith("http://") ||
+            imageUrl.startsWith("https://")
+        ) {
+            return imageUrl;
+        }
+
+        return `${API_BASE_URL}${imageUrl}`;
+
+    }
+
+
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
+
+    function updateNavigation() {
+
+        const token =
+            sessionStorage.getItem("token");
+
+
+        if (token) {
+
+            loggedInLinks.style.display =
+                "inline-flex";
+
+            loggedOutLinks.style.display =
+                "none";
+
+
+            writeBlogButton.href =
+                "blog.html";
+
+
+            bottomWriteButton.href =
+                "blog.html";
+
+        } else {
+
+            loggedInLinks.style.display =
+                "none";
+
+            loggedOutLinks.style.display =
+                "inline-flex";
+
+
+            writeBlogButton.href =
+                "login.html";
+
+
+            bottomWriteButton.href =
+                "login.html";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    if (logoutButton) {
+
+        logoutButton.addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+
+                sessionStorage.removeItem("token");
+
+                sessionStorage.removeItem("user");
+
+
+                window.location.href =
+                    "index.html";
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       VIEW BLOG
+    ===================================================== */
+
+    function viewBlog(id) {
+
+        window.location.href =
+            `blog-details.html?id=${encodeURIComponent(id)}`;
+
+    }
+
+
+    /* =====================================================
+       CREATE BLOG CARD
+    ===================================================== */
+
+    function createBlogCard(blog) {
+
+        const card =
+            document.createElement("article");
 
 
         card.className =
-            "category-card";
+            "blog-card";
+
+
+        const category =
+            blog.category ||
+            "General";
+
+
+        const title =
+            blog.title ||
+            "Untitled Blog";
+
+
+        const content =
+            blog.content ||
+            "";
+
+
+        const shortContent =
+            content.length > 160
+                ? content.substring(0, 160) + "..."
+                : content;
+
+
+        const imageUrl =
+            getImageUrl(blog.imageUrl);
+
+
+        let imageHTML =
+            "";
+
+
+        if (imageUrl) {
+
+            imageHTML = `
+
+                <img
+                    src="${escapeHtml(imageUrl)}"
+                    alt="${escapeHtml(title)}"
+                    class="home-blog-image"
+                    loading="lazy"
+                >
+
+            `;
+
+        } else {
+
+            imageHTML = `
+
+                <div class="home-blog-no-image">
+                    No image uploaded
+                </div>
+
+            `;
+
+        }
 
 
         card.innerHTML = `
 
-            <h3>
-                ${category}
-            </h3>
+            ${imageHTML}
 
+            <div class="blog-card-content">
 
-            <p>
+                <span class="blog-category">
+                    ${escapeHtml(category)}
+                </span>
 
-                ${categories[category]}
 
-                ${
-                    categories[category] === 1
-                        ? " Blog"
-                        : " Blogs"
-                }
+                <h3>
+                    ${escapeHtml(title)}
+                </h3>
 
-            </p>
 
+                <p>
+                    ${escapeHtml(shortContent)}
+                </p>
 
-            <button
-                type="button"
-                class="btn"
-                onclick="filterCategory('${category}')"
-            >
-                Explore
-            </button>
 
-        `;
-
-
-        categoryList.appendChild(card);
-
-    });
-
-}
-
-
-
-/* =====================================================
-   FILTER BY CATEGORY
-===================================================== */
-
-function filterCategory(category) {
-
-
-    const filtered =
-        allBlogs.filter(function(blog) {
-
-
-            return (
-                (blog.category || "General")
-                === category
-            );
-
-        });
-
-
-    displayLatestBlogs(filtered);
-
-
-    latestBlogs.scrollIntoView({
-        behavior: "smooth"
-    });
-
-}
-
-
-
-/* =====================================================
-   LOAD PUBLIC BLOGS
-===================================================== */
-
-async function loadBlogs() {
-
-
-    try {
-
-
-        /*
-         * IMPORTANT
-         *
-         * This is the PUBLIC API.
-         *
-         * No token is required.
-         *
-         * Everyone can see these blogs.
-         */
-
-        const response =
-            await fetch(
-                "http://localhost:3000/blogs"
-            );
-
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Failed to load blogs"
-            );
-
-        }
-
-
-
-        const blogs =
-            await response.json();
-
-
-
-        /*
-         * Save all blogs for search
-         * and category filtering.
-         */
-
-        allBlogs = blogs;
-
-
-
-        /*
-         * Display real blogs.
-         */
-
-        displayFeaturedBlogs(
-            blogs
-        );
-
-
-        displayLatestBlogs(
-            blogs
-        );
-
-
-        displayCategories(
-            blogs
-        );
-
-
-    } catch (error) {
-
-
-        console.error(
-            "Public blog loading error:",
-            error
-        );
-
-
-
-        featuredBlogs.innerHTML = `
-
-            <div class="status-message">
-
-                Unable to load blogs.
-
-                <br>
-
-                Please make sure the backend
-                server is running.
+                <button
+                    type="button"
+                    class="btn"
+                >
+                    Read Story
+                </button>
 
             </div>
 
         `;
 
 
-
-        latestBlogs.innerHTML = `
-
-            <div class="status-message">
-
-                Unable to load blogs.
-
-                <br>
-
-                Please make sure the backend
-                server is running.
-
-            </div>
-
-        `;
+        const readButton =
+            card.querySelector(".btn");
 
 
+        readButton.addEventListener(
+            "click",
+            function() {
 
-        categoryList.innerHTML = `
+                viewBlog(blog._id);
 
-            <div class="status-message">
+            }
+        );
 
-                Unable to load categories.
 
-                <br>
-
-                Please make sure the backend
-                server is running.
-
-            </div>
-
-        `;
+        return card;
 
     }
 
-}
+
+    /* =====================================================
+       FEATURED BLOGS
+    ===================================================== */
+
+    function displayFeaturedBlogs(blogs) {
+
+        featuredBlogs.innerHTML = "";
 
 
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-if (searchInput) {
+        const featured =
+            blogs.slice(0, 3);
 
 
-    searchInput.addEventListener(
-        "input",
-        function() {
+        if (featured.length === 0) {
+
+            featuredBlogs.innerHTML = `
+
+                <div class="status-message">
+                    No blogs available yet.
+                </div>
+
+            `;
+
+            return;
+
+        }
 
 
-            displayLatestBlogs(
-                allBlogs,
-                searchInput.value
+        featured.forEach(
+            function(blog) {
+
+                const card =
+                    createBlogCard(blog);
+
+                featuredBlogs.appendChild(card);
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       LATEST BLOGS
+    ===================================================== */
+
+    function displayLatestBlogs(
+        blogs,
+        searchTerm = ""
+    ) {
+
+        latestBlogs.innerHTML = "";
+
+
+        const search =
+            searchTerm
+                .toLowerCase()
+                .trim();
+
+
+        const filtered =
+            blogs.filter(
+                function(blog) {
+
+                    const title =
+                        (blog.title || "")
+                        .toLowerCase();
+
+
+                    const content =
+                        (blog.content || "")
+                        .toLowerCase();
+
+
+                    const category =
+                        (blog.category || "")
+                        .toLowerCase();
+
+
+                    return (
+                        title.includes(search) ||
+                        content.includes(search) ||
+                        category.includes(search)
+                    );
+
+                }
             );
 
 
+        if (filtered.length === 0) {
+
+            latestBlogs.innerHTML = `
+
+                <div class="status-message">
+                    No blogs found.
+                </div>
+
+            `;
+
+            return;
+
         }
-    );
-
-}
 
 
+        filtered.forEach(
+            function(blog) {
 
-/* =====================================================
-   INITIALIZE PAGE
-===================================================== */
+                const card =
+                    createBlogCard(blog);
 
-updateNavigation();
+                latestBlogs.appendChild(card);
 
-loadBlogs();
+            }
+        );
 
+    }
+
+
+    /* =====================================================
+       CATEGORIES
+    ===================================================== */
+
+    function displayCategories(blogs) {
+
+        categoryList.innerHTML = "";
+
+
+        const categories = {};
+
+
+        blogs.forEach(
+            function(blog) {
+
+                const category =
+                    blog.category ||
+                    "General";
+
+
+                if (!categories[category]) {
+
+                    categories[category] =
+                        0;
+
+                }
+
+
+                categories[category]++;
+
+            }
+        );
+
+
+        const categoryNames =
+            Object.keys(categories);
+
+
+        if (categoryNames.length === 0) {
+
+            categoryList.innerHTML = `
+
+                <div class="status-message">
+                    No categories available.
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        categoryNames.forEach(
+            function(category) {
+
+                const card =
+                    document.createElement("div");
+
+
+                card.className =
+                    "category-card";
+
+
+                const count =
+                    categories[category];
+
+
+                card.innerHTML = `
+
+                    <h3>
+                        ${escapeHtml(category)}
+                    </h3>
+
+
+                    <p>
+                        ${count}
+                        ${count === 1 ? "Blog" : "Blogs"}
+                    </p>
+
+
+                    <a
+                        href="blogs.html?category=${encodeURIComponent(category)}"
+                        class="btn"
+                    >
+                        Explore
+                    </a>
+
+                `;
+
+
+                categoryList.appendChild(card);
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       LOAD PUBLIC BLOGS
+    ===================================================== */
+
+    async function loadBlogs() {
+
+        try {
+
+            /*
+                Public endpoint.
+                No token is required.
+            */
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/blogs`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load blogs."
+                );
+
+            }
+
+
+            const blogs =
+                await response.json();
+
+
+            allBlogs =
+                blogs;
+
+
+            displayFeaturedBlogs(
+                blogs
+            );
+
+
+            displayLatestBlogs(
+                blogs
+            );
+
+
+            displayCategories(
+                blogs
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Public blog loading error:",
+                error
+            );
+
+
+            featuredBlogs.innerHTML = `
+
+                <div class="status-message">
+
+                    Unable to load blogs.
+
+                    <br><br>
+
+                    Please make sure the backend
+                    server is running.
+
+                </div>
+
+            `;
+
+
+            latestBlogs.innerHTML = `
+
+                <div class="status-message">
+
+                    Unable to load blogs.
+
+                    <br><br>
+
+                    Please make sure the backend
+                    server is running.
+
+                </div>
+
+            `;
+
+
+            categoryList.innerHTML = `
+
+                <div class="status-message">
+
+                    Unable to load categories.
+
+                    <br><br>
+
+                    Please make sure the backend
+                    server is running.
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SEARCH
+    ===================================================== */
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "input",
+            function() {
+
+                displayLatestBlogs(
+                    allBlogs,
+                    searchInput.value
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+    updateNavigation();
+
+    loadBlogs();
 
 </script>
 

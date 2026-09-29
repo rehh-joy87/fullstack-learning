@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Profile | BlogSpace</title>
+    <title>Profile | INKORA</title>
 
     <link
         rel="stylesheet"
@@ -19,206 +19,428 @@
 
     <style>
 
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
         .profile-page {
             min-height: 100vh;
-            background: #0b0d10;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    #f8f6f0 0%,
+                    #ffffff 35%,
+                    #f4f1fb 70%,
+                    #e9f3ed 100%
+                );
         }
 
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
         .profile-header {
-            border-bottom: 1px solid #292f36;
-            background: #0b0d10;
+            background: #ffffff;
+
+            border-bottom: 1px solid #dfe6e1;
         }
+
 
         .profile-navbar {
             max-width: 1150px;
-            min-height: 70px;
+
+            min-height: 72px;
+
             margin: 0 auto;
+
             padding: 0 20px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
-            gap: 20px;
+
+            gap: 25px;
         }
+
 
         .profile-logo {
-            color: #f1f1f1;
+            color: #20242a;
+
             text-decoration: none;
-            font-size: 20px;
+
+            font-size: 21px;
+
             font-weight: 700;
+
+            white-space: nowrap;
         }
+
 
         .profile-logo span {
-            color: #d6a85f;
+            color: #6b9278;
         }
 
+
+        /* =====================================================
+           NAVIGATION
+
+           Logged-in navigation:
+           Home | Blogs | Categories | My Blogs | Profile | Logout
+        ===================================================== */
+
         .profile-nav {
-            display: flex;
+            display: inline-flex;
+
             align-items: center;
-            gap: 7px;
+
+            justify-content: flex-end;
+
+            gap: 26px;
+
             flex-wrap: wrap;
         }
 
+
         .profile-nav a {
-            padding: 8px 10px;
-            color: #8f969f;
+            display: inline-flex;
+
+            align-items: center;
+
+            min-height: 36px;
+
+            color: #59655e;
+
             text-decoration: none;
+
             font-size: 13px;
+
+            white-space: nowrap;
         }
+
 
         .profile-nav a:hover,
         .profile-nav a.active {
-            color: #d6a85f;
+            color: #4f765c;
         }
 
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
         .profile-main {
-            padding: 55px 20px;
+            padding: 60px 20px 80px;
         }
+
 
         .profile-container {
             max-width: 900px;
+
             margin: 0 auto;
         }
 
+
+        /* =====================================================
+           HEADING
+        ===================================================== */
+
         .profile-heading {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #292f36;
+            margin-bottom: 28px;
+
+            padding-bottom: 22px;
+
+            border-bottom: 1px solid #dfe6e1;
         }
 
+
         .profile-heading-label {
-            color: #d6a85f;
+            color: #6b9278;
+
             font-size: 11px;
+
             font-weight: 700;
+
             letter-spacing: 1.5px;
         }
 
+
         .profile-heading h1 {
             margin: 8px 0;
-            color: #f1f1f1;
-            font-size: 38px;
+
+            color: #20242a;
+
+            font-size: 40px;
+
+            line-height: 1.1;
+
+            letter-spacing: -0.8px;
         }
+
 
         .profile-heading p {
             margin: 0;
-            color: #8f969f;
+
+            color: #718078;
+
             font-size: 14px;
         }
 
-        /* PROFILE TABLE */
+
+        /* =====================================================
+           PROFILE TABLE
+        ===================================================== */
 
         .profile-table {
             width: 100%;
-            border: 1px solid #292f36;
-            border-bottom: none;
+
+            background: #ffffff;
+
+            border: 1px solid #dfe6e1;
         }
+
 
         .profile-row {
             display: grid;
-            grid-template-columns: 200px 1fr;
+
+            grid-template-columns:
+                200px 1fr;
+
             min-height: 65px;
-            border-bottom: 1px solid #292f36;
+
+            border-bottom: 1px solid #dfe6e1;
         }
+
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
 
         .profile-label {
             display: flex;
+
             align-items: center;
+
             padding: 15px 18px;
-            background: #0d1014;
-            border-right: 1px solid #292f36;
-            color: #d6a85f;
+
+            background: #f4f8f5;
+
+            border-right: 1px solid #dfe6e1;
+
+            color: #557760;
+
             font-size: 13px;
+
             font-weight: 600;
         }
+
 
         .profile-value {
             display: flex;
+
             align-items: center;
+
             padding: 15px 18px;
-            background: #11151a;
-            color: #f1f1f1;
+
+            background: #ffffff;
+
+            color: #20242a;
+
             font-size: 14px;
+
             overflow-wrap: anywhere;
         }
 
+
         .password-hidden {
+            color: #20242a;
+
             letter-spacing: 2px;
-            color: #f1f1f1;
         }
+
 
         .password-note {
             margin-left: 12px;
-            color: #686f78;
+
+            color: #89958e;
+
             font-size: 12px;
+
             letter-spacing: 0;
         }
 
+
         .account-status {
-            color: #d6a85f;
-            font-weight: 600;
+            color: #557760;
+
+            font-weight: 700;
         }
 
+
         .profile-id {
-            color: #8f969f;
+            color: #718078;
+
             font-family: monospace;
+
             font-size: 13px;
         }
 
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
         .profile-actions {
-            margin-top: 20px;
+            margin-top: 22px;
+
             display: flex;
+
             gap: 10px;
+
             flex-wrap: wrap;
         }
 
+
         .profile-button {
-            display: inline-block;
-            padding: 10px 15px;
-            border: 1px solid #292f36;
-            background: #11151a;
-            color: #d6a85f;
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 40px;
+
+            padding: 0 15px;
+
+            background: #ffffff;
+
+            border: 1px solid #d1ddd5;
+
+            color: #557760;
+
             text-decoration: none;
+
             font-size: 13px;
+
             font-weight: 600;
         }
 
+
         .profile-button:hover {
-            border-color: #d6a85f;
-            color: #f1f1f1;
+            background: #edf5ef;
+
+            border-color: #6b9278;
+
+            color: #426b50;
         }
+
 
         .profile-status {
             padding: 25px;
-            border: 1px solid #292f36;
-            color: #8f969f;
-            background: #11151a;
+
+            background: #ffffff;
+
+            color: #718078;
+
             font-size: 14px;
         }
 
-        @media (max-width: 600px) {
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .profile-page .site-footer {
+            padding: 25px 20px;
+
+            border-top: 1px solid #dfe6e1;
+
+            background: #ffffff;
+
+            text-align: center;
+        }
+
+
+        .profile-page .site-footer p {
+            margin: 0;
+
+            color: #718078;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 750px) {
 
             .profile-navbar {
                 align-items: flex-start;
+
                 flex-direction: column;
-                padding-top: 15px;
-                padding-bottom: 15px;
+
+                padding-top: 16px;
+
+                padding-bottom: 16px;
             }
 
-            .profile-heading h1 {
-                font-size: 30px;
+
+            .profile-nav {
+                width: 100%;
+
+                justify-content: flex-start;
+
+                gap: 16px;
             }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .profile-main {
+                padding:
+                    40px 18px 60px;
+            }
+
+
+            .profile-heading h1 {
+                font-size: 31px;
+            }
+
 
             .profile-row {
                 grid-template-columns: 1fr;
             }
 
+
             .profile-label {
                 min-height: 44px;
+
                 border-right: none;
-                border-bottom: 1px solid #292f36;
+
+                border-bottom: 1px solid #dfe6e1;
             }
+
 
             .profile-value {
                 min-height: 55px;
+            }
+
+
+            .profile-actions {
+                flex-direction: column;
+            }
+
+
+            .profile-button {
+                width: 100%;
             }
 
         }
@@ -230,420 +452,532 @@
 
 <body>
 
-<div class="profile-page">
-
-    <!-- =================================================
-         NAVIGATION
-    ================================================== -->
-
-    <header class="profile-header">
-
-        <div class="profile-navbar">
-
-            <a
-                href="index.html"
-                class="profile-logo"
-            >
-                <span>●</span> BlogSpace
-            </a>
+    <div class="profile-page">
 
 
-            <nav class="profile-nav">
+        <!-- =================================================
+             HEADER
+        ================================================== -->
 
-                <a href="index.html">
-                    Home
-                </a>
+        <header class="profile-header">
 
-                <a href="blogs.html">
-                    Blogs
-                </a>
+            <div class="profile-navbar">
 
-                <a href="categories.html">
-                    Categories
-                </a>
-
-                <a href="my-blogs.html">
-                    My Blogs
-                </a>
 
                 <a
-                    href="profile.html"
-                    class="active"
+                    href="index.html"
+                    class="profile-logo"
                 >
-                    Profile
+                    <span>●</span> INKORA
                 </a>
 
-                <a
-                    href="#"
-                    id="logoutButton"
-                >
-                    Logout
-                </a>
 
-            </nav>
-
-        </div>
-
-    </header>
+                <nav class="profile-nav">
 
 
-    <!-- =================================================
-         MAIN
-    ================================================== -->
+                    <a href="index.html">
+                        Home
+                    </a>
 
-    <main class="profile-main">
 
-        <div class="profile-container">
+                    <a href="blogs.html">
+                        Blogs
+                    </a>
 
-            <div class="profile-heading">
 
-                <span class="profile-heading-label">
-                    ACCOUNT
-                </span>
+                    <a href="categories.html">
+                        Categories
+                    </a>
 
-                <h1>
-                    Profile
-                </h1>
 
-                <p>
-                    Your BlogSpace account information.
-                </p>
+                    <a href="my-blogs.html">
+                        My Blogs
+                    </a>
+
+
+                    <a
+                        href="profile.html"
+                        class="active"
+                    >
+                        Profile
+                    </a>
+
+
+                    <a
+                        href="#"
+                        id="logoutButton"
+                    >
+                        Logout
+                    </a>
+
+
+                </nav>
 
             </div>
 
+        </header>
 
-            <section
-                id="profileBox"
-                class="profile-table"
-            >
 
-                <div class="profile-status">
-                    Loading profile...
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="profile-main">
+
+            <div class="profile-container">
+
+
+                <div class="profile-heading">
+
+                    <span class="profile-heading-label">
+                        ACCOUNT
+                    </span>
+
+
+                    <h1>
+                        Your Profile
+                    </h1>
+
+
+                    <p>
+                        View your INKORA account information.
+                    </p>
+
                 </div>
 
-            </section>
 
-
-            <div class="profile-actions">
-
-                <a
-                    href="my-blogs.html"
-                    class="profile-button"
+                <section
+                    id="profileBox"
+                    class="profile-table"
                 >
-                    My Blogs
-                </a>
 
-                <a
-                    href="blog.html"
-                    class="profile-button"
-                >
-                    Write a Blog
-                </a>
+                    <div class="profile-status">
+                        Loading profile...
+                    </div>
 
-                <a
-                    href="dashboard.html"
-                    class="profile-button"
-                >
-                    Dashboard
-                </a>
+                </section>
+
+
+                <div class="profile-actions">
+
+
+                    <a
+                        href="my-blogs.html"
+                        class="profile-button"
+                    >
+                        My Blogs
+                    </a>
+
+
+                    <a
+                        href="blog.html"
+                        class="profile-button"
+                    >
+                        Write a Blog
+                    </a>
+
+
+                    <a
+                        href="dashboard.html"
+                        class="profile-button"
+                    >
+                        Dashboard
+                    </a>
+
+
+                </div>
+
 
             </div>
 
-        </div>
-
-    </main>
-
-</div>
+        </main>
 
 
-<script>
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
 
-    const API_URL =
-        "http://localhost:3000";
+        <footer class="site-footer">
 
+            <p>
+                © 2026 INKORA | Stories. Ideas. Knowledge.
+            </p>
 
-    const token =
-        localStorage.getItem("token");
-
-
-    if (!token) {
-
-        window.location.href =
-            "login.html";
-    }
+        </footer>
 
 
-    function authHeaders() {
-
-        return {
-            "Authorization":
-                `Bearer ${token}`
-        };
-    }
+    </div>
 
 
-    function escapeHtml(value) {
-
-        const div =
-            document.createElement("div");
-
-        div.textContent =
-            value ?? "";
-
-        return div.innerHTML;
-    }
+    <script src="config.js"></script>
 
 
-    function formatDate(dateValue) {
+    <script>
 
-        if (!dateValue) {
-            return "Not available";
+        /* =====================================================
+           LOGIN CHECK
+        ===================================================== */
+
+        const token =
+            sessionStorage.getItem("token");
+
+
+        if (!token) {
+
+            window.location.href =
+                "login.html";
+
         }
 
-        const date =
-            new Date(dateValue);
 
-        if (Number.isNaN(date.getTime())) {
-            return "Not available";
+        /* =====================================================
+           AUTH HEADERS
+        ===================================================== */
+
+        function authHeaders() {
+
+            return {
+                "Authorization":
+                    `Bearer ${token}`
+            };
+
         }
 
-        return date.toLocaleDateString(
-            "en-US",
-            {
-                year: "numeric",
-                month: "long",
-                day: "numeric"
+
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
+
+        function escapeHtml(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                value ?? "";
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================================
+           FORMAT DATE
+        ===================================================== */
+
+        function formatDate(dateValue) {
+
+            if (!dateValue) {
+                return "Not available";
             }
-        );
-    }
 
 
-    function logout() {
-
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-
-        window.location.href =
-            "index.html";
-    }
-
-
-    document
-        .getElementById("logoutButton")
-        .addEventListener(
-            "click",
-            function(event) {
-
-                event.preventDefault();
-
-                logout();
-            }
-        );
-
-
-    async function loadProfile() {
-
-        const box =
-            document.getElementById(
-                "profileBox"
-            );
-
-
-        try {
-
-            const [
-                userResponse,
-                blogsResponse
-            ] = await Promise.all([
-
-                fetch(
-                    `${API_URL}/me`,
-                    {
-                        headers:
-                            authHeaders()
-                    }
-                ),
-
-                fetch(
-                    `${API_URL}/my-blogs`,
-                    {
-                        headers:
-                            authHeaders()
-                    }
-                )
-
-            ]);
+            const date =
+                new Date(dateValue);
 
 
             if (
-                userResponse.status === 401 ||
-                userResponse.status === 403 ||
-                blogsResponse.status === 401 ||
-                blogsResponse.status === 403
+                Number.isNaN(
+                    date.getTime()
+                )
             ) {
 
-                logout();
+                return "Not available";
 
-                return;
             }
 
 
-            if (!userResponse.ok) {
+            return date.toLocaleDateString(
+                "en-US",
+                {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                }
+            );
 
-                throw new Error(
-                    "Unable to load profile"
-                );
-            }
-
-
-            if (!blogsResponse.ok) {
-
-                throw new Error(
-                    "Unable to load blogs"
-                );
-            }
+        }
 
 
-            const user =
-                await userResponse.json();
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        function logout() {
+
+            sessionStorage.removeItem(
+                "token"
+            );
+
+            sessionStorage.removeItem(
+                "user"
+            );
+
+            window.location.href =
+                "index.html";
+        }
 
 
-            const blogs =
-                await blogsResponse.json();
+        document
+            .getElementById("logoutButton")
+            .addEventListener(
+                "click",
+                function(event) {
 
+                    event.preventDefault();
 
-            box.innerHTML = `
+                    logout();
 
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Name
-                    </div>
-
-                    <div class="profile-value">
-                        ${escapeHtml(user.name || "Not available")}
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Email
-                    </div>
-
-                    <div class="profile-value">
-                        ${escapeHtml(user.email || "Not available")}
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Password
-                    </div>
-
-                    <div class="profile-value">
-
-                        <span class="password-hidden">
-                            ••••••••••
-                        </span>
-
-                        <span class="password-note">
-                            Password protected
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Account Status
-                    </div>
-
-                    <div class="profile-value">
-
-                        <span class="account-status">
-                            Active
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Created Date
-                    </div>
-
-                    <div class="profile-value">
-                        ${formatDate(user.createdAt)}
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        User ID
-                    </div>
-
-                    <div class="profile-value">
-
-                        <span class="profile-id">
-                            ${escapeHtml(user.id || "Not available")}
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Total Blogs
-                    </div>
-
-                    <div class="profile-value">
-                        ${blogs.length}
-                    </div>
-
-                </div>
-
-            `;
-
-        } catch (error) {
-
-            console.error(
-                "Profile error:",
-                error
+                }
             );
 
 
-            box.innerHTML = `
-                <div class="profile-status">
-                    Unable to load profile.
-                    <br>
-                    Please make sure the backend server is running.
-                </div>
-            `;
+        /* =====================================================
+           LOAD PROFILE
+        ===================================================== */
+
+        async function loadProfile() {
+
+            const box =
+                document.getElementById(
+                    "profileBox"
+                );
+
+
+            try {
+
+                const [
+                    userResponse,
+                    blogsResponse
+                ] = await Promise.all([
+
+                    fetch(
+                        `${API_BASE_URL}/me`,
+                        {
+                            headers:
+                                authHeaders()
+                        }
+                    ),
+
+                    fetch(
+                        `${API_BASE_URL}/my-blogs`,
+                        {
+                            headers:
+                                authHeaders()
+                        }
+                    )
+
+                ]);
+
+
+                /* INVALID TOKEN */
+
+                if (
+                    userResponse.status === 401 ||
+                    userResponse.status === 403 ||
+                    blogsResponse.status === 401 ||
+                    blogsResponse.status === 403
+                ) {
+
+                    sessionStorage.removeItem(
+                        "token"
+                    );
+
+                    sessionStorage.removeItem(
+                        "user"
+                    );
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                if (!userResponse.ok) {
+
+                    throw new Error(
+                        "Unable to load profile."
+                    );
+
+                }
+
+
+                if (!blogsResponse.ok) {
+
+                    throw new Error(
+                        "Unable to load blogs."
+                    );
+
+                }
+
+
+                const user =
+                    await userResponse.json();
+
+
+                const blogs =
+                    await blogsResponse.json();
+
+
+                /* =============================================
+                   PROFILE INFORMATION
+                ============================================= */
+
+                box.innerHTML = `
+
+                    <div class="profile-row">
+
+                        <div class="profile-label">
+                            Name
+                        </div>
+
+                        <div class="profile-value">
+                            ${escapeHtml(
+                                user.name ||
+                                "Not available"
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-row">
+
+                        <div class="profile-label">
+                            Email
+                        </div>
+
+                        <div class="profile-value">
+                            ${escapeHtml(
+                                user.email ||
+                                "Not available"
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-row">
+
+                        <div class="profile-label">
+                            Password
+                        </div>
+
+                        <div class="profile-value">
+
+                            <span class="password-hidden">
+                                ••••••••••
+                            </span>
+
+                            <span class="password-note">
+                                Password protected
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-row">
+
+                        <div class="profile-label">
+                            Account Status
+                        </div>
+
+                        <div class="profile-value">
+
+                            <span class="account-status">
+                                Active
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-row">
+
+                        <div class="profile-label">
+                            Created Date
+                        </div>
+
+                        <div class="profile-value">
+                            ${formatDate(
+                                user.createdAt
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-row">
+
+                        <div class="profile-label">
+                            User ID
+                        </div>
+
+                        <div class="profile-value">
+
+                            <span class="profile-id">
+                                ${escapeHtml(
+                                    user.id ||
+                                    "Not available"
+                                )}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-row">
+
+                        <div class="profile-label">
+                            Total Blogs
+                        </div>
+
+                        <div class="profile-value">
+                            ${blogs.length}
+                        </div>
+
+                    </div>
+
+                `;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Profile error:",
+                    error
+                );
+
+
+                box.innerHTML = `
+
+                    <div class="profile-status">
+
+                        Unable to load profile.
+
+                        <br><br>
+
+                        Please make sure the backend server is running.
+
+                    </div>
+
+                `;
+
+            }
+
         }
-    }
 
 
-    loadProfile();
+        loadProfile();
 
-</script>
+    </script>
 
 </body>
+
 </html>

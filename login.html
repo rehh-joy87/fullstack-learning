@@ -115,66 +115,8 @@
 </footer>
 
 
-<script>
-const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
-
-loginForm.addEventListener("submit", async function (e) {
-
-    e.preventDefault();
-
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-
-    loginMessage.textContent = "";
-    loginMessage.className = "form-message";
-
-    try {
-
-        const response = await fetch("http://localhost:3000/login", {
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                email,
-                password
-            })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || "Login failed");
-        }
-
-        localStorage.setItem("token", data.token);
-
-        if (data.user) {
-            localStorage.setItem("user", JSON.stringify(data.user));
-        }
-
-        loginMessage.textContent = "Login successful.";
-        loginMessage.classList.add("success");
-
-        setTimeout(() => {
-            window.location.href = "dashboard.html";
-        }, 700);
-
-    } catch (error) {
-
-        console.error(error);
-
-        loginMessage.textContent =
-            error.message || "Unable to login.";
-
-        loginMessage.classList.add("error");
-    }
-
-});
-</script>
+<script src="config.js"></script>
+<script src="login.js"></script>
 
 </body>
 </html>

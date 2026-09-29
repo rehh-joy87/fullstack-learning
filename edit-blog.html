@@ -2,72 +2,38 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Edit Blog | BlogSpace</title>
+    <title>Edit Blog | INKORA</title>
 
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-
     <!-- NAVBAR -->
+    <header class="site-header">
 
-    <header class="navbar">
+        <div class="navbar">
 
-        <div class="navbar-inner">
-
-            <a
-                href="index.html"
-                class="logo"
-            >
-                BlogSpace
+            <a href="index.html" class="logo">
+                <span class="logo-dot">●</span> INKORA
             </a>
 
             <nav class="nav-links">
 
-                <a href="index.html">
-                    Home
-                </a>
+                <a href="index.html">Home</a>
 
-                <a href="blogs.html">
-                    Blogs
-                </a>
+                <a href="blogs.html">Blogs</a>
 
-                <a href="categories.html">
-                    Categories
-                </a>
+                <a href="categories.html">Categories</a>
 
-                <a href="my-blogs.html">
-                    My Blogs
-                </a>
+                <a href="my-blogs.html">My Blogs</a>
 
-                <a href="dashboard.html">
-                    Dashboard
-                </a>
+                <a href="profile.html">Profile</a>
 
-                <a href="profile.html">
-                    Profile
-                </a>
-
-                <a href="blog.html" class="nav-cta">
-                    Write a Blog
-                </a>
-
-                <a
-                    href="#"
-                    onclick="logout()"
-                >
-                    Logout
-                </a>
+                <a href="#" id="logoutButton">Logout</a>
 
             </nav>
 
@@ -76,48 +42,48 @@
     </header>
 
 
-    <!-- EDIT -->
+    <!-- EDIT BLOG -->
 
-    <main class="section">
+    <main class="page">
 
-        <div class="container">
+        <div class="form-wrapper">
 
-            <div
-                class="auth-card"
-                style="max-width: 800px; margin:auto;"
-            >
+            <div class="form-card">
 
-                <h1>
-                    Edit Blog
-                </h1>
+                <h1>Edit Blog</h1>
 
-                <p>
-                    Update your blog post.
+                <p class="form-intro">
+                    Update your story, category, image, or content.
                 </p>
 
 
                 <div
                     id="message"
-                    class="message"
+                    class="form-message"
                 ></div>
 
 
                 <form id="editForm">
 
+                    <!-- TITLE -->
+
                     <div class="form-group">
 
                         <label for="title">
-                            Title
+                            Blog Title
                         </label>
 
                         <input
                             type="text"
                             id="title"
+                            placeholder="Enter your blog title"
                             required
                         >
 
                     </div>
 
+
+                    <!-- CATEGORY -->
 
                     <div class="form-group">
 
@@ -125,39 +91,112 @@
                             Category
                         </label>
 
-                        <select
-                            id="category"
-                            required
-                        >
+                        <select id="category" required>
 
-                            <option value="Technology">
-                                Technology
+                            <option value="Technical">
+                                Technical
                             </option>
 
-                            <option value="Python">
-                                Python
-                            </option>
-
-                            <option value="AI">
-                                AI
-                            </option>
-
-                            <option value="Machine Learning">
-                                Machine Learning
+                            <option value="Food">
+                                Food
                             </option>
 
                             <option value="Travel">
                                 Travel
                             </option>
 
-                            <option value="Lifestyle">
-                                Lifestyle
+                            <option value="Interior">
+                                Interior
+                            </option>
+
+                            <option value="Craft">
+                                Craft
+                            </option>
+
+                            <option value="Music">
+                                Music
+                            </option>
+
+                            <option value="Nature">
+                                Nature
+                            </option>
+
+                            <option value="Dresses">
+                                Dresses
+                            </option>
+
+                            <option value="Climate">
+                                Climate
                             </option>
 
                         </select>
 
                     </div>
 
+
+                    <!-- CURRENT IMAGE -->
+
+                    <div
+                        class="form-group"
+                        id="currentImageGroup"
+                        style="display:none;"
+                    >
+
+                        <label>
+                            Current Image
+                        </label>
+
+                        <div class="image-preview">
+
+                            <img
+                                id="currentImage"
+                                src=""
+                                alt="Current blog image"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NEW IMAGE -->
+
+                    <div class="form-group">
+
+                        <label for="image">
+                            Replace Image
+                        </label>
+
+                        <input
+                            type="file"
+                            id="image"
+                            accept="image/jpeg,image/png,image/webp"
+                        >
+
+                        <div class="image-help">
+                            Optional. JPG, PNG or WEBP. Maximum size: 5 MB.
+                        </div>
+
+                    </div>
+
+
+                    <!-- NEW IMAGE PREVIEW -->
+
+                    <div
+                        id="imagePreview"
+                        class="image-preview hidden"
+                    >
+
+                        <img
+                            id="previewImage"
+                            src=""
+                            alt="New image preview"
+                        >
+
+                    </div>
+
+
+                    <!-- CONTENT -->
 
                     <div class="form-group">
 
@@ -167,14 +206,18 @@
 
                         <textarea
                             id="content"
+                            placeholder="Write your blog content..."
                             required
                         ></textarea>
 
                     </div>
 
 
+                    <!-- BUTTON -->
+
                     <button
                         type="submit"
+                        id="saveButton"
                         class="form-button"
                     >
                         Save Changes
@@ -189,243 +232,19 @@
     </main>
 
 
-    <script>
+    <!-- FOOTER -->
 
-        const API_URL =
-            "http://localhost:3000";
+    <footer class="site-footer">
 
-        const token =
-            localStorage.getItem("token");
+        <p>
+            © 2026 INKORA | Stories. Ideas. Knowledge.
+        </p>
 
+    </footer>
 
-        if (!token) {
 
-            window.location.href =
-                "login.html";
-
-        }
-
-
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
-        const blogId =
-            params.get("id");
-
-
-        const form =
-            document.getElementById(
-                "editForm"
-            );
-
-        const message =
-            document.getElementById(
-                "message"
-            );
-
-
-        function showMessage(text, type) {
-
-            message.textContent =
-                text;
-
-            message.className =
-                `message show ${type}`;
-
-        }
-
-
-        /* =====================================================
-           LOAD BLOG
-           ===================================================== */
-
-        async function loadBlog() {
-
-            if (!blogId) {
-
-                showMessage(
-                    "No blog ID provided.",
-                    "error"
-                );
-
-                form.style.display =
-                    "none";
-
-                return;
-
-            }
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        `${API_URL}/blogs/${blogId}`
-                    );
-
-
-                const blog =
-                    await response.json();
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        blog.message ||
-                        "Blog not found"
-                    );
-
-                }
-
-
-                document.getElementById("title")
-                    .value =
-                    blog.title || "";
-
-
-                document.getElementById("category")
-                    .value =
-                    blog.category || "Technology";
-
-
-                document.getElementById("content")
-                    .value =
-                    blog.content || "";
-
-
-            } catch (error) {
-
-                console.error(error);
-
-                showMessage(
-                    error.message,
-                    "error"
-                );
-
-                form.style.display =
-                    "none";
-
-            }
-
-        }
-
-
-        /* =====================================================
-           UPDATE BLOG
-           ===================================================== */
-
-        form.addEventListener(
-            "submit",
-            async function(event) {
-
-                event.preventDefault();
-
-
-                const title =
-                    document
-                        .getElementById("title")
-                        .value
-                        .trim();
-
-                const category =
-                    document
-                        .getElementById("category")
-                        .value;
-
-                const content =
-                    document
-                        .getElementById("content")
-                        .value
-                        .trim();
-
-
-                try {
-
-                    const response =
-                        await fetch(
-                            `${API_URL}/blogs/${blogId}`,
-                            {
-                                method: "PUT",
-
-                                headers: {
-
-                                    "Content-Type":
-                                        "application/json",
-
-                                    "Authorization":
-                                        `Bearer ${token}`
-
-                                },
-
-                                body: JSON.stringify({
-                                    title,
-                                    category,
-                                    content
-                                })
-
-                            }
-                        );
-
-
-                    const data =
-                        await response.json();
-
-
-                    if (!response.ok) {
-
-                        throw new Error(
-                            data.message ||
-                            "Failed to update blog"
-                        );
-
-                    }
-
-
-                    showMessage(
-                        "Blog updated successfully!",
-                        "success"
-                    );
-
-
-                    setTimeout(() => {
-
-                        window.location.href =
-                            "my-blogs.html";
-
-                    }, 900);
-
-
-                } catch (error) {
-
-                    console.error(error);
-
-                    showMessage(
-                        error.message,
-                        "error"
-                    );
-
-                }
-
-            }
-        );
-
-
-        function logout() {
-
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-
-            window.location.href =
-                "index.html";
-
-        }
-
-
-        loadBlog();
-
-    </script>
+    <script src="config.js"></script>
+    <script src="editBlog.js"></script>
 
 </body>
 

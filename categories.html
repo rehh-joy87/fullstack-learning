@@ -1,28 +1,197 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<title>Categories | INKORA</title>
 
-    <title>Categories - BlogSpace</title>
+<link rel="stylesheet" href="style.css">
 
-    <link rel="stylesheet" href="style.css">
+<style>
+    /* ==============================
+       CATEGORIES PAGE
+    ============================== */
+
+    .categories-page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 55px 25px 80px;
+    }
+
+    /* Header */
+
+    .categories-header {
+        text-align: center;
+        max-width: 650px;
+        margin: 0 auto 45px;
+    }
+
+    .categories-header h1 {
+        margin: 0 0 10px;
+        color: #20242a;
+        font-size: 40px;
+        font-weight: 700;
+    }
+
+    .categories-header p {
+        margin: 0;
+        color: #707a74;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    /* Grid */
+
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    /* Category Card */
+
+    .category-card {
+        min-height: 180px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+        text-decoration: none;
+
+        background: #f7faf8;
+        border: 1px solid #dfe7e1;
+        border-radius: 14px;
+
+        padding: 25px 20px;
+
+        transition:
+            transform 0.2s ease,
+            background 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .category-card:hover {
+        transform: translateY(-4px);
+        background: #eef5f0;
+        border-color: #b8cbbd;
+        box-shadow: 0 8px 22px rgba(40, 60, 48, 0.08);
+    }
+
+    /* Emoji */
+
+    .category-emoji {
+        width: 65px;
+        height: 65px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #e8f0ea;
+        border-radius: 50%;
+
+        font-size: 32px;
+
+        margin-bottom: 15px;
+    }
+
+    /* Text */
+
+    .category-card h2 {
+        margin: 0 0 6px;
+
+        color: #20242a;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .category-card span {
+        color: #707a74;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    /* Footer */
+
+    .site-footer {
+        margin-top: 20px;
+    }
+
+    /* ==============================
+       TABLET
+    ============================== */
+
+    @media (max-width: 850px) {
+
+        .category-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 550px) {
+
+        .categories-page {
+            padding: 40px 18px 60px;
+        }
+
+        .categories-header {
+            margin-bottom: 30px;
+        }
+
+        .categories-header h1 {
+            font-size: 32px;
+        }
+
+        .categories-header p {
+            font-size: 14px;
+        }
+
+        .category-grid {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+
+        .category-card {
+            min-height: 150px;
+        }
+
+        .category-emoji {
+            width: 58px;
+            height: 58px;
+            font-size: 28px;
+        }
+
+        .category-card h2 {
+            font-size: 19px;
+        }
+    }
+</style>
 
 </head>
 
 <body>
+
+<!-- ==============================
+     HEADER
+============================== -->
 
 <header class="site-header">
 
     <nav class="navbar">
 
         <a href="index.html" class="logo">
-            BlogSpace
+            INKORA
         </a>
 
         <div class="nav-links">
@@ -35,11 +204,11 @@
                 Blogs
             </a>
 
-            <a href="categories.html" class="active">
+            <a href="categories.html">
                 Categories
             </a>
 
-            <span id="authLinks"></span>
+            <span id="authLinks" class="nav-auth-links"></span>
 
         </div>
 
@@ -48,48 +217,212 @@
 </header>
 
 
-<main class="page">
+<!-- ==============================
+     MAIN CONTENT
+============================== -->
 
-    <div class="page-header">
+<main class="categories-page">
 
-        <span class="eyebrow">
-            EXPLORE
-        </span>
+    <section class="categories-header">
 
-        <h1>
-            Categories
-        </h1>
+        <h1>Explore Categories</h1>
 
         <p>
-            Browse blogs by topic.
+            Discover stories, ideas and knowledge across
+            different interests and perspectives.
         </p>
 
-    </div>
+    </section>
 
 
-    <div
-        id="categoryList"
-        class="category-grid">
+    <!-- ==============================
+         CATEGORY GRID
+    ============================== -->
 
-        <div class="status-message">
-            Loading categories...
-        </div>
+    <section class="category-grid">
 
-    </div>
+
+        <!-- Technical -->
+
+        <a href="blogs.html?category=Technical"
+           class="category-card">
+
+            <div class="category-emoji">
+                💻
+            </div>
+
+            <h2>Technical</h2>
+
+            <span>
+                Technology, coding and innovation
+            </span>
+
+        </a>
+
+
+        <!-- Food -->
+
+        <a href="blogs.html?category=Food"
+           class="category-card">
+
+            <div class="category-emoji">
+                🍲
+            </div>
+
+            <h2>Food</h2>
+
+            <span>
+                Recipes, cooking and food stories
+            </span>
+
+        </a>
+
+
+        <!-- Travel -->
+
+        <a href="blogs.html?category=Travel"
+           class="category-card">
+
+            <div class="category-emoji">
+                ✈️
+            </div>
+
+            <h2>Travel</h2>
+
+            <span>
+                Places, journeys and adventures
+            </span>
+
+        </a>
+
+
+        <!-- Interior -->
+
+        <a href="blogs.html?category=Interior"
+           class="category-card">
+
+            <div class="category-emoji">
+                🏠
+            </div>
+
+            <h2>Interior</h2>
+
+            <span>
+                Homes, spaces and design
+            </span>
+
+        </a>
+
+
+        <!-- Craft -->
+
+        <a href="blogs.html?category=Craft"
+           class="category-card">
+
+            <div class="category-emoji">
+                🧵
+            </div>
+
+            <h2>Craft</h2>
+
+            <span>
+                Handmade creations and creativity
+            </span>
+
+        </a>
+
+
+        <!-- Music -->
+
+        <a href="blogs.html?category=Music"
+           class="category-card">
+
+            <div class="category-emoji">
+                🎵
+            </div>
+
+            <h2>Music</h2>
+
+            <span>
+                Artists, songs and musical stories
+            </span>
+
+        </a>
+
+
+        <!-- Nature -->
+
+        <a href="blogs.html?category=Nature"
+           class="category-card">
+
+            <div class="category-emoji">
+                🌿
+            </div>
+
+            <h2>Nature</h2>
+
+            <span>
+                Wildlife and the natural world
+            </span>
+
+        </a>
+
+
+        <!-- Outfits -->
+
+        <a href="blogs.html?category=Dresses"
+           class="category-card">
+
+            <div class="category-emoji">
+                👗
+            </div>
+
+            <h2>Outfits</h2>
+
+            <span>
+                Fashion, outfits and style
+            </span>
+
+        </a>
+
+
+        <!-- Climate -->
+
+        <a href="blogs.html?category=Climate"
+           class="category-card">
+
+            <div class="category-emoji">
+                🌍
+            </div>
+
+            <h2>Climate</h2>
+
+            <span>
+                Environment and sustainability
+            </span>
+
+        </a>
+
+
+    </section>
 
 </main>
 
+
+<!-- ==============================
+     FOOTER
+============================== -->
 
 <footer class="site-footer">
 
     <div class="footer-inner">
 
         <span>
-            © 2026 BlogSpace
+            © 2026 INKORA
         </span>
 
         <span>
-            Explore
+            Stories. Ideas. Knowledge.
         </span>
 
     </div>
@@ -97,171 +430,55 @@
 </footer>
 
 
+<!-- ==============================
+     NAVIGATION SCRIPT
+============================== -->
+
 <script>
 
-const API_URL = "http://localhost:3000";
+    function setupNavigation() {
+
+        const authLinks =
+            document.getElementById("authLinks");
 
 
-// ---------------------------------------------------------
-// NAV
-// ---------------------------------------------------------
+        if (sessionStorage.getItem("token")) {
 
-function setupNavigation() {
-
-    const authLinks =
-        document.getElementById("authLinks");
-
-    if (localStorage.getItem("token")) {
-
-        authLinks.innerHTML = `
-
-            <a href="my-blogs.html">
-                My Blogs
-            </a>
-
-            <a href="dashboard.html">
-                Dashboard
-            </a>
-
-            <a href="profile.html">
-                Profile
-            </a>
-
-            <a href="blog.html" class="nav-button">
-                Write a Blog
-            </a>
-
-            <a href="#" onclick="logout()">
-                Logout
-            </a>
-
-        `;
-
-    } else {
-
-        authLinks.innerHTML = `
-
-            <a href="register.html">
-                Register
-            </a>
-
-            <a href="login.html">
-                Login
-            </a>
-
-        `;
-    }
-}
+            authLinks.innerHTML = `
+                <a href="my-blogs.html">My Blogs</a>
+                <a href="profile.html">Profile</a>
+                <a href="#" id="logoutLink">Logout</a>
+            `;
 
 
-// ---------------------------------------------------------
-// LOAD CATEGORIES
-// ---------------------------------------------------------
+            document
+                .getElementById("logoutLink")
+                .addEventListener("click", function(event) {
 
-async function loadCategories() {
+                    event.preventDefault();
 
-    try {
+                    sessionStorage.removeItem("token");
+                    sessionStorage.removeItem("user");
 
-        const response =
-            await fetch(`${API_URL}/blogs`);
+                    window.location.href =
+                        "index.html";
 
-        if (!response.ok) {
-            throw new Error("Failed to load blogs");
+                });
+
+
+        } else {
+
+            authLinks.innerHTML = `
+                <a href="register.html">Register</a>
+                <a href="login.html">Login</a>
+            `;
+
         }
 
-        const blogs =
-            await response.json();
-
-        const categories = {};
-
-        blogs.forEach(blog => {
-
-            const category =
-                blog.category || "General";
-
-            categories[category] =
-                (categories[category] || 0) + 1;
-
-        });
-
-        const categoryList =
-            document.getElementById("categoryList");
-
-        const entries =
-            Object.entries(categories);
-
-        if (!entries.length) {
-
-            categoryList.innerHTML =
-                `<div class="empty-state">
-                    No categories available.
-                 </div>`;
-
-            return;
-        }
-
-        categoryList.innerHTML =
-            entries.map(([name, count]) => `
-
-                <a
-                    class="category-card"
-                    href="blogs.html?category=${encodeURIComponent(name)}">
-
-                    <h3>
-                        ${escapeHTML(name)}
-                    </h3>
-
-                    <p>
-                        ${count}
-                        ${count === 1 ? "blog" : "blogs"}
-                    </p>
-
-                </a>
-
-            `).join("");
-
-    } catch (error) {
-
-        console.error(error);
-
-        document.getElementById("categoryList").innerHTML =
-            `<div class="status-message">
-                Unable to load categories.
-             </div>`;
     }
-}
 
 
-// ---------------------------------------------------------
-// LOGOUT
-// ---------------------------------------------------------
-
-function logout() {
-
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-
-    window.location.href = "index.html";
-}
-
-
-// ---------------------------------------------------------
-// ESCAPE
-// ---------------------------------------------------------
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-setupNavigation();
-loadCategories();
+    setupNavigation();
 
 </script>
 
