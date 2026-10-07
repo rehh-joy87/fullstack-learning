@@ -4,20 +4,28 @@ const dns = require("dns");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
 const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
 const path = require("path");
 const fs = require("fs");
 
-
 require("dotenv").config();
-
 
 const Blog = require("./models/Blog");
 const User = require("./models/User");
 const authenticateToken = require("./middleware/auth");
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
+
+// ===============================
+// CLOUDINARY CONFIGURATION
+// ===============================
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 const app = express();
 
@@ -26,8 +34,15 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Serve frontend files
+// ===============================
+// SERVE FRONTEND FILES
+// ===============================
+
 app.use(express.static(__dirname));
+
+// ===============================
+// IMAGE UPLOAD
+// ===============================
 
 const uploadDirectory = path.join(__dirname, "uploads");
 
@@ -37,30 +52,15 @@ if (!fs.existsSync(uploadDirectory)) {
     });
 }
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadDirectory);
-    },
-
-    filename: function (req, file, cb) {
-        const extension =
-            path.extname(file.originalname).toLowerCase();
-
-        const uniqueName =
-            `${Date.now()}-${Math.round(Math.random() * 1e9)}${extension}`;
-
-        cb(null, uniqueName);
-    }
-});
-
 const upload = multer({
-    storage: storage,
+    storage: multer.memoryStorage(),
 
     limits: {
         fileSize: 5 * 1024 * 1024
     },
 
     fileFilter: function (req, file, cb) {
+
         const allowedTypes = [
             "image/jpeg",
             "image/png",
@@ -68,48 +68,69 @@ const upload = multer({
         ];
 
         if (!allowedTypes.includes(file.mimetype)) {
+
             return cb(
                 new Error(
                     "Only JPG, PNG and WEBP images are allowed."
                 )
             );
+
         }
 
         cb(null, true);
     }
 });
 
-// Make uploaded images publicly accessible
+// Keep old local images accessible locally
+app.use(
+    "/uploads",
+    express.static(uploadDirectory)
+);
 
-app.use("/uploads",express.static(uploadDirectory));
-
-
-
-console.log("Mongo URI exists:", !!process.env.MONGO_URI);
-
+console.log(
+    "Mongo URI exists:",
+    !!process.env.MONGO_URI
+);
 
 // ===============================
 // MONGODB CONNECTION
 // ===============================
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("MongoDB connected successfully!");
-        console.log("Database name:", mongoose.connection.name);
-    })
-    .catch((error) => {
-        console.error("MongoDB connection failed:", error);
-    });
 
+    .then(() => {
+
+        console.log(
+            "MongoDB connected successfully!"
+        );
+
+        console.log(
+            "Database name:",
+            mongoose.connection.name
+        );
+
+    })
+
+    .catch((error) => {
+
+        console.error(
+            "MongoDB connection failed:",
+            error
+        );
+
+    });
 
 // ===============================
 // HOME
 // ===============================
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-});
 
+    res.sendFile(
+        path.join(__dirname, "index.html")
+    );
+
+});
 
 // ===============================
 // REGISTER
@@ -119,60 +140,96 @@ app.post("/register", async (req, res) => {
 
     try {
 
-        const { name, email, password } = req.body;
+        const {
+            name,
+            email,
+            password
+        } = req.body;
 
         if (!name || !email || !password) {
+
             return res.status(400).json({
-                message: "Please provide name, email and password"
+                message:
+                    "Please provide name, email and password"
             });
+
         }
 
-        const cleanEmail = email.trim().toLowerCase();
+        const cleanEmail =
+            email.trim().toLowerCase();
 
-        const existingUser = await User.findOne({
-            email: cleanEmail
-        });
+        const existingUser =
+            await User.findOne({
+                email: cleanEmail
+            });
 
         if (existingUser) {
+
             return res.status(400).json({
-                message: "User already exists"
+                message:
+                    "User already exists"
             });
+
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword =
+            await bcrypt.hash(password, 10);
 
         const newUser = new User({
+
             name: name.trim(),
+
             email: cleanEmail,
+
             password: hashedPassword
+
         });
 
-        const savedUser = await newUser.save();
+        const savedUser =
+            await newUser.save();
 
-        console.log("USER SAVED:", savedUser._id);
+        console.log(
+            "USER SAVED:",
+            savedUser._id
+        );
 
         res.status(201).json({
-            message: "Registration successful!",
+
+            message:
+                "Registration successful!",
+
             user: {
+
                 id: savedUser._id,
+
                 name: savedUser.name,
+
                 email: savedUser.email
+
             }
+
         });
 
     } catch (error) {
 
-        console.error("REGISTRATION ERROR:", error);
+        console.error(
+            "REGISTRATION ERROR:",
+            error
+        );
 
         res.status(500).json({
-            message: "Registration failed",
-            error: error.message
+
+            message:
+                "Registration failed",
+
+            error:
+                error.message
+
         });
 
     }
 
 });
-
 
 // ===============================
 // LOGIN
@@ -182,192 +239,324 @@ app.post("/login", async (req, res) => {
 
     try {
 
-        const { email, password } = req.body;
+        const {
+            email,
+            password
+        } = req.body;
 
-        console.log("LOGIN EMAIL:", email);
-        console.log("LOGIN PASSWORD RECEIVED:", !!password);
+        console.log(
+            "LOGIN EMAIL:",
+            email
+        );
+
+        console.log(
+            "LOGIN PASSWORD RECEIVED:",
+            !!password
+        );
 
         if (!email || !password) {
+
             return res.status(400).json({
-                message: "Please provide email and password"
+
+                message:
+                    "Please provide email and password"
+
             });
+
         }
 
-        const cleanEmail = email.trim().toLowerCase();
+        const cleanEmail =
+            email.trim().toLowerCase();
 
-        console.log("SEARCHING EMAIL:", cleanEmail);
+        console.log(
+            "SEARCHING EMAIL:",
+            cleanEmail
+        );
 
-        const user = await User.findOne({
-            email: cleanEmail
-        });
+        const user =
+            await User.findOne({
+                email: cleanEmail
+            });
 
-        console.log("USER FOUND:", user);
+        console.log(
+            "USER FOUND:",
+            user
+        );
 
         if (!user) {
+
             return res.status(401).json({
-                message: "Invalid email or password"
+
+                message:
+                    "Invalid email or password"
+
             });
+
         }
 
-        const isPasswordCorrect = await bcrypt.compare(
-            password,
-            user.password
-        );
+        const isPasswordCorrect =
+            await bcrypt.compare(
+                password,
+                user.password
+            );
 
-        console.log("PASSWORD CORRECT:", isPasswordCorrect);
+        console.log(
+            "PASSWORD CORRECT:",
+            isPasswordCorrect
+        );
 
         if (!isPasswordCorrect) {
+
             return res.status(401).json({
-                message: "Invalid email or password"
+
+                message:
+                    "Invalid email or password"
+
             });
+
         }
 
-        const token = jwt.sign(
-            {
-                userId: user._id,
-                email: user.email
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "1d"
-            }
-        );
+        const token =
+            jwt.sign(
+
+                {
+                    userId: user._id,
+                    email: user.email
+                },
+
+                process.env.JWT_SECRET,
+
+                {
+                    expiresIn: "1d"
+                }
+
+            );
 
         res.json({
-            message: "Login successful!",
+
+            message:
+                "Login successful!",
+
             token: token,
+
             user: {
+
                 id: user._id,
+
                 name: user.name,
+
                 email: user.email
+
             }
+
         });
 
     } catch (error) {
 
-        console.error("LOGIN ERROR:", error);
+        console.error(
+            "LOGIN ERROR:",
+            error
+        );
 
         res.status(500).json({
-            message: "Login failed",
-            error: error.message
+
+            message:
+                "Login failed",
+
+            error:
+                error.message
+
         });
 
     }
 
 });
-
 
 // ===============================
 // GET CURRENT USER PROFILE
 // ===============================
 
-app.get("/me", authenticateToken, async (req, res) => {
+app.get(
+    "/me",
+    authenticateToken,
+    async (req, res) => {
 
-    try {
+        try {
 
-        const user = await User.findById(req.user.userId);
+            const user =
+                await User.findById(
+                    req.user.userId
+                );
 
-        if (!user) {
-            return res.status(404).json({
-                message: "User not found"
+            if (!user) {
+
+                return res.status(404).json({
+
+                    message:
+                        "User not found"
+
+                });
+
+            }
+
+            res.json({
+
+                id: user._id,
+
+                name: user.name,
+
+                email: user.email,
+
+                createdAt: user.createdAt
+
             });
+
+        } catch (error) {
+
+            console.error(
+                "PROFILE ERROR:",
+                error
+            );
+
+            res.status(500).json({
+
+                message:
+                    "Failed to load profile"
+
+            });
+
         }
 
-        res.json({
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            createdAt: user.createdAt
-        });
-
-    } catch (error) {
-
-        console.error("PROFILE ERROR:", error);
-
-        res.status(500).json({
-            message: "Failed to load profile"
-        });
-
     }
-
-});
-
+);
 
 // ===============================
 // GET ALL BLOGS - PUBLIC
 // ===============================
 
 app.get("/blogs", async (req, res) => {
+
     try {
-        const blogs = await Blog.find()
-            .sort({ createdAt: -1 });
+
+        const blogs =
+            await Blog.find()
+                .sort({
+                    createdAt: -1
+                });
 
         res.json(blogs);
 
     } catch (error) {
 
-        console.error("Error fetching public blogs:", error);
+        console.error(
+            "Error fetching public blogs:",
+            error
+        );
 
         res.status(500).json({
-            message: "Failed to fetch blogs"
-        });
-    }
-});
 
+            message:
+                "Failed to fetch blogs"
+
+        });
+
+    }
+
+});
 
 // ===============================
 // GET MY BLOGS - AUTHENTICATED
 // ===============================
 
-app.get("/my-blogs", authenticateToken, async (req, res) => {
-    try {
+app.get(
+    "/my-blogs",
+    authenticateToken,
+    async (req, res) => {
 
-        const blogs = await Blog.find({
-            userId: req.user.userId
-        }).sort({ createdAt: -1 });
+        try {
 
-        res.json(blogs);
+            const blogs =
+                await Blog.find({
 
-    } catch (error) {
+                    userId:
+                        req.user.userId
 
-        console.error("Error fetching my blogs:", error);
+                }).sort({
 
-        res.status(500).json({
-            message: "Failed to fetch your blogs"
-        });
+                    createdAt: -1
+
+                });
+
+            res.json(blogs);
+
+        } catch (error) {
+
+            console.error(
+                "Error fetching my blogs:",
+                error
+            );
+
+            res.status(500).json({
+
+                message:
+                    "Failed to fetch your blogs"
+
+            });
+
+        }
+
     }
-});
-
+);
 
 // ===============================
 // GET SINGLE BLOG - PUBLIC
 // ===============================
 
-app.get("/blogs/:id", async (req, res) => {
-    try {
+app.get(
+    "/blogs/:id",
+    async (req, res) => {
 
-        const blog = await Blog.findById(req.params.id);
+        try {
 
-        if (!blog) {
-            return res.status(404).json({
-                message: "Blog not found"
+            const blog =
+                await Blog.findById(
+                    req.params.id
+                );
+
+            if (!blog) {
+
+                return res.status(404).json({
+
+                    message:
+                        "Blog not found"
+
+                });
+
+            }
+
+            res.json(blog);
+
+        } catch (error) {
+
+            console.error(
+                "Error fetching blog:",
+                error
+            );
+
+            res.status(500).json({
+
+                message:
+                    "Error fetching blog"
+
             });
+
         }
 
-        res.json(blog);
-
-    } catch (error) {
-
-        console.error("Error fetching blog:", error);
-
-        res.status(500).json({
-            message: "Error fetching blog"
-        });
     }
-});
+);
 
 // ===============================
-// CREATE BLOG WITH IMAGE
+// CREATE BLOG WITH CLOUDINARY IMAGE
 // ===============================
 
 app.post(
@@ -378,12 +567,32 @@ app.post(
 
         try {
 
-            console.log("=================================");
-            console.log("CREATE BLOG REQUEST");
-            console.log("USER ID:", req.user.userId);
-            console.log("TITLE:", req.body.title);
-            console.log("CATEGORY:", req.body.category);
-            console.log("=================================");
+            console.log(
+                "================================="
+            );
+
+            console.log(
+                "CREATE BLOG REQUEST"
+            );
+
+            console.log(
+                "USER ID:",
+                req.user.userId
+            );
+
+            console.log(
+                "TITLE:",
+                req.body.title
+            );
+
+            console.log(
+                "CATEGORY:",
+                req.body.category
+            );
+
+            console.log(
+                "================================="
+            );
 
             const {
                 title,
@@ -394,56 +603,149 @@ app.post(
             if (!title || !content) {
 
                 return res.status(400).json({
-                    message: "Title and content are required."
+
+                    message:
+                        "Title and content are required."
+
                 });
 
             }
 
-            const imageUrl = req.file
-                ? `/uploads/${req.file.filename}`
-                : "";
+            // ===============================
+            // UPLOAD IMAGE TO CLOUDINARY
+            // ===============================
 
-            const newBlog = new Blog({
+            let imageUrl = "";
 
-                title: title.trim(),
+            if (req.file) {
 
-                content: content.trim(),
+                const result =
+                    await new Promise(
+                        (resolve, reject) => {
 
-                // IMPORTANT:
-                // "Technology" is not in Blog.js enum
-                category: category || "Technical",
+                            const stream =
+                                cloudinary.uploader.upload_stream(
 
-                imageUrl,
+                                    {
+                                        folder:
+                                            "inkora/blogs"
+                                    },
 
-                userId: req.user.userId
+                                    (
+                                        error,
+                                        result
+                                    ) => {
 
-            });
+                                        if (error) {
 
-            const savedBlog = await newBlog.save();
+                                            reject(
+                                                error
+                                            );
 
-            console.log("BLOG CREATED SUCCESSFULLY");
-            console.log("NEW BLOG ID:", savedBlog._id);
-            console.log("NEW BLOG TITLE:", savedBlog.title);
-            console.log("NEW BLOG CATEGORY:", savedBlog.category);
-            console.log("=================================");
+                                        } else {
+
+                                            resolve(
+                                                result
+                                            );
+
+                                        }
+
+                                    }
+
+                                );
+
+                            stream.end(
+                                req.file.buffer
+                            );
+
+                        }
+                    );
+
+                imageUrl =
+                    result.secure_url;
+
+                console.log(
+                    "CLOUDINARY IMAGE URL:",
+                    imageUrl
+                );
+            }
+
+            // ===============================
+            // CREATE BLOG
+            // ===============================
+
+            const newBlog =
+                new Blog({
+
+                    title:
+                        title.trim(),
+
+                    content:
+                        content.trim(),
+
+                    category:
+                        category ||
+                        "Technical",
+
+                    imageUrl:
+
+                        imageUrl,
+
+                    userId:
+                        req.user.userId
+
+                });
+
+            const savedBlog =
+                await newBlog.save();
+
+            console.log(
+                "BLOG CREATED SUCCESSFULLY"
+            );
+
+            console.log(
+                "NEW BLOG ID:",
+                savedBlog._id
+            );
+
+            console.log(
+                "NEW BLOG TITLE:",
+                savedBlog.title
+            );
+
+            console.log(
+                "NEW BLOG CATEGORY:",
+                savedBlog.category
+            );
+
+            console.log(
+                "================================="
+            );
 
             res.status(201).json({
 
-                message: "Blog added successfully!",
+                message:
+                    "Blog added successfully!",
 
-                blog: savedBlog
+                blog:
+                    savedBlog
 
             });
 
         } catch (error) {
 
-            console.error("ERROR ADDING BLOG:", error);
+            console.error(
+                "ERROR ADDING BLOG:",
+                error
+            );
 
             res.status(500).json({
 
-                message: "Failed to add blog",
+                message:
+                    "Failed to add blog",
 
-                error: error.message
+                error:
+                    error.message
 
             });
 
@@ -451,7 +753,6 @@ app.post(
 
     }
 );
-
 
 // ===============================
 // UPDATE BLOG
@@ -466,19 +767,24 @@ app.put(
         try {
 
             const blog =
-                await Blog.findById(req.params.id);
-
+                await Blog.findById(
+                    req.params.id
+                );
 
             if (!blog) {
 
                 return res.status(404).json({
-                    message: "Blog not found."
+
+                    message:
+                        "Blog not found."
+
                 });
 
             }
 
-
-            /* CHECK OWNER */
+            // ===============================
+            // CHECK OWNER
+            // ===============================
 
             if (
                 blog.userId.toString() !==
@@ -486,12 +792,13 @@ app.put(
             ) {
 
                 return res.status(403).json({
+
                     message:
                         "You are not allowed to edit this blog."
+
                 });
 
             }
-
 
             const {
                 title,
@@ -499,52 +806,100 @@ app.put(
                 category
             } = req.body;
 
-
             if (!title || !content) {
 
                 return res.status(400).json({
+
                     message:
                         "Title and content are required."
+
                 });
 
             }
 
-
-            /* UPDATE TEXT */
+            // ===============================
+            // UPDATE TEXT
+            // ===============================
 
             blog.title =
                 title.trim();
 
-
             blog.content =
                 content.trim();
 
-
             blog.category =
-                category || "Technical";
+                category ||
+                "Technical";
 
-
-            /* UPDATE IMAGE ONLY IF
-               A NEW IMAGE WAS UPLOADED */
+            // ===============================
+            // UPDATE IMAGE
+            // ===============================
 
             if (req.file) {
 
+                const result =
+                    await new Promise(
+                        (resolve, reject) => {
+
+                            const stream =
+                                cloudinary.uploader.upload_stream(
+
+                                    {
+                                        folder:
+                                            "inkora/blogs"
+                                    },
+
+                                    (
+                                        error,
+                                        result
+                                    ) => {
+
+                                        if (error) {
+
+                                            reject(
+                                                error
+                                            );
+
+                                        } else {
+
+                                            resolve(
+                                                result
+                                            );
+
+                                        }
+
+                                    }
+
+                                );
+
+                            stream.end(
+                                req.file.buffer
+                            );
+
+                        }
+                    );
+
                 blog.imageUrl =
-                    `/uploads/${req.file.filename}`;
+                    result.secure_url;
 
+                console.log(
+                    "UPDATED CLOUDINARY IMAGE:",
+                    blog.imageUrl
+                );
             }
-
 
             const updatedBlog =
                 await blog.save();
 
-
             res.json({
+
                 message:
                     "Blog updated successfully!",
-                blog: updatedBlog
-            });
 
+                blog:
+                    updatedBlog
+
+            });
 
         } catch (error) {
 
@@ -553,17 +908,17 @@ app.put(
                 error
             );
 
-
             res.status(500).json({
+
                 message:
                     "Failed to update blog."
+
             });
 
         }
 
     }
 );
-
 
 // ===============================
 // DELETE BLOG
@@ -576,24 +931,44 @@ app.delete(
 
         try {
 
-            console.log("=================================");
-            console.log("DELETE BLOG REQUEST");
-            console.log("BLOG ID:", req.params.id);
-            console.log("USER ID:", req.user.userId);
-            console.log("=================================");
+            console.log(
+                "================================="
+            );
+
+            console.log(
+                "DELETE BLOG REQUEST"
+            );
+
+            console.log(
+                "BLOG ID:",
+                req.params.id
+            );
+
+            console.log(
+                "USER ID:",
+                req.user.userId
+            );
+
+            console.log(
+                "================================="
+            );
 
             const deletedBlog =
                 await Blog.findOneAndDelete({
 
-                    _id: req.params.id,
+                    _id:
+                        req.params.id,
 
-                    userId: req.user.userId
+                    userId:
+                        req.user.userId
 
                 });
 
             if (!deletedBlog) {
 
-                console.log("NO BLOG WAS DELETED");
+                console.log(
+                    "NO BLOG WAS DELETED"
+                );
 
                 return res.status(404).json({
 
@@ -604,16 +979,31 @@ app.delete(
 
             }
 
-            console.log("BLOG DELETED!");
-            console.log("DELETED ID:", deletedBlog._id);
-            console.log("DELETED TITLE:", deletedBlog.title);
-            console.log("=================================");
+            console.log(
+                "BLOG DELETED!"
+            );
+
+            console.log(
+                "DELETED ID:",
+                deletedBlog._id
+            );
+
+            console.log(
+                "DELETED TITLE:",
+                deletedBlog.title
+            );
+
+            console.log(
+                "================================="
+            );
 
             res.json({
 
-                message: "Blog deleted successfully!",
+                message:
+                    "Blog deleted successfully!",
 
-                blog: deletedBlog
+                blog:
+                    deletedBlog
 
             });
 
@@ -626,7 +1016,8 @@ app.delete(
 
             res.status(500).json({
 
-                message: "Failed to delete blog"
+                message:
+                    "Failed to delete blog"
 
             });
 
@@ -635,15 +1026,17 @@ app.delete(
     }
 );
 
-
 // ===============================
 // START SERVER
 // ===============================
 
-app.listen(PORT, () => {
+app.listen(
+    PORT,
+    () => {
 
-    console.log(
-        `Server running at http://localhost:${PORT}`
-    );
+        console.log(
+            `Server running at http://localhost:${PORT}`
+        );
 
-});
+    }
+);
